@@ -1,0 +1,12 @@
+{
+  "MANTIS_JUGGERNAUT_PREPARED.title": "准备",
+  "MANTIS_JUGGERNAUT_PREPARED.description": "置于[gold]手牌[/gold]最左侧的牌为[gold]准备[gold]牌。",
+  "MANTIS_JUGGERNAUT_STANCE.title": "架势",
+  "MANTIS_JUGGERNAUT_STANCE.description": "特有的轮换状态体系，遵循切换规则：\n[gold]左引[/gold]\n·[gold]衡势[/gold]→[gold]左蓄势[/gold]\n·[gold]右蓄势[/gold]→[gold]衡势[/gold]\n·[gold]左蓄势[/gold]→[red]失衡[/red]\n[gold]右引[/gold]\n·[gold]衡势[/gold]→[gold]右蓄势[/gold]\n·[gold]左蓄势[/gold]→[gold]衡势[/gold]\n·[gold]右蓄势[/gold]→[red]失衡[/red]",
+  "MANTIS_JUGGERNAUT_BACKSWING_LEFT.title": "左引",
+  "MANTIS_JUGGERNAUT_BACKSWING_LEFT.description": "[gold]右蓄势[/gold]时增加[gold]左引[/gold]攻击伤害。\n向指定方向改变[gold]架势[/gold]：\n·[gold]衡势[/gold]→[gold]左蓄势[/gold]\n·[gold]右蓄势[/gold]→[gold]衡势[/gold]\n·[gold]左蓄势[/gold]→[red]失衡[/red]\n（[gold]架势[/gold]详情见初始遗物。）\n攻击完毕后反转为[gold]右引[/gold]。",
+  "MANTIS_JUGGERNAUT_BACKSWING_RIGHT.title": "右引",
+  "MANTIS_JUGGERNAUT_BACKSWING_RIGHT.description": "[gold]左蓄势[/gold]时增加[gold]右引[/gold]攻击伤害。\n向指定方向改变[gold]架势[/gold]：\n·[gold]衡势[/gold]→[gold]右蓄势[/gold]\n·[gold]左蓄势[/gold]→[gold]衡势[/gold]\n·[gold]右蓄势[/gold]→[red]失衡[/red]\n（[gold]架势[/gold]详情见初始遗物。）\n攻击完毕后反转为[gold]左引[/gold]。",
+  "MANTIS_JUGGERNAUT_HEAVY_KNOCK.title": "重击",
+  "MANTIS_JUGGERNAUT_HEAVY_KNOCK.description": "每段[gold]重击[/gold]攻击导致敌人状态变化：\n·[gold]正常[/gold]→[gold]偏斜[/gold]\n·[gold]偏斜[/gold]→[red]失衡[/red]\n·[red]失衡[/red]→[red]失衡层数+1[/red]"
+}

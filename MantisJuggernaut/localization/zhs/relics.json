@@ -1,0 +1,9 @@
+{
+  "MANTIS_JUGGERNAUT_RELIC_WING_CLOAK.description": "展开虫族战斗[gold]架势[/gold]。战斗开始时，进入[gold]衡势[/gold]。",
+  "MANTIS_JUGGERNAUT_RELIC_WING_CLOAK.flavor": "曼提斯武装猎手摆出战斗架势，就能吓退许多敌人。",
+  "MANTIS_JUGGERNAUT_RELIC_WING_CLOAK.title": "虫翼披风",
+  "MANTIS_JUGGERNAUT_RELIC_MASTER_CLOAK.description": "展开虫族战斗[gold]架势[/gold]。战斗开始时，进入[gold]衡势[/gold]。\n拾起时，从你的[gold]牌组[/gold]中选择[blue]{Cards}[/blue]张牌添加[gold]奇巧[/gold]。",
+  "MANTIS_JUGGERNAUT_RELIC_MASTER_CLOAK.flavor": "先贤大师级的战斗技法经由披风传承给现在的持有者。",
+  "MANTIS_JUGGERNAUT_RELIC_MASTER_CLOAK.selectionScreenPrompt": "选择[blue]{Cards}[/blue]张牌添加[gold]奇巧[/gold]。",
+  "MANTIS_JUGGERNAUT_RELIC_MASTER_CLOAK.title": "大师披风"
+}
