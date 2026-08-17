@@ -31,7 +31,7 @@ public sealed class Guillotine()
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Concat(
     [
-        new PowerVar<VulnerablePower>(1m),
+        new PowerVar<VulnerablePower>(2m),
         new DamageVar(20m, ValueProp.Move)
     ]);
 

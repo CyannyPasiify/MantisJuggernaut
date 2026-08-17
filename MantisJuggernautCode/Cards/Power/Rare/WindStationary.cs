@@ -31,7 +31,7 @@ public sealed class WindStationary() : MantisJuggernautPowerCard(BaseEnergyCost,
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<WindStationaryPower>(1m)
+        new PowerVar<WindStationaryPower>(2m)
     ];
 
     // 打出时的效果逻辑。
@@ -50,6 +50,6 @@ public sealed class WindStationary() : MantisJuggernautPowerCard(BaseEnergyCost,
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
-        DynamicVars[nameof(WindStationaryPower)].UpgradeValueBy(1m);
+        EnergyCost.UpgradeBy(-1);
     }
 }

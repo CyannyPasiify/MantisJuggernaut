@@ -35,7 +35,7 @@ public sealed class Juggernaut()
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Concat(
     [
-        new DamageVar(10m, ValueProp.Move),
+        new DamageVar(12m, ValueProp.Move),
         new DynamicVar(DamageIncreaseVarKey, 6)
     ]);
 

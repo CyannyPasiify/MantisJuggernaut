@@ -18,7 +18,7 @@ public sealed class LuckyHit()
     private const int BaseEnergyCost = 2;
 
     // 卡牌稀有度。
-    private const CardRarity CardRarityValue = CardRarity.Uncommon;
+    private const CardRarity CardRarityValue = CardRarity.Rare;
 
     // 目标类型。
     private const TargetType CardTarget = TargetType.AnyEnemy;

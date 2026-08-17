@@ -28,7 +28,7 @@ public sealed class VersatileInstinct() : MantisJuggernautPowerCard(BaseEnergyCo
     {
         get
         {
-            var common = new List<IHoverTip> { InstinctSlash.MakeCardHoverTip() };
+            var common = base.AdditionalHoverTips.ToList();
             if (!IsUpgraded)
             {
                 return common

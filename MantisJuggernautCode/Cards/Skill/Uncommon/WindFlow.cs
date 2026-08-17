@@ -27,11 +27,11 @@ public sealed class WindFlow() : MantisJuggernautSkillBackswingCard(BaseEnergyCo
     ]);
 
     // 卡牌基础数值。
-    protected override IEnumerable<DynamicVar> CanonicalVars =>
+    protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Concat(
     [
         new CardsVar(1),
         new PowerVar<SwiftPower>(2m)
-    ];
+    ]);
 
     // 打出时的效果逻辑。
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

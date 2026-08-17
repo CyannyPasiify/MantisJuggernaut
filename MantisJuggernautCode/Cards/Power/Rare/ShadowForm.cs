@@ -54,6 +54,5 @@ public sealed class ShadowForm() : MantisJuggernautPowerCard(BaseEnergyCost, Car
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
     }
 }

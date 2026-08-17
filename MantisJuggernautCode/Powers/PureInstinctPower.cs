@@ -1,11 +1,8 @@
 ﻿using MantisJuggernaut.Cards;
-using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
-using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -48,11 +45,6 @@ public class PureInstinctPower : MantisJuggernautPower
             return 0m;
         }
 
-        if (cardSource == null)
-        {
-            return 0m;
-        }
-
         if (cardSource is not InstinctSlash)
         {
             return 0m;
@@ -61,34 +53,34 @@ public class PureInstinctPower : MantisJuggernautPower
         return Amount;
     }
 
-    public override Task AfterCardEnteredCombat(CardModel card)
-    {
-        if (card is not InstinctSlash)
-        {
-            return Task.CompletedTask;
-        }
-
-        if (card.Owner != Owner.Player)
-        {
-            return Task.CompletedTask;
-        }
-
-        CardCmd.ApplyKeyword(card, CardKeyword.Retain);
-        return Task.CompletedTask;
-    }
-
-    public override Task AfterApplied(Creature? applier, CardModel? cardSource)
-    {
-        if (Owner.Player?.PlayerCombatState is null)
-        {
-            return Task.CompletedTask;
-        }
-
-        foreach (CardModel item in Owner.Player.PlayerCombatState.AllCards.Where(c => c is InstinctSlash))
-        {
-            CardCmd.ApplyKeyword(item, CardKeyword.Retain);
-        }
-
-        return Task.CompletedTask;
-    }
+    // public override Task AfterCardEnteredCombat(CardModel card)
+    // {
+    //     if (card is not InstinctSlash)
+    //     {
+    //         return Task.CompletedTask;
+    //     }
+    //
+    //     if (card.Owner != Owner.Player)
+    //     {
+    //         return Task.CompletedTask;
+    //     }
+    //
+    //     CardCmd.ApplyKeyword(card, CardKeyword.Retain);
+    //     return Task.CompletedTask;
+    // }
+    //
+    // public override Task AfterApplied(Creature? applier, CardModel? cardSource)
+    // {
+    //     if (Owner.Player?.PlayerCombatState is null)
+    //     {
+    //         return Task.CompletedTask;
+    //     }
+    //
+    //     foreach (CardModel item in Owner.Player.PlayerCombatState.AllCards.Where(c => c is InstinctSlash))
+    //     {
+    //         CardCmd.ApplyKeyword(item, CardKeyword.Retain);
+    //     }
+    //
+    //     return Task.CompletedTask;
+    // }
 }

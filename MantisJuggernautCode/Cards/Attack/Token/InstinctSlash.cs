@@ -28,11 +28,12 @@ public sealed class InstinctSlash()
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Concat(
     [
-        new DamageVar(6m, ValueProp.Move)
+        new DamageVar(7m, ValueProp.Move)
     ]);
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [
+        CardKeyword.Retain,
         CardKeyword.Exhaust
     ];
 

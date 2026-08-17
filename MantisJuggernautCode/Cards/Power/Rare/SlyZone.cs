@@ -15,7 +15,7 @@ namespace MantisJuggernaut.Cards;
 public sealed class SlyZone() : MantisJuggernautPowerCard(BaseEnergyCost, CardRarityValue, CardTarget)
 {
     // 基础耗能。
-    private const int BaseEnergyCost = 2;
+    private const int BaseEnergyCost = 1;
 
     // 卡牌稀有度。
     private const CardRarity CardRarityValue = CardRarity.Rare;

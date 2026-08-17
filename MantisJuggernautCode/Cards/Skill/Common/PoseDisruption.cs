@@ -21,11 +21,20 @@ public sealed class PoseDisruption() : MantisJuggernautSkillCard(BaseEnergyCost,
     // 目标类型（Self 表示自己）。
     private const TargetType CardTarget = TargetType.AnyEnemy;
 
-    protected override IEnumerable<IHoverTip> AdditionalHoverTips => base.AdditionalHoverTips.Concat(
-    [
-        HoverTipFactory.FromPower<HeavyKnockDownPower>(),
-        HoverTipFactory.FromPower<BackswingBalancePower>()
-    ]);
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips
+    {
+        get
+        {
+            var hoverTips = base.AdditionalHoverTips.ToList();
+            hoverTips.Add(HoverTipFactory.FromPower<HeavyKnockDownPower>());
+            if (IsUpgraded)
+            {
+                hoverTips.Add(HoverTipFactory.FromPower<BackswingBalancePower>());
+            }
+
+            return hoverTips;
+        }
+    }
 
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars =>

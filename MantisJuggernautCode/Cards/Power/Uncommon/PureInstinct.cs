@@ -25,14 +25,13 @@ public sealed class PureInstinct() : MantisJuggernautPowerCard(BaseEnergyCost, C
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
-        InstinctSlash.MakeCardHoverTip(),
-        HoverTipFactory.FromKeyword(CardKeyword.Retain)
+        InstinctSlash.MakeCardHoverTip()
     ];
 
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<PureInstinctPower>(5m)
+        new PowerVar<PureInstinctPower>(6m)
     ];
 
     // 打出时的效果逻辑。
@@ -51,6 +50,6 @@ public sealed class PureInstinct() : MantisJuggernautPowerCard(BaseEnergyCost, C
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
-        DynamicVars[nameof(PureInstinctPower)].UpgradeValueBy(2m);
+        DynamicVars[nameof(PureInstinctPower)].UpgradeValueBy(3m);
     }
 }

@@ -22,14 +22,14 @@ public sealed class FiendGrip() : MantisJuggernautSkillBackswingCard(BaseEnergyC
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => base.AdditionalHoverTips.Concat(
     [
-        InstinctSlash.MakeCardHoverTip(false, SwingRight)
+        InstinctSlash.MakeCardHoverTip(IsUpgraded, SwingRight)
     ]);
 
     // 卡牌基础数值。
-    protected override IEnumerable<DynamicVar> CanonicalVars =>
+    protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Concat(
     [
-        new CardsVar(2)
-    ];
+        new CardsVar(3)
+    ]);
 
     // 打出时的效果逻辑。
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -37,8 +37,9 @@ public sealed class FiendGrip() : MantisJuggernautSkillBackswingCard(BaseEnergyC
         if (CombatState is not null)
             await InstinctSlash.CreateInHand(
                 Owner,
+                DynamicVars.Cards.IntValue,
                 CombatState,
-                false,
+                IsUpgraded,
                 SwingRight
             );
 
@@ -48,6 +49,5 @@ public sealed class FiendGrip() : MantisJuggernautSkillBackswingCard(BaseEnergyC
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
-        DynamicVars[nameof(SwiftPower)].UpgradeValueBy(2m);
     }
 }

@@ -31,7 +31,7 @@ public sealed class Nightmare()
         new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, creature) =>
             CombatManager.Instance.History.Entries.OfType<CardDrawnEntry>()
                 .Count(e => e.Actor == card.Owner.Creature)),
-        new CardsVar(10)
+        new CardsVar(8)
     ]);
 
     protected override bool IsPlayable => PileType.Hand.GetPile(Owner).Cards.Count >= DynamicVars.Cards.IntValue;

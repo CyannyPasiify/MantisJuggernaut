@@ -52,6 +52,6 @@ public sealed class SubtleTechnique() : MantisJuggernautPowerCard(BaseEnergyCost
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
-        DynamicVars[nameof(FakeFlawPower)].UpgradeValueBy(2m);
+        DynamicVars[nameof(SubtleTechniquePower)].UpgradeValueBy(2m);
     }
 }

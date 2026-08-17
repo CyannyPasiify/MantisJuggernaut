@@ -36,7 +36,7 @@ public sealed class BarbedThrust()
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Concat(
     [
-        new DamageVar(14m, ValueProp.Move)
+        new DamageVar(16m, ValueProp.Move)
     ]);
 
     // 打出时的效果逻辑。

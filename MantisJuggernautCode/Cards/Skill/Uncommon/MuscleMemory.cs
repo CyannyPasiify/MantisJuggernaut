@@ -29,11 +29,6 @@ public sealed class MuscleMemory()
         HoverTipFactory.FromPower<InstinctPower>()
     ]);
 
-    // 卡牌基础数值。
-    protected override IEnumerable<DynamicVar> CanonicalVars =>
-    [
-    ];
-
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [
         CardKeyword.Sly

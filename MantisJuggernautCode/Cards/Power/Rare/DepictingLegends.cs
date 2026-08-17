@@ -58,6 +58,5 @@ public sealed class DepictingLegends() : MantisJuggernautPowerCard(BaseEnergyCos
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
     }
 }

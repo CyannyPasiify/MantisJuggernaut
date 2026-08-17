@@ -13,7 +13,7 @@ namespace MantisJuggernaut.Cards;
 
 [RegisterCard(typeof(MantisJuggernautCardPool))]
 public sealed class WindRun()
-    : MantisJuggernautAttackHeavyKnockCard(BaseEnergyCost, CardRarityValue, CardTarget)
+    : MantisJuggernautSkillCard(BaseEnergyCost, CardRarityValue, CardTarget)
 {
     // 基础耗能。
     private const int BaseEnergyCost = 2;

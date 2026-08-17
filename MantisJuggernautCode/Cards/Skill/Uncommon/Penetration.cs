@@ -22,7 +22,7 @@ public sealed class Penetration() : MantisJuggernautSkillCard(BaseEnergyCost, Ca
     // 目标类型（Self 表示自己）。
     private const TargetType CardTarget = TargetType.AnyEnemy;
 
-    protected override IEnumerable<IHoverTip> AdditionalHoverTips => AdditionalHoverTips.Concat(
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => base.AdditionalHoverTips.Concat(
     [
         HoverTipFactory.FromPower<ArtifactPower>(),
         HoverTipFactory.FromPower<ExposureMarkPower>()

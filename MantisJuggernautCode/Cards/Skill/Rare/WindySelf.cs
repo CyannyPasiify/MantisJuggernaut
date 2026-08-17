@@ -57,15 +57,12 @@ public sealed class WindySelf() : MantisJuggernautSkillCard(BaseEnergyCost, Card
             this
         );
 
-        if (IsUpgraded)
-        {
-            await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
-        }
+        await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
     }
 
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
-        AddKeyword(CardKeyword.Innate);
+        DynamicVars.Cards.UpgradeValueBy(2m);
     }
 }
