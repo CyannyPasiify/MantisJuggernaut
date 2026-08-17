@@ -12,39 +12,38 @@ using MegaCrit.Sts2.Core.Models.Powers;
 namespace MantisJuggernaut.Cards;
 
 [RegisterCard(typeof(MantisJuggernautCardPool))]
-[RegisterDustyTomeCard(typeof(MantisJuggernautCharacter))]
-public sealed class Tumbler() : MantisJuggernautPowerCard(BaseEnergyCost, CardRarityValue, CardTarget)
+public sealed class SubtleTechnique() : MantisJuggernautPowerCard(BaseEnergyCost, CardRarityValue, CardTarget)
 {
     // 基础耗能。
-    private const int BaseEnergyCost = 2;
+    private const int BaseEnergyCost = 1;
 
     // 卡牌稀有度。
-    private const CardRarity CardRarityValue = CardRarity.Ancient;
+    private const CardRarity CardRarityValue = CardRarity.Uncommon;
 
     // 目标类型（Self 表示自己）。
     private const TargetType CardTarget = TargetType.Self;
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
-        ExtHoverTipFactory.Static(ExtStaticHoverTip.Stance),
-        HoverTipFactory.FromPower<StrengthPower>(),
-        HoverTipFactory.FromPower<DexterityPower>()
+        HoverTipFactory.FromPower<BackswingImbalancePower>(),
+        HoverTipFactory.FromPower<BackswingBalancePower>(),
+        HoverTipFactory.FromPower<StrengthPower>()
     ];
 
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<TumblerPower>(1m)
+        new PowerVar<SubtleTechniquePower>(3m)
     ];
 
     // 打出时的效果逻辑。
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "PowerUp", Owner.Character.PowerUpAnimDelay);
-        await PowerCmd.Apply<TumblerPower>(
+        await PowerCmd.Apply<SubtleTechniquePower>(
             choiceContext,
             Owner.Creature,
-            DynamicVars[nameof(TumblerPower)].BaseValue,
+            DynamicVars[nameof(SubtleTechniquePower)].BaseValue,
             Owner.Creature,
             this
         );
@@ -53,6 +52,6 @@ public sealed class Tumbler() : MantisJuggernautPowerCard(BaseEnergyCost, CardRa
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
-        AddKeyword(CardKeyword.Innate);
+        DynamicVars[nameof(FakeFlawPower)].UpgradeValueBy(2m);
     }
 }

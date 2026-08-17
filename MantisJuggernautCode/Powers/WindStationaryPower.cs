@@ -1,17 +1,18 @@
 ﻿using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
 
 namespace MantisJuggernaut.Powers;
 
 [RegisterPower]
-public class AmbushPower : MantisJuggernautPower
+public class WindStationaryPower : MantisJuggernautPower
 {
     // 类型，Buff或Debuff
     public override PowerType Type => PowerType.Buff;
@@ -23,21 +24,20 @@ public class AmbushPower : MantisJuggernautPower
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
-        HoverTipFactory.FromKeyword(CardKeyword.Sly)
+        HoverTipFactory.FromPower<BackswingBalancePower>()
     ];
 
-    public override async Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
+    public override async Task AfterPowerAmountChanged(
+        PlayerChoiceContext choiceContext,
+        PowerModel power,
+        decimal amount,
+        Creature? applier,
+        CardModel? cardSource
+    )
     {
-        if (card.Owner == Owner.Player && card.Keywords.Contains(CardKeyword.Sly))
+        if (power.Owner == Owner && power is BackswingBalancePower && Owner.Player is not null)
         {
-            int num = CombatManager.Instance.History.Entries.OfType<CardDrawnEntry>()
-                .Count(e => e.HappenedThisTurn(CombatState) &&
-                            e.Actor == Owner && e.Card.Keywords.Contains(CardKeyword.Sly));
-            if (num <= 1)
-            {
-                Flash();
-                await CardCmd.DiscardAndDraw(choiceContext, [card], Amount);
-            }
+            await CardPileCmd.Draw(choiceContext, Amount, Owner.Player);
         }
     }
 }

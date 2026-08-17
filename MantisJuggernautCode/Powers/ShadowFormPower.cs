@@ -5,13 +5,14 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Interop.AutoRegistration;
 
 namespace MantisJuggernaut.Powers;
 
 [RegisterPower]
-public class AmbushPower : MantisJuggernautPower
+public class ShadowFormPower : MantisJuggernautPower
 {
     // 类型，Buff或Debuff
     public override PowerType Type => PowerType.Buff;
@@ -19,25 +20,37 @@ public class AmbushPower : MantisJuggernautPower
     // 叠加类型，Counter表示可叠加，Single表示不可叠加
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override PowerInstanceType InstanceType => PowerInstanceType.None;
+    public override PowerInstanceType InstanceType => PowerInstanceType.Instanced;
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
         HoverTipFactory.FromKeyword(CardKeyword.Sly)
     ];
 
+    public bool IsUpgraded
+    {
+        get => ((BoolVar)DynamicVars["IsUpgraded"]).BoolVal;
+        set => ((BoolVar)DynamicVars["IsUpgraded"]).BoolVal = value;
+    }
+
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+    [
+        new BoolVar("IsUpgraded", false)
+    ];
+
     public override async Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
     {
         if (card.Owner == Owner.Player && card.Keywords.Contains(CardKeyword.Sly))
         {
-            int num = CombatManager.Instance.History.Entries.OfType<CardDrawnEntry>()
-                .Count(e => e.HappenedThisTurn(CombatState) &&
-                            e.Actor == Owner && e.Card.Keywords.Contains(CardKeyword.Sly));
-            if (num <= 1)
+            Flash();
+            await CardCmd.Discard(choiceContext, card);
+            CardModel genCard = card.CreateClone();
+            if (IsUpgraded && !genCard.IsUpgraded)
             {
-                Flash();
-                await CardCmd.DiscardAndDraw(choiceContext, [card], Amount);
+                CardCmd.Upgrade(card);
             }
+
+            await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, Owner.Player);
         }
     }
 }

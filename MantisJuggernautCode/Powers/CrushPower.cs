@@ -1,8 +1,11 @@
-﻿using MegaCrit.Sts2.Core.Commands;
+﻿using MantisJuggernaut.Cards;
+using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -10,7 +13,7 @@ using STS2RitsuLib.Interop.AutoRegistration;
 namespace MantisJuggernaut.Powers;
 
 [RegisterPower]
-public class FakeFlawPower : MantisJuggernautPower
+public class CrushPower : MantisJuggernautPower
 {
     // 类型，Buff或Debuff
     public override PowerType Type => PowerType.Buff;
@@ -22,24 +25,32 @@ public class FakeFlawPower : MantisJuggernautPower
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
-        HoverTipFactory.FromPower<BackswingImbalancePower>()
     ];
 
-    public override async Task AfterPowerAmountChanged(
-        PlayerChoiceContext choiceContext,
-        PowerModel power,
+    public override decimal ModifyDamageMultiplicative(
+        Creature? target,
         decimal amount,
-        Creature? applier,
-        CardModel? cardSource
+        ValueProp props,
+        Creature? dealer,
+        CardModel? cardSource,
+        CardPlay? cardPlay
     )
     {
-        if (power.Owner != Owner ||
-            power is not BackswingImbalancePower ||
-            amount <= 0)
+        if (target is null || Owner != dealer || cardSource == null)
         {
-            return;
+            return 1m;
         }
 
-        await CreatureCmd.GainBlock(Owner, Amount, ValueProp.Unpowered, null);
+        if (!props.IsPoweredAttack())
+        {
+            return 1m;
+        }
+
+        if (target.CurrentHp * 2 > target.MaxHp)
+        {
+            return 1m;
+        }
+
+        return 1m + Amount / 100m;
     }
 }
