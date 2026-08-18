@@ -93,6 +93,7 @@
   "MANTIS_JUGGERNAUT_CARD_SEE_THROUGH.description": "给予所有意图为攻击的敌人{WeakPower:diff()}层[gold]虚弱[/gold]。",
   "MANTIS_JUGGERNAUT_CARD_SEE_THROUGH.title": "看破",
   "MANTIS_JUGGERNAUT_CARD_LIGHT_PACK.description": "至多丢弃{Cards:diff()}张牌。\n在下回合获得等同于弃牌数的[gold]能量[/gold]。",
+  "MANTIS_JUGGERNAUT_CARD_LIGHT_PACK.selectionScreenPrompt": "选择至多[blue]{Cards}[/blue]张牌丢弃。",
   "MANTIS_JUGGERNAUT_CARD_LIGHT_PACK.title": "轻装上阵",
   "MANTIS_JUGGERNAUT_CARD_BORN_HUNTER.description": "给予{VulnerablePower:diff()}层[gold]易伤[/gold]。\n将1张随机方向的[gold]{IfUpgraded:show:本能挥斩+|本能挥斩}[/gold]加入你的[gold]手牌[/gold]。",
   "MANTIS_JUGGERNAUT_CARD_BORN_HUNTER.title": "天生猎手",

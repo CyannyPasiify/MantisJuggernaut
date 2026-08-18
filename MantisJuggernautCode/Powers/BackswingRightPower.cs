@@ -64,10 +64,10 @@ public class BackswingRightPower : MantisJuggernautPower
 
     public override async Task AfterDamageReceived(
         PlayerChoiceContext choiceContext,
-        Creature? dealer,
+        Creature? target,
         DamageResult result,
         ValueProp props,
-        Creature? target,
+        Creature? dealer,
         CardModel? cardSource
     )
     {

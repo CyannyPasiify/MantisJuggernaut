@@ -41,13 +41,6 @@ public sealed class Sweep()
             .TargetingAllOpponents(CombatState)
             .WithHitFx("vfx/vfx_attack_blunt", null, "heavy_attack.mp3")
             .Execute(choiceContext);
-        await CardCmd.Discard(choiceContext,
-            await CardSelectCmd.FromHandForDiscard(
-                choiceContext, Owner,
-                new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, DynamicVars.Cards.IntValue),
-                null, this
-            )
-        );
         await base.OnPlay(choiceContext, cardPlay);
     }
 

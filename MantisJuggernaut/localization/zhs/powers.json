@@ -55,6 +55,7 @@
   "MANTIS_JUGGERNAUT_POWER_HIGH_SPEED_POWER.title": "高速",
   "MANTIS_JUGGERNAUT_POWER_HIDDEN_BLADE_POWER.description": "在你的回合开始时，[gold]准备[/gold]一张牌。",
   "MANTIS_JUGGERNAUT_POWER_HIDDEN_BLADE_POWER.smartDescription": "在你的回合开始时，将[blue]{Amount}[/blue]张牌放到[gold]手牌[/gold]最左侧。",
+  "MANTIS_JUGGERNAUT_POWER_HIDDEN_BLADE_POWER.selectionScreenPrompt": "将[blue]{Amount}[/blue]张牌放到[gold]手牌[/gold]最左侧。",
   "MANTIS_JUGGERNAUT_POWER_HIDDEN_BLADE_POWER.title": "藏锋",
   "MANTIS_JUGGERNAUT_POWER_AMBUSH_POWER.description": "每回合你第一次抽到[gold]奇巧[/gold]牌时，丢弃它，抽更多牌。",
   "MANTIS_JUGGERNAUT_POWER_AMBUSH_POWER.smartDescription": "每回合你第一次抽到[gold]奇巧[/gold]牌时，丢弃它，抽[blue]{Amount}[/blue]张牌。",
