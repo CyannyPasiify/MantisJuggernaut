@@ -52,6 +52,7 @@
   "MANTIS_JUGGERNAUT_CARD_FULL_SPIN_SLASH.description": "[gold]{Backswing:choose(0):左|右}引[/gold]。\n造成{Damage:diff()}点伤害。\n[gold]衡势[/gold]：从[gold]抽牌堆[/gold]中将{Cards:diff()}张耗能最高的牌放入[gold]手牌[/gold]。",
   "MANTIS_JUGGERNAUT_CARD_FULL_SPIN_SLASH.title": "全回旋斩",
   "MANTIS_JUGGERNAUT_CARD_CRITICAL_HIT.description": "[gold]{Backswing:choose(0):左|右}引[/gold]。\n造成{Damage:diff()}点伤害。丢弃任意数量的[gold]手牌[/gold]，每丢弃1张牌，此牌就额外造成{DamageIncrease:diff()}点伤害。",
+  "MANTIS_JUGGERNAUT_CARD_CRITICAL_HIT.selectionScreenPrompt": "选择任意张[gold]手牌[/gold]丢弃。",
   "MANTIS_JUGGERNAUT_CARD_CRITICAL_HIT.title": "会心一击",
   "MANTIS_JUGGERNAUT_CARD_LEAPING_SLASH.description": "[gold]重击[/gold]。\n造成{Damage:diff()}点伤害。每当你在回合进行中抽到这张牌时，耗能在本回合减少{Energy:diff()}{energyPrefix:energyIcons(1)}。",
   "MANTIS_JUGGERNAUT_CARD_LEAPING_SLASH.title": "跃空袭",

@@ -1,13 +1,19 @@
 using MantisJuggernaut.Characters;
+using MantisJuggernaut.Enchantments;
 using MantisJuggernaut.HoverTips;
 using MantisJuggernaut.Powers;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes;
+using MegaCrit.Sts2.Core.Nodes.Vfx;
 using MegaCrit.Sts2.Core.Rooms;
 using STS2RitsuLib.Interop.AutoRegistration;
 
@@ -21,14 +27,14 @@ public sealed class MasterCloak : MantisJuggernautRelic
     public override RelicRarity Rarity => RelicRarity.Starter;
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => base.AdditionalHoverTips.Concat(
-    [
-        ExtHoverTipFactory.Static(ExtStaticHoverTip.Stance),
-        HoverTipFactory.FromPower<BackswingBalancePower>(),
-        HoverTipFactory.FromPower<BackswingLeftPower>(),
-        HoverTipFactory.FromPower<BackswingRightPower>(),
-        HoverTipFactory.FromPower<BackswingImbalancePower>(),
-        HoverTipFactory.FromKeyword(CardKeyword.Sly)
-    ]);
+        [
+            ExtHoverTipFactory.Static(ExtStaticHoverTip.Stance),
+            HoverTipFactory.FromPower<BackswingBalancePower>(),
+            HoverTipFactory.FromPower<BackswingLeftPower>(),
+            HoverTipFactory.FromPower<BackswingRightPower>(),
+            HoverTipFactory.FromPower<BackswingImbalancePower>()
+        ])
+        .Concat(HoverTipFactory.FromEnchantment<MasterHeritage>());
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
@@ -52,11 +58,22 @@ public sealed class MasterCloak : MantisJuggernautRelic
 
     public override async Task AfterObtained()
     {
-        var list = (await CardSelectCmd.FromDeckGeneric(
-            Owner,
-            new CardSelectorPrefs(SelectionScreenPrompt, DynamicVars.Cards.IntValue),
-            card => !card.Keywords.Contains(CardKeyword.Sly)
-        )).ToList();
-        foreach (var item in list) CardCmd.ApplyKeyword(item, CardKeyword.Sly);
+        EnchantmentModel enchant = ModelDb.Enchantment<MasterHeritage>();
+        List<CardModel> list = PileType.Deck.GetPile(Owner).Cards.Where(enchant.CanEnchant).ToList();
+        CardModel? card = (await CardSelectCmd.FromDeckForEnchantment(
+                list.UnstableShuffle(Owner.RunState.Rng.Niche).ToList(),
+                enchant,
+                1,
+                new CardSelectorPrefs(CardSelectorPrefs.EnchantSelectionPrompt, 1))
+            ).FirstOrDefault();
+        if (card != null)
+        {
+            CardCmd.Enchant<MasterHeritage>(card, 1m);
+            NCardEnchantVfx? nCardEnchantVfx = NCardEnchantVfx.Create(card);
+            if (nCardEnchantVfx != null)
+            {
+                NRun.Instance?.GlobalUi.CardPreviewContainer.AddChildSafely(nCardEnchantVfx);
+            }
+        }
     }
 }

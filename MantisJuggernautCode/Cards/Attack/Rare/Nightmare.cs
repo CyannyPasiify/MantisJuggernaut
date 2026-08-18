@@ -41,7 +41,7 @@ public sealed class Nightmare()
     {
         if (CombatState is null) return;
 
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+        await DamageCmd.Attack(DynamicVars.CalculatedDamage)
             .FromCard(this, cardPlay)
             .TargetingAllOpponents(CombatState)
             .WithHitFx("vfx/vfx_giant_horizontal_slash", null, "slash_attack.mp3")
