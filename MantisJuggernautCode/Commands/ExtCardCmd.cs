@@ -60,6 +60,7 @@ public static class ExtCardCmd
 
     public static async Task Prepare(CardModel card, bool toRight = false)
     {
+        card.RemoveFromCurrentPile(true);
         await CardPileCmd.Add(card, PileType.Hand, toRight ? CardPilePosition.Bottom : CardPilePosition.Top);
         var nPlayerHand = NPlayerHand.Instance;
         if (nPlayerHand?.GetCardHolder(card) is NHandCardHolder holder)
@@ -77,6 +78,8 @@ public static class ExtCardCmd
         {
             procCards.Reverse();
         }
+
+        procCards.ForEach(c => c.RemoveFromCurrentPile(true));
 
         var nPlayerHand = NPlayerHand.Instance;
         foreach (var card in procCards)

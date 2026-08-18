@@ -46,7 +46,7 @@ public sealed class SeeThrough() : MantisJuggernautSkillCard(BaseEnergyCost, Car
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
         var atkMonsters = CombatState.HittableEnemies.Where(c => c.Monster?.IntendsToAttack == true);
 
-        await PowerCmd.Apply<HeavyKnockDownPower>(
+        await PowerCmd.Apply<WeakPower>(
             choiceContext,
             atkMonsters,
             DynamicVars.Weak.BaseValue,

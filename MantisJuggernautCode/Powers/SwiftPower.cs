@@ -63,36 +63,40 @@ public class SwiftPower : MantisJuggernautPower
     {
         if (card.Owner.Creature != Owner || _leftCard is null || _rightCard is null) return;
 
-        // 发生从手牌到结算区的变化（丢弃奇巧牌不会被纳入，因为是从弃牌堆到结算区）
-        if (oldPileType == PileType.Hand && card.Pile?.Type == PileType.Play)
+        // 有卡牌离开手牌
+        if (oldPileType == PileType.Hand)
         {
-            // 确定卡牌是否为之前记录的左右端侧牌
-            if (card == _leftCard)
+            // 发生从手牌到结算区的变化（丢弃奇巧牌不会被纳入，因为是从弃牌堆到结算区）
+            if (card.Pile?.Type == PileType.Play)
             {
-                if (_rightCard is not null)
+                // 确定卡牌是否为之前记录的左右端侧牌
+                if (card == _leftCard)
                 {
-                    await CardCmd.DiscardAndDraw(
-                        new ThrowingPlayerChoiceContext(),
-                        [_rightCard],
-                        1
-                    );
-                    UpdateRecord();
-                    await PowerCmd.Decrement(this);
+                    if (_rightCard is not null)
+                    {
+                        await CardCmd.DiscardAndDraw(
+                            new ThrowingPlayerChoiceContext(),
+                            [_rightCard],
+                            1
+                        );
+                        UpdateRecord();
+                        await PowerCmd.Decrement(this);
+                    }
+                }
+                else if (card == _rightCard)
+                {
+                    if (_leftCard is not null)
+                    {
+                        await ExtCardCmd.DiscardAndDraw(
+                            new ThrowingPlayerChoiceContext(),
+                            [_leftCard],
+                            1
+                        );
+                        await PowerCmd.Decrement(this);
+                    }
                 }
             }
-            else if (card == _rightCard)
-            {
-                if (_leftCard is not null)
-                {
-                    await ExtCardCmd.DiscardAndLeftDraw(
-                        new ThrowingPlayerChoiceContext(),
-                        [_leftCard],
-                        1
-                    );
-                    UpdateRecord();
-                    await PowerCmd.Decrement(this);
-                }
-            }
+            UpdateRecord();
         }
 
         // 有卡牌进入手牌

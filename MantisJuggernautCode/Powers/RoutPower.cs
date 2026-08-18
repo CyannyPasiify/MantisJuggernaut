@@ -12,9 +12,9 @@ using STS2RitsuLib.Interop.AutoRegistration;
 namespace MantisJuggernaut.Powers;
 
 [RegisterPower]
-public class RupturePower : MantisJuggernautPower
+public class RoutPower : MantisJuggernautPower
 {
-    public const string RuptureIncreaseVarKey = "RuptureIncrease";
+    public const string RoutIncreaseVarKey = "RoutIncrease";
 
     // 类型，Buff或Debuff
     public override PowerType Type => PowerType.Debuff;
@@ -30,7 +30,7 @@ public class RupturePower : MantisJuggernautPower
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new IntVar(RuptureIncreaseVarKey, 1)
+        new IntVar(RoutIncreaseVarKey, 1)
     ];
 
     public override async Task AfterDamageReceived(
@@ -44,6 +44,7 @@ public class RupturePower : MantisJuggernautPower
     {
         if (target != Owner || !props.IsPoweredAttack()) return;
 
+        VfxCmd.PlayOnCreatureCenter(target, "vfx/vfx_dramatic_stab");
         await CreatureCmd.Damage(
             choiceContext,
             Owner,
@@ -53,10 +54,10 @@ public class RupturePower : MantisJuggernautPower
             null
         );
 
-        await PowerCmd.Apply<RupturePower>(
+        await PowerCmd.Apply<RoutPower>(
             choiceContext,
             Owner,
-            DynamicVars[RuptureIncreaseVarKey].BaseValue,
+            DynamicVars[RoutIncreaseVarKey].BaseValue,
             Owner,
             null
         );

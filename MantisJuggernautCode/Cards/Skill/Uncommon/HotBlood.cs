@@ -1,11 +1,11 @@
 using MantisJuggernaut.Characters;
+using MantisJuggernaut.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
-using RupturePower = MantisJuggernaut.Powers.RupturePower;
 
 namespace MantisJuggernaut.Cards;
 
@@ -23,13 +23,18 @@ public sealed class HotBlood() : MantisJuggernautSkillCard(BaseEnergyCost, CardR
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => base.AdditionalHoverTips.Concat(
     [
-        HoverTipFactory.FromPower<RupturePower>()
+        HoverTipFactory.FromPower<RoutPower>()
     ]);
 
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<RupturePower>(4m)
+        new PowerVar<RoutPower>(4m)
+    ];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+    [
+        CardKeyword.Exhaust
     ];
 
     // 打出时的效果逻辑。
@@ -37,10 +42,10 @@ public sealed class HotBlood() : MantisJuggernautSkillCard(BaseEnergyCost, CardR
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
-        await PowerCmd.Apply<RupturePower>(
+        await PowerCmd.Apply<RoutPower>(
             choiceContext,
             cardPlay.Target,
-            DynamicVars[nameof(RupturePower)].BaseValue,
+            DynamicVars[nameof(RoutPower)].BaseValue,
             Owner.Creature,
             this
         );

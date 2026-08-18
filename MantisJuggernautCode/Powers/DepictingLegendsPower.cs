@@ -52,9 +52,10 @@ public class DepictingLegendsPower : MantisJuggernautPower
     {
         if (player == Owner.Player && AmountOnTurnStart >= 1)
         {
-            var card = Owner.Player.RunState.Rng.CombatCardGeneration.NextItem(LegendTechniques);
-            if (card is not null)
+            CardModel? cardItem = Owner.Player.RunState.Rng.CombatCardGeneration.NextItem(LegendTechniques);
+            if (cardItem != null)
             {
+                CardModel card = CombatState.CreateCard(cardItem, Owner.Player);
                 if (IsUpgraded) CardCmd.Upgrade(card);
 
                 Flash();

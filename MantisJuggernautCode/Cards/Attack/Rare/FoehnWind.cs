@@ -29,14 +29,14 @@ public sealed class FoehnWind()
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => base.AdditionalHoverTips.Concat(
     [
-        HoverTipFactory.FromPower<RupturePower>()
+        HoverTipFactory.FromPower<RoutPower>()
     ]);
 
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Concat(
     [
         new DamageVar(12m, ValueProp.Move),
-        new PowerVar<RupturePower>(6m)
+        new PowerVar<RoutPower>(6m)
     ]);
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
@@ -68,10 +68,10 @@ public sealed class FoehnWind()
             .WithHitFx("vfx/vfx_fire_burning")
             .Execute(choiceContext);
 
-        await PowerCmd.Apply<RupturePower>(
+        await PowerCmd.Apply<RoutPower>(
             choiceContext,
             Owner.Creature,
-            DynamicVars[nameof(RupturePower)].BaseValue,
+            DynamicVars[nameof(RoutPower)].BaseValue,
             Owner.Creature,
             this
         );

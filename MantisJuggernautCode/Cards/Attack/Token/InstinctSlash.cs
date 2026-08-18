@@ -7,14 +7,15 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 
 namespace MantisJuggernaut.Cards;
 
-[RegisterCard(typeof(MantisJuggernautCardPool))]
+[RegisterCard(typeof(TokenCardPool))]
 public sealed class InstinctSlash()
-    : MantisJuggernautAttackBackswingCard(BaseEnergyCost, CardRarityValue, CardTarget, false, false)
+    : MantisJuggernautAttackBackswingCard(BaseEnergyCost, CardRarityValue, CardTarget, false)
 {
     // 基础耗能。
     private const int BaseEnergyCost = 0;

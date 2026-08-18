@@ -104,6 +104,6 @@ public class VersatileInstinctPower : MantisJuggernautPower
         if (enchantAmount is null) return;
 
         var (enchant, amount) = enchantAmount;
-        CardCmd.Enchant(enchant, card, amount);
+        CardCmd.Enchant(enchant.ToMutable(), card, amount);
     }
 }

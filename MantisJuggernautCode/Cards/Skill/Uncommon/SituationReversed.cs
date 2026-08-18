@@ -60,7 +60,7 @@ public sealed class SituationReversed() : MantisJuggernautSkillCard(BaseEnergyCo
         List<CardModel> cardsToDraw = [];
         for (var i = 0; i < DynamicVars.Cards.IntValue; i++)
         {
-            var card = nonXCards.MaxBy(e => e.EnergyCost.GetResolved() > 0);
+            var card = nonXCards.MaxBy(e => e.EnergyCost.GetResolved());
             if (card != null)
             {
                 cardsToDraw.Add(card);

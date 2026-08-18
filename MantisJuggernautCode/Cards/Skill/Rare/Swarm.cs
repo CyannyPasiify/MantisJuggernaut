@@ -1,10 +1,10 @@
 using MantisJuggernaut.Characters;
+using MantisJuggernaut.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 
@@ -24,7 +24,7 @@ public sealed class Swarm() : MantisJuggernautSkillCard(BaseEnergyCost, CardRari
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => base.AdditionalHoverTips.Concat(
     [
-        HoverTipFactory.FromPower<RupturePower>()
+        HoverTipFactory.FromPower<RoutPower>()
     ]);
 
     // 卡牌基础数值。
@@ -32,7 +32,7 @@ public sealed class Swarm() : MantisJuggernautSkillCard(BaseEnergyCost, CardRari
     [
         new RepeatVar(2),
         new DamageVar(1m, ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move),
-        new PowerVar<RupturePower>(1m)
+        new PowerVar<RoutPower>(1m)
     ];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
@@ -52,10 +52,10 @@ public sealed class Swarm() : MantisJuggernautSkillCard(BaseEnergyCost, CardRari
             if (enemy == null) continue;
 
             await CreatureCmd.Damage(choiceContext, enemy, DynamicVars.Damage, this, cardPlay);
-            await PowerCmd.Apply<RupturePower>(
+            await PowerCmd.Apply<RoutPower>(
                 choiceContext,
                 enemy,
-                DynamicVars[nameof(RupturePower)].BaseValue,
+                DynamicVars[nameof(RoutPower)].BaseValue,
                 Owner.Creature,
                 this
             );

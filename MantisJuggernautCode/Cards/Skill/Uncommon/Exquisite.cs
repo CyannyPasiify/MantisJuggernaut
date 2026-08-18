@@ -45,8 +45,8 @@ public sealed class Exquisite() : MantisJuggernautSkillCard(BaseEnergyCost, Card
             (await CardSelectCmd.FromHand(
                 choiceContext,
                 Owner,
-                new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, DynamicVars.Cards.IntValue),
-                card => card is { Type: CardType.Skill, IsSlyThisTurn: false },
+                new CardSelectorPrefs(SelectionScreenPrompt, DynamicVars.Cards.IntValue),
+                card => card is { IsSlyThisTurn: false, Type: CardType.Attack or CardType.Skill or CardType.Power },
                 this)
             ).FirstOrDefault();
         if (cardModel != null) CardCmd.ApplyKeyword(cardModel, CardKeyword.Sly);
