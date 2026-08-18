@@ -27,10 +27,7 @@ public sealed class PoseDisruption() : MantisJuggernautSkillCard(BaseEnergyCost,
         {
             var hoverTips = base.AdditionalHoverTips.ToList();
             hoverTips.Add(HoverTipFactory.FromPower<HeavyKnockDownPower>());
-            if (IsUpgraded)
-            {
-                hoverTips.Add(HoverTipFactory.FromPower<BackswingBalancePower>());
-            }
+            if (IsUpgraded) hoverTips.Add(HoverTipFactory.FromPower<BackswingBalancePower>());
 
             return hoverTips;
         }

@@ -3,7 +3,6 @@ using MegaCrit.Sts2.Core.Entities.Characters;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Characters;
-using STS2RitsuLib.Scaffolding.Godot;
 
 namespace MantisJuggernaut.Characters;
 
@@ -11,8 +10,6 @@ namespace MantisJuggernaut.Characters;
 public sealed class MantisJuggernautCharacter : ModCharacterTemplate<MantisJuggernautCardPool, MantisJuggernautRelicPool
     , MantisJuggernautPotionPool>
 {
-    public static readonly Color ThemeColor = new("2F6729");
-
     private const string SceneRoot = $"{Entry.ResPath}/scenes/characters";
     private const string ImageRoot = $"{Entry.ResPath}/images/characters";
     private const string CharacterScenePath = $"{SceneRoot}/MantisJuggernaut_character.tscn";
@@ -20,6 +17,7 @@ public sealed class MantisJuggernautCharacter : ModCharacterTemplate<MantisJugge
     private const string MerchantScenePath = $"{SceneRoot}/MantisJuggernaut_merchant.tscn";
     private const string RestSiteScenePath = $"{SceneRoot}/MantisJuggernaut_rest_site.tscn";
     private const string CharacterSelectBgScenePath = $"{SceneRoot}/MantisJuggernaut_character_select_bg.tscn";
+    public static readonly Color ThemeColor = new("2F6729");
 
     // 角色名称颜色。
     public override Color NameColor => ThemeColor;
@@ -40,7 +38,7 @@ public sealed class MantisJuggernautCharacter : ModCharacterTemplate<MantisJugge
     // CharacterAssetProfile 按类别拆分。你只写需要替换的部分，其他字段会保留回退。
     // AssetProfile 只指定模板自带的静态占位资源；没有复制的音频、拖尾、转场等资源继续从占位角色回退。
     public override CharacterAssetProfile AssetProfile => new(
-        Scenes: new CharacterSceneAssetSet(
+        new CharacterSceneAssetSet(
             // 人物模型 tscn 路径。
             // VisualsPath: CharacterScenePath,
             // 能量表盘 tscn 路径。
@@ -50,11 +48,11 @@ public sealed class MantisJuggernautCharacter : ModCharacterTemplate<MantisJugge
             // 篝火休息场景。
             // RestSiteAnimPath: RestSiteScenePath
         ),
-        Ui: new CharacterUiAssetSet(
+        new CharacterUiAssetSet(
             // 人物头像路径。
-            IconTexturePath: $"{ImageRoot}/MantisJuggernaut_character_icon.png",
+            $"{ImageRoot}/MantisJuggernaut_character_icon.png",
             // 人物头像轮廓。
-            IconOutlineTexturePath: $"{ImageRoot}/MantisJuggernaut_character_icon_outline.png",
+            $"{ImageRoot}/MantisJuggernaut_character_icon_outline.png",
             // 人物选择背景。
             // CharacterSelectBgPath: CharacterSelectBgScenePath,
             // 人物选择图标。

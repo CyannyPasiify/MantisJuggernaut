@@ -1,12 +1,10 @@
 ﻿using MegaCrit.Sts2.Core.Combat;
-using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Interop.AutoRegistration;
 
 namespace MantisJuggernaut.Powers;
@@ -33,18 +31,15 @@ public class AnxietyPower : MantisJuggernautPower
         IEnumerable<Creature> participants
     )
     {
-        if (!participants.Contains(Owner) || Owner.Player is null)
-        {
-            return;
-        }
+        if (!participants.Contains(Owner) || Owner.Player is null) return;
 
         var slyCards = PileType.Hand.GetPile(Owner.Player).Cards
             .Where(e => e.Keywords.Contains(CardKeyword.Sly))
             .ToList();
 
-        for (int i = 0; i < Amount && slyCards.Count > 0; i++)
+        for (var i = 0; i < Amount && slyCards.Count > 0; i++)
         {
-            CardModel? card = Owner.Player.RunState.Rng.Shuffle.NextItem(slyCards);
+            var card = Owner.Player.RunState.Rng.Shuffle.NextItem(slyCards);
             if (card is not null)
             {
                 CardCmd.ApplySingleTurnRetain(card);

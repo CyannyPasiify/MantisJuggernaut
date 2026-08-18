@@ -1,16 +1,16 @@
-﻿using MegaCrit.Sts2.Core.Commands;
+﻿using MantisJuggernaut.Characters;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
-using MantisJuggernaut.Characters;
 
 namespace MantisJuggernaut.Cards;
 
 [RegisterCard(typeof(MantisJuggernautCardPool))]
 public sealed class EdgeFall()
-    : MantisJuggernautAttackBackswingHeavyKnockCard(BaseEnergyCost, CardRarityValue, CardTarget, false)
+    : MantisJuggernautAttackBackswingHeavyKnockCard(BaseEnergyCost, CardRarityValue, CardTarget)
 {
     // 基础耗能。
     private const int BaseEnergyCost = 1;

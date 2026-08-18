@@ -24,10 +24,7 @@ public class InstinctPower : MantisJuggernautPower
 
     public override async Task AfterCardDiscarded(PlayerChoiceContext choiceContext, CardModel card)
     {
-        if (card.Owner.Creature != Owner)
-        {
-            return;
-        }
+        if (card.Owner.Creature != Owner) return;
 
         await CardPileCmd.Draw(choiceContext, Amount, card.Owner);
         await PowerCmd.Remove(this);

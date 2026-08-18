@@ -1,12 +1,11 @@
+using MantisJuggernaut.Characters;
+using MantisJuggernaut.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
-using MantisJuggernaut.Characters;
-using MantisJuggernaut.Powers;
-using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.HoverTips;
 using STS2RitsuLib.Interop.AutoRegistration;
 
 namespace MantisJuggernaut.Cards;
@@ -14,7 +13,7 @@ namespace MantisJuggernaut.Cards;
 // RegisterCard 会把这张牌交给 RitsuLib 自动注册。
 [RegisterCard(typeof(MantisJuggernautCardPool))]
 public sealed class Fastened()
-    : MantisJuggernautAttackBackswingCard(BaseEnergyCost, CardRarityValue, CardTarget, false)
+    : MantisJuggernautAttackBackswingCard(BaseEnergyCost, CardRarityValue, CardTarget)
 {
     // 基础耗能。
     private const int BaseEnergyCost = 1;
@@ -29,12 +28,9 @@ public sealed class Fastened()
     {
         get
         {
-            if (CombatState == null)
-            {
-                return false;
-            }
+            if (CombatState == null) return false;
 
-            return CombatState.HittableEnemies.Any((Creature e) =>
+            return CombatState.HittableEnemies.Any(e =>
                 e.HasPower<HeavyKnockObliquePower>() || e.HasPower<HeavyKnockDownPower>());
         }
     }
@@ -74,9 +70,9 @@ public sealed class Fastened()
             var cards = PileType.Hand.GetPile(Owner).Cards
                 .Where(e => !e.EnergyCost.CostsX && e.EnergyCost.GetResolved() > 0)
                 .ToList();
-            for (int i = 0; i < DynamicVars.Cards.IntValue && cards.Count > 0; i++)
+            for (var i = 0; i < DynamicVars.Cards.IntValue && cards.Count > 0; i++)
             {
-                int selIdx = Owner.RunState.Rng.CombatCardSelection.NextInt(0, cards.Count);
+                var selIdx = Owner.RunState.Rng.CombatCardSelection.NextInt(0, cards.Count);
                 cards[selIdx].EnergyCost.AddUntilPlayed(-DynamicVars.Energy.IntValue);
                 cards.RemoveAt(selIdx);
             }

@@ -12,7 +12,7 @@ using Logger = MegaCrit.Sts2.Core.Logging.Logger;
 namespace MantisJuggernaut;
 
 [ModInitializer(nameof(Initialize))]
-public partial class Entry
+public class Entry
 {
     // ModId 需要和 MantisJuggernaut.json 里的 id 保持一致。
     // res://MantisJuggernaut/... 里的 MantisJuggernaut 是 PCK 资源目录，不是 C# namespace。
@@ -44,7 +44,7 @@ public partial class Entry
             ModCardHandOutlineRules.Fixed( // 特定种类卡牌。可以设置为你的卡牌基类，让所有子类发光。
                 card =>
                 {
-                    SwiftPower? swiftPower = card.Owner.Creature.GetPower<SwiftPower>();
+                    var swiftPower = card.Owner.Creature.GetPower<SwiftPower>();
                     return swiftPower?.IsSwiftMarked(card) ?? false;
                 }, // 发光条件
                 Colors.Purple, // 发光颜色

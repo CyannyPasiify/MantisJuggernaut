@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
@@ -13,6 +14,10 @@ namespace MantisJuggernaut.Powers;
 [RegisterPower]
 public class HeavyKnockDownPower : MantisJuggernautPower
 {
+    public const string DamageIncreaseVarKey = "DamageIncrease";
+
+    public const string DamageDecreaseVarKey = "DamageDecrease";
+
     // 类型，Buff或Debuff
     public override PowerType Type => PowerType.Debuff;
 
@@ -21,14 +26,10 @@ public class HeavyKnockDownPower : MantisJuggernautPower
 
     public override PowerInstanceType InstanceType => PowerInstanceType.None;
 
-    public const string DamageIncreaseVarKey = "DamageIncrease";
-
-    public const string DamageDecreaseVarKey = "DamageDecrease";
-
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar(DamageIncreaseVarKey, 1.5m),
-        new DynamicVar(DamageDecreaseVarKey, 0.5m),
+        new(DamageIncreaseVarKey, 1.5m),
+        new(DamageDecreaseVarKey, 0.5m)
     ];
 
     public override decimal ModifyDamageMultiplicative(
@@ -40,33 +41,22 @@ public class HeavyKnockDownPower : MantisJuggernautPower
         CardPlay? cardPlay
     )
     {
-        if (!props.IsPoweredAttack())
-        {
-            return 1m;
-        }
+        if (!props.IsPoweredAttack()) return 1m;
 
-        if (Owner == dealer)
-        {
-            return (decimal)Math.Pow((double)DynamicVars[DamageDecreaseVarKey].BaseValue, Amount);
-        }
+        if (Owner == dealer) return (decimal)Math.Pow((double)DynamicVars[DamageDecreaseVarKey].BaseValue, Amount);
 
-        if (Owner == target)
-        {
-            return 1m + (DynamicVars[DamageIncreaseVarKey].BaseValue - 1m) * Amount;
-        }
+        if (Owner == target) return 1m + (DynamicVars[DamageIncreaseVarKey].BaseValue - 1m) * Amount;
 
         return 1m;
     }
 
-    public override async Task AfterSideTurnStart(
+    public override async Task AfterSideTurnEnd(
+        PlayerChoiceContext choiceContext,
         CombatSide side,
-        IReadOnlyList<Creature> participants,
-        ICombatState combatState
-    )
+        IEnumerable<Creature> participants)
     {
-        if (participants.Contains(Owner))
-        {
-            await PowerCmd.Remove(this);
-        }
+        if (side != CombatSide.Enemy)
+            return;
+        await PowerCmd.Remove(this);
     }
 }

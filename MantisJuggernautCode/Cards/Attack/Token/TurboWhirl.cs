@@ -1,20 +1,20 @@
 ﻿using Godot;
+using MantisJuggernaut.Characters;
+using MantisJuggernaut.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.ValueProps;
-using STS2RitsuLib.Interop.AutoRegistration;
-using MantisJuggernaut.Characters;
-using MantisJuggernaut.Powers;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Nodes;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
 using MegaCrit.Sts2.Core.Saves;
 using MegaCrit.Sts2.Core.Settings;
+using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Interop.AutoRegistration;
 
 namespace MantisJuggernaut.Cards;
 
@@ -62,8 +62,8 @@ public sealed class TurboWhirl()
         );
         if (CombatState is not null)
         {
-            Color color = new Color("FFFFFF80");
-            double delay = SaveManager.Instance.PrefsSave.FastMode == FastModeType.Fast ? 0.2 : 0.3;
+            var color = new Color("FFFFFF80");
+            var delay = SaveManager.Instance.PrefsSave.FastMode == FastModeType.Fast ? 0.2 : 0.3;
             NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(
                 NHorizontalLinesVfx.Create(color, 0.8 + DynamicVars.Repeat.IntValue * delay));
             SfxCmd.Play("event:/sfx/characters/ironclad/ironclad_whirlwind");

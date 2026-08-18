@@ -1,13 +1,11 @@
+using MantisJuggernaut.Characters;
+using MantisJuggernaut.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MantisJuggernaut.Characters;
-using MantisJuggernaut.HoverTips;
 using STS2RitsuLib.Interop.AutoRegistration;
-using MantisJuggernaut.Powers;
-using MegaCrit.Sts2.Core.Models.Powers;
 
 namespace MantisJuggernaut.Cards;
 
@@ -42,17 +40,14 @@ public sealed class DepictingLegends() : MantisJuggernautPowerCard(BaseEnergyCos
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "PowerUp", Owner.Character.PowerUpAnimDelay);
-        DepictingLegendsPower? power = await PowerCmd.Apply<DepictingLegendsPower>(
+        var power = await PowerCmd.Apply<DepictingLegendsPower>(
             choiceContext,
             Owner.Creature,
             DynamicVars[nameof(DepictingLegendsPower)].BaseValue,
             Owner.Creature,
             this
         );
-        if (power is not null)
-        {
-            power.IsUpgraded = IsUpgraded;
-        }
+        if (power is not null) power.IsUpgraded = IsUpgraded;
     }
 
     // 升级后的效果逻辑。

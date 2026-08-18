@@ -29,9 +29,9 @@ public class BackswingVar : MantisJuggernautToolTipVar
 
     public void UpdateHoverTip()
     {
-        string entry = StringHelper.Slugify(Entry.ModId) + "_" +
-                       StringHelper.Slugify(Key) + "_" +
-                       (BoolVal ? "RIGHT" : "LEFT");
+        var entry = StringHelper.Slugify(Entry.ModId) + "_" +
+                    StringHelper.Slugify(Key) + "_" +
+                    (BoolVal ? "RIGHT" : "LEFT");
         this.WithSharedTooltip(entry);
     }
 }

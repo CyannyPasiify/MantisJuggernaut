@@ -1,12 +1,9 @@
-﻿using MegaCrit.Sts2.Core.Combat;
-using MegaCrit.Sts2.Core.Combat.History.Entries;
-using MegaCrit.Sts2.Core.Commands;
+﻿using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
 
 namespace MantisJuggernaut.Powers;
@@ -36,8 +33,6 @@ public class WindStationaryPower : MantisJuggernautPower
     )
     {
         if (power.Owner == Owner && power is BackswingBalancePower && Owner.Player is not null)
-        {
             await CardPileCmd.Draw(choiceContext, Amount, Owner.Player);
-        }
     }
 }

@@ -165,6 +165,7 @@
   "MANTIS_JUGGERNAUT_CARD_HIGH_SPEED.description": "获得{DexterityPower:diff()}点[gold]敏捷[/gold]。\n在你的回合开始时，获得{HighSpeedPower:diff()}层[gold]本能[/gold]。",
   "MANTIS_JUGGERNAUT_CARD_HIGH_SPEED.title": "高速",
   "MANTIS_JUGGERNAUT_CARD_HIDDEN_BLADE.description": "[gold]准备[/gold]一张牌。\n在你的回合开始时，[gold]准备[/gold]一张牌。",
+  "MANTIS_JUGGERNAUT_CARD_HIDDEN_BLADE.selectionScreenPrompt": "[gold]准备[/gold]一张牌放到[gold]手牌[/gold]最左侧。",
   "MANTIS_JUGGERNAUT_CARD_HIDDEN_BLADE.title": "藏锋",
   "MANTIS_JUGGERNAUT_CARD_AMBUSH.description": "每回合你第一次抽到[gold]奇巧[/gold]牌时，丢弃它，抽{AmbushPower:diff()}张牌。",
   "MANTIS_JUGGERNAUT_CARD_AMBUSH.title": "伏击",

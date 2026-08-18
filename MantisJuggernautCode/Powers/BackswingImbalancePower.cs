@@ -4,10 +4,8 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 
@@ -16,6 +14,10 @@ namespace MantisJuggernaut.Powers;
 [RegisterPower]
 public class BackswingImbalancePower : MantisJuggernautPower
 {
+    public const string DamageIncreaseVarKey = "DamageIncrease";
+
+    public const string DamageDecreaseVarKey = "DamageDecrease";
+
     // 类型，Buff或Debuff
     public override PowerType Type => PowerType.Buff;
 
@@ -24,14 +26,10 @@ public class BackswingImbalancePower : MantisJuggernautPower
 
     public override PowerInstanceType InstanceType => PowerInstanceType.None;
 
-    public const string DamageIncreaseVarKey = "DamageIncrease";
-
-    public const string DamageDecreaseVarKey = "DamageDecrease";
-
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar(DamageIncreaseVarKey, 1.5m),
-        new DynamicVar(DamageDecreaseVarKey, 0.5m),
+        new(DamageIncreaseVarKey, 1.5m),
+        new(DamageDecreaseVarKey, 0.5m)
     ];
 
     public override decimal ModifyDamageMultiplicative(
@@ -43,20 +41,11 @@ public class BackswingImbalancePower : MantisJuggernautPower
         CardPlay? cardPlay
     )
     {
-        if (!props.IsPoweredAttack())
-        {
-            return 1m;
-        }
+        if (!props.IsPoweredAttack()) return 1m;
 
-        if (Owner == dealer)
-        {
-            return DynamicVars[DamageDecreaseVarKey].BaseValue;
-        }
+        if (Owner == dealer) return DynamicVars[DamageDecreaseVarKey].BaseValue;
 
-        if (Owner == target)
-        {
-            return DynamicVars[DamageIncreaseVarKey].BaseValue;
-        }
+        if (Owner == target) return DynamicVars[DamageIncreaseVarKey].BaseValue;
 
         return 1m;
     }

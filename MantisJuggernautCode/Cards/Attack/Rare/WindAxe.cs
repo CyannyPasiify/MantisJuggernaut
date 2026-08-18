@@ -48,10 +48,7 @@ public sealed class WindAxe()
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_heavy_blunt", null, "heavy_attack.mp3")
             .Execute(choiceContext);
-        if (IsUpgraded)
-        {
-            await ApplyHeavyKnock(choiceContext, cardPlay.Target, HeavyKnockAmount, Owner.Creature, this);
-        }
+        if (IsUpgraded) await ApplyHeavyKnock(choiceContext, cardPlay.Target, HeavyKnockAmount, Owner.Creature, this);
 
         await PowerCmd.Apply<SwiftPower>(
             choiceContext,

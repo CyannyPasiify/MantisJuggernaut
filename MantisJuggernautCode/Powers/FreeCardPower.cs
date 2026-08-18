@@ -26,10 +26,9 @@ public class FreeCardPower : MantisJuggernautPower
         modifiedCost = originalCost;
         if (card.Owner.Creature != Owner)
             return false;
-        PileType? type = card.Pile?.Type;
+        var type = card.Pile?.Type;
         bool flag;
         if (type.HasValue)
-        {
             switch (type.GetValueOrDefault())
             {
                 case PileType.Hand:
@@ -37,7 +36,6 @@ public class FreeCardPower : MantisJuggernautPower
                     flag = true;
                     goto label_6;
             }
-        }
 
         flag = false;
         label_6:
@@ -49,13 +47,12 @@ public class FreeCardPower : MantisJuggernautPower
 
     public override async Task BeforeCardPlayed(CardPlay cardPlay)
     {
-        FreeCardPower power = this;
+        var power = this;
         if (cardPlay.Card.Owner.Creature != power.Owner)
             return;
-        PileType? type = cardPlay.Card.Pile?.Type;
+        var type = cardPlay.Card.Pile?.Type;
         bool flag;
         if (type.HasValue)
-        {
             switch (type.GetValueOrDefault())
             {
                 case PileType.Hand:
@@ -63,7 +60,6 @@ public class FreeCardPower : MantisJuggernautPower
                     flag = true;
                     goto label_6;
             }
-        }
 
         flag = false;
         label_6:

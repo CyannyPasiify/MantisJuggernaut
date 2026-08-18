@@ -1,5 +1,4 @@
 using MantisJuggernaut.Characters;
-using MantisJuggernaut.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -42,8 +41,8 @@ public sealed class Improvisation() : MantisJuggernautSkillCard(BaseEnergyCost, 
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
         if (CombatState is not null && Owner.PlayerCombatState is not null)
         {
-            int num = CardPile.MaxCardsInHand - Owner.PlayerCombatState.Hand.Cards.Count;
-            for (int i = 0; i < num; i++)
+            var num = CardPile.MaxCardsInHand - Owner.PlayerCombatState.Hand.Cards.Count;
+            for (var i = 0; i < num; i++)
             {
                 await InstinctSlash.CreateInHand(
                     Owner,

@@ -35,20 +35,11 @@ public class PureInstinctPower : MantisJuggernautPower
         CardPlay? cardPlay
     )
     {
-        if (Owner != dealer || cardSource == null)
-        {
-            return 0m;
-        }
+        if (Owner != dealer || cardSource == null) return 0m;
 
-        if (!props.IsPoweredAttack())
-        {
-            return 0m;
-        }
+        if (!props.IsPoweredAttack()) return 0m;
 
-        if (cardSource is not InstinctSlash)
-        {
-            return 0m;
-        }
+        if (cardSource is not InstinctSlash) return 0m;
 
         return Amount;
     }

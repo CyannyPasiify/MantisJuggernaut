@@ -39,7 +39,7 @@ public class SubtleTechniquePower : MantisJuggernautPower
     {
         if (power.Owner == Owner && power is BackswingImbalancePower)
         {
-            int num = CombatManager.Instance.History.Entries.OfType<PowerReceivedEntry>()
+            var num = CombatManager.Instance.History.Entries.OfType<PowerReceivedEntry>()
                 .Count(e => e.HappenedThisTurn(CombatState) && e.Power is BackswingImbalancePower && e.Actor == Owner);
             if (num <= 1)
             {

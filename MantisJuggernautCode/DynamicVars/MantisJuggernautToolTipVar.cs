@@ -8,7 +8,7 @@ public abstract class MantisJuggernautToolTipVar : DynamicVar
 {
     public MantisJuggernautToolTipVar(string name, decimal baseValue) : base(name, baseValue)
     {
-        string entry = StringHelper.Slugify(Entry.ModId) + "_" + StringHelper.Slugify(name);
+        var entry = StringHelper.Slugify(Entry.ModId) + "_" + StringHelper.Slugify(name);
         this.WithSharedTooltip(entry);
     }
 }

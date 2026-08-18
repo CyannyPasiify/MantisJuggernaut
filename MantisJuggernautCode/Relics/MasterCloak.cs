@@ -1,17 +1,15 @@
-using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Relics;
-using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MantisJuggernaut.Characters;
 using MantisJuggernaut.HoverTips;
 using MantisJuggernaut.Powers;
 using MegaCrit.Sts2.Core.CardSelection;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Rooms;
 using STS2RitsuLib.Interop.AutoRegistration;
-using STS2RitsuLib.Scaffolding.Content;
 
 namespace MantisJuggernaut.Relics;
 
@@ -54,14 +52,11 @@ public sealed class MasterCloak : MantisJuggernautRelic
 
     public override async Task AfterObtained()
     {
-        List<CardModel> list = (await CardSelectCmd.FromDeckGeneric(
+        var list = (await CardSelectCmd.FromDeckGeneric(
             Owner,
             new CardSelectorPrefs(SelectionScreenPrompt, DynamicVars.Cards.IntValue),
             card => !card.Keywords.Contains(CardKeyword.Sly)
         )).ToList();
-        foreach (CardModel item in list)
-        {
-            CardCmd.ApplyKeyword(item, CardKeyword.Sly);
-        }
+        foreach (var item in list) CardCmd.ApplyKeyword(item, CardKeyword.Sly);
     }
 }

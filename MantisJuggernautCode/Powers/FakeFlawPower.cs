@@ -36,9 +36,7 @@ public class FakeFlawPower : MantisJuggernautPower
         if (power.Owner != Owner ||
             power is not BackswingImbalancePower ||
             amount <= 0)
-        {
             return;
-        }
 
         await CreatureCmd.GainBlock(Owner, Amount, ValueProp.Unpowered, null);
     }

@@ -55,13 +55,11 @@ public sealed class WindRun()
 
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (cardPlay.Player != Owner || 
-            !IsPrepared || 
+        if (cardPlay.Player != Owner ||
+            !IsPrepared ||
             cardPlay.Card.Type != CardType.Skill ||
             cardPlay.Card == this)
-        {
             return;
-        }
 
         await OnPlay(choiceContext, cardPlay);
     }

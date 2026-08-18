@@ -38,10 +38,7 @@ public abstract class MantisJuggernautAttackBackswingHeavyKnockCard(
         CardModel? cardSource
     )
     {
-        if (amount <= 0)
-        {
-            return;
-        }
+        if (amount <= 0) return;
 
         if (target.HasPower<HeavyKnockDownPower>())
         {

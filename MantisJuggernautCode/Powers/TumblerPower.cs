@@ -34,10 +34,7 @@ public class TumblerPower : MantisJuggernautPower
         CardModel? cardSource
     )
     {
-        if (power.Owner != Owner || amount == 0m)
-        {
-            return;
-        }
+        if (power.Owner != Owner || amount == 0m) return;
 
         switch (power)
         {

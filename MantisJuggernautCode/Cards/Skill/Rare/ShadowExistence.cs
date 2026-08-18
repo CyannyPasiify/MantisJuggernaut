@@ -47,9 +47,7 @@ public sealed class ShadowExistence()
             cardPlay.Card.Type != CardType.Attack ||
             cardPlay.Card is InstinctSlash ||
             CombatState is null)
-        {
             return;
-        }
 
         await InstinctSlash.CreateInHand(
             Owner,

@@ -2,7 +2,6 @@ using MantisJuggernaut.DynamicVars;
 using MantisJuggernaut.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -62,52 +61,37 @@ public abstract class MantisJuggernautAttackBackswingCard(
     {
         var swingVar = (BackswingVar)DynamicVars[BackswingVar.Key];
         swingVar.BoolVal = !swingVar.BoolVal;
-        if (Pile is not null)
-        {
-            NCard.FindOnTable(this)?.UpdateVisuals(Pile.Type, CardPreviewMode.Normal);
-        }
+        if (Pile is not null) NCard.FindOnTable(this)?.UpdateVisuals(Pile.Type, CardPreviewMode.Normal);
     }
 
     // 修正状态
     public virtual async Task UpdateState(PlayerChoiceContext choiceContext)
     {
-        bool swingR = SwingRight;
-        Creature creature = Owner.Creature;
+        var swingR = SwingRight;
+        var creature = Owner.Creature;
         if (creature.HasPower<BackswingBalancePower>())
         {
             await PowerCmd.Remove<BackswingBalancePower>(creature);
             if (swingR)
-            {
                 await PowerCmd.Apply<BackswingRightPower>(choiceContext, creature, 1m, creature, this);
-            }
             else
-            {
                 await PowerCmd.Apply<BackswingLeftPower>(choiceContext, creature, 1m, creature, this);
-            }
         }
         else if (creature.HasPower<BackswingLeftPower>())
         {
             await PowerCmd.Remove<BackswingLeftPower>(creature);
             if (swingR)
-            {
                 await PowerCmd.Apply<BackswingBalancePower>(choiceContext, creature, 1m, creature, this);
-            }
             else
-            {
                 await PowerCmd.Apply<BackswingImbalancePower>(choiceContext, creature, 1m, creature, this);
-            }
         }
         else if (creature.HasPower<BackswingRightPower>())
         {
             await PowerCmd.Remove<BackswingRightPower>(creature);
             if (swingR)
-            {
                 await PowerCmd.Apply<BackswingImbalancePower>(choiceContext, creature, 1m, creature, this);
-            }
             else
-            {
                 await PowerCmd.Apply<BackswingBalancePower>(choiceContext, creature, 1m, creature, this);
-            }
         }
     }
 

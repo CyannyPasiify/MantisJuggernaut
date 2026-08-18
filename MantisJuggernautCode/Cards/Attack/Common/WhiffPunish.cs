@@ -1,12 +1,12 @@
-﻿using MegaCrit.Sts2.Core.Commands;
+﻿using MantisJuggernaut.Characters;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
-using MantisJuggernaut.Characters;
-using MegaCrit.Sts2.Core.Nodes.CommonUi;
 
 namespace MantisJuggernaut.Cards;
 
@@ -49,14 +49,11 @@ public sealed class WhiffPunish()
 
         if (CombatState is not null)
         {
-            InstinctSlash card = CombatState.CreateCard<InstinctSlash>(Owner);
+            var card = CombatState.CreateCard<InstinctSlash>(Owner);
             card.SwingRight = !SwingRight;
-            if (IsUpgraded)
-            {
-                CardCmd.Upgrade(card, CardPreviewStyle.None);
-            }
+            if (IsUpgraded) CardCmd.Upgrade(card, CardPreviewStyle.None);
 
-            for (int i = 0; i < DynamicVars.Cards.IntValue; i++)
+            for (var i = 0; i < DynamicVars.Cards.IntValue; i++)
             {
                 await InstinctSlash.CreateInHand(Owner, CombatState, IsUpgraded, !SwingRight);
                 await Cmd.CustomScaledWait(0.1f, 0.2f);

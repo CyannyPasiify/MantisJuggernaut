@@ -1,11 +1,11 @@
+using MantisJuggernaut.Characters;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.ValueProps;
-using MantisJuggernaut.Characters;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 
 namespace MantisJuggernaut.Cards;
@@ -49,7 +49,6 @@ public sealed class JointStrike() : MantisJuggernautAttackCard(BaseEnergyCost, C
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
         if (cardPlay.Target.Monster?.IntendsToAttack ?? false)
-        {
             await PowerCmd.Apply<WeakPower>(
                 choiceContext,
                 cardPlay.Target,
@@ -57,9 +56,7 @@ public sealed class JointStrike() : MantisJuggernautAttackCard(BaseEnergyCost, C
                 Owner.Creature,
                 this
             );
-        }
         else
-        {
             await PowerCmd.Apply<VulnerablePower>(
                 choiceContext,
                 cardPlay.Target,
@@ -67,7 +64,6 @@ public sealed class JointStrike() : MantisJuggernautAttackCard(BaseEnergyCost, C
                 Owner.Creature,
                 this
             );
-        }
     }
 
     // 升级后的效果逻辑。

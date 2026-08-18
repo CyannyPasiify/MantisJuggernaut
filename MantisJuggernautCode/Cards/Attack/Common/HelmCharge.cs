@@ -1,16 +1,16 @@
-﻿using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.ValueProps;
-using STS2RitsuLib.Interop.AutoRegistration;
-using MantisJuggernaut.Characters;
+﻿using MantisJuggernaut.Characters;
+using MantisJuggernaut.Commands;
 using MantisJuggernaut.Powers;
 using MegaCrit.Sts2.Core.CardSelection;
+using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
-using MegaCrit.Sts2.Core.Logging;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Nodes.Cards.Holders;
 using MegaCrit.Sts2.Core.Nodes.Combat;
+using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Interop.AutoRegistration;
 
 namespace MantisJuggernaut.Cards;
 
@@ -52,15 +52,8 @@ public sealed class HelmCharge()
         )).ToList();
         if (cards.Count == 2)
         {
-            await CardPileCmd.Add(cards[0], PileType.Hand, CardPilePosition.Top);
-            NPlayerHand? nPlayerHand = NPlayerHand.Instance;
-            if (nPlayerHand?.GetCardHolder(cards[0]) is NHandCardHolder holder)
-            {
-                nPlayerHand.CardHolderContainer.MoveChildSafely(holder, 0);
-                holder.SetDefaultTargets();
-            }
-
-            await CardPileCmd.Add(cards[1], PileType.Hand, CardPilePosition.Bottom);
+            await ExtCardCmd.Prepare(cards[0]);
+            await ExtCardCmd.Prepare(cards[1], true);
             Owner.Creature.GetPower<SwiftPower>()?.UpdateRecord();
         }
     }

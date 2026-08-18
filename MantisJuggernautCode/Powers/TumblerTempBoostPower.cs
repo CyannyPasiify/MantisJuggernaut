@@ -33,7 +33,7 @@ public class TumblerTempBoostPower : MantisJuggernautPower
             amount,
             applier,
             cardSource,
-            silent: true
+            true
         );
         await PowerCmd.Apply<DexterityPower>(
             new ThrowingPlayerChoiceContext(),
@@ -41,7 +41,7 @@ public class TumblerTempBoostPower : MantisJuggernautPower
             amount,
             applier,
             cardSource,
-            silent: true
+            true
         );
     }
 
@@ -61,7 +61,7 @@ public class TumblerTempBoostPower : MantisJuggernautPower
                 amount,
                 applier,
                 cardSource,
-                silent: true
+                true
             );
             await PowerCmd.Apply<DexterityPower>(
                 choiceContext,
@@ -69,7 +69,7 @@ public class TumblerTempBoostPower : MantisJuggernautPower
                 amount,
                 applier,
                 cardSource,
-                silent: true
+                true
             );
         }
     }

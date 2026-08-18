@@ -7,7 +7,7 @@ namespace MantisJuggernaut.Cards;
 public interface IHeavyKnock
 {
     public decimal HeavyKnockAmount { get; }
-    
+
     public Task ApplyHeavyKnock(PlayerChoiceContext choiceContext, Creature target,
         decimal amount,
         Creature? applier,

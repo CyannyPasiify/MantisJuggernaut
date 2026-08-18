@@ -1,10 +1,10 @@
-﻿using MegaCrit.Sts2.Core.Commands;
+﻿using MantisJuggernaut.Characters;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
-using MantisJuggernaut.Characters;
 
 namespace MantisJuggernaut.Cards;
 
@@ -12,7 +12,7 @@ namespace MantisJuggernaut.Cards;
 [RegisterCharacterStarterCard(typeof(MantisJuggernautCharacter), Order = 1)]
 [RegisterArchaicToothTranscendence(typeof(EdgeFall))]
 public sealed class EdgeCleave()
-    : MantisJuggernautAttackBackswingCard(BaseEnergyCost, CardRarityValue, CardTarget, false)
+    : MantisJuggernautAttackBackswingCard(BaseEnergyCost, CardRarityValue, CardTarget)
 {
     // 基础耗能。
     private const int BaseEnergyCost = 1;

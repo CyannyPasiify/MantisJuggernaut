@@ -11,11 +11,6 @@ namespace MantisJuggernaut.Powers;
 [RegisterPower]
 public class BladeDancePower : MantisJuggernautPower
 {
-    private class Data
-    {
-        public int InstictPlayed;
-    }
-
     // 类型，Buff或Debuff
     public override PowerType Type => PowerType.Buff;
 
@@ -51,16 +46,18 @@ public class BladeDancePower : MantisJuggernautPower
 
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (cardPlay.Card.Owner != Owner.Player || cardPlay.Card is not InstinctSlash)
-        {
-            return;
-        }
+        if (cardPlay.Card.Owner != Owner.Player || cardPlay.Card is not InstinctSlash) return;
 
-        Data data = GetInternalData<Data>();
+        var data = GetInternalData<Data>();
         data.InstictPlayed++;
-        int triggers = data.InstictPlayed / DynamicVars.Cards.IntValue;
+        var triggers = data.InstictPlayed / DynamicVars.Cards.IntValue;
         await InstinctSlash.CreateInHand(Owner.Player, triggers, CombatState, IsUpgraded, false, true);
         data.InstictPlayed -= triggers * DynamicVars.Cards.IntValue;
         InvokeDisplayAmountChanged();
+    }
+
+    private class Data
+    {
+        public int InstictPlayed;
     }
 }

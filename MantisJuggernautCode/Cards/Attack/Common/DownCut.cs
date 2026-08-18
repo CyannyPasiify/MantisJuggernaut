@@ -1,12 +1,12 @@
-﻿using MegaCrit.Sts2.Core.Commands;
+﻿using MantisJuggernaut.Characters;
+using MantisJuggernaut.Powers;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
-using MantisJuggernaut.Characters;
-using MantisJuggernaut.Powers;
-using MegaCrit.Sts2.Core.HoverTips;
 
 namespace MantisJuggernaut.Cards;
 
@@ -45,22 +45,15 @@ public sealed class DownCut()
             .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target);
 
-        bool isBalance = IsBalance;
+        var isBalance = IsBalance;
         if (isBalance)
-        {
             atkCmd.WithHitFx("vfx/vfx_heavy_blunt", null, "heavy_attack.mp3");
-        }
         else
-        {
             atkCmd.WithHitFx("vfx/vfx_attack_slash");
-        }
 
         await atkCmd.Execute(choiceContext);
 
-        if (isBalance)
-        {
-            await ApplyHeavyKnock(choiceContext, cardPlay.Target, HeavyKnockAmount, Owner.Creature, this);
-        }
+        if (isBalance) await ApplyHeavyKnock(choiceContext, cardPlay.Target, HeavyKnockAmount, Owner.Creature, this);
     }
 
     // 升级后的效果逻辑。

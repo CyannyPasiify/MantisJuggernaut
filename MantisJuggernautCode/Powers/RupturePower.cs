@@ -1,14 +1,11 @@
-﻿using MantisJuggernaut.Commands;
-using MegaCrit.Sts2.Core.Combat;
+﻿using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 
@@ -17,6 +14,8 @@ namespace MantisJuggernaut.Powers;
 [RegisterPower]
 public class RupturePower : MantisJuggernautPower
 {
+    public const string RuptureIncreaseVarKey = "RuptureIncrease";
+
     // 类型，Buff或Debuff
     public override PowerType Type => PowerType.Debuff;
 
@@ -28,8 +27,6 @@ public class RupturePower : MantisJuggernautPower
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
     ];
-
-    public const string RuptureIncreaseVarKey = "RuptureIncrease";
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
@@ -45,10 +42,7 @@ public class RupturePower : MantisJuggernautPower
         CardModel? cardSource
     )
     {
-        if (target != Owner || !props.IsPoweredAttack())
-        {
-            return;
-        }
+        if (target != Owner || !props.IsPoweredAttack()) return;
 
         await CreatureCmd.Damage(
             choiceContext,
@@ -75,9 +69,7 @@ public class RupturePower : MantisJuggernautPower
     )
     {
         if (participants.Contains(Owner))
-        {
             if (Amount > 1)
-            {
                 await PowerCmd.ModifyAmount(
                     choiceContext,
                     this,
@@ -85,7 +77,5 @@ public class RupturePower : MantisJuggernautPower
                     Owner,
                     null
                 );
-            }
-        }
     }
 }

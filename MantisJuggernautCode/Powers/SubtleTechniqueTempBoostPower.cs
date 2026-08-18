@@ -32,7 +32,7 @@ public class SubtleTechniqueTempBoostPower : MantisJuggernautPower
             amount,
             applier,
             cardSource,
-            silent: true
+            true
         );
     }
 
@@ -45,16 +45,14 @@ public class SubtleTechniqueTempBoostPower : MantisJuggernautPower
     )
     {
         if (amount != Amount && power == this)
-        {
             await PowerCmd.Apply<StrengthPower>(
                 choiceContext,
                 Owner,
                 amount,
                 applier,
                 cardSource,
-                silent: true
+                true
             );
-        }
     }
 
     public override async Task AfterSideTurnEnd(

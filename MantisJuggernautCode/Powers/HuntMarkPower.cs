@@ -33,10 +33,7 @@ public class HuntMarkPower : MantisJuggernautPower
         CardModel? cardSource
     )
     {
-        if (target != Owner || dealer is null)
-        {
-            return;
-        }
+        if (target != Owner || dealer is null) return;
 
         if (result.WasTargetKilled)
         {

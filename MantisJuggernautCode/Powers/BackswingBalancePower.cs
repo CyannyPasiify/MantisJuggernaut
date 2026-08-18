@@ -17,15 +17,9 @@ public class BackswingBalancePower : MantisJuggernautPower
 
     public override decimal ModifyHandDraw(Player player, decimal count)
     {
-        if (player != Owner.Player)
-        {
-            return count;
-        }
+        if (player != Owner.Player) return count;
 
-        if (AmountOnTurnStart == 0)
-        {
-            return count;
-        }
+        if (AmountOnTurnStart == 0) return count;
 
         return count + 1;
     }

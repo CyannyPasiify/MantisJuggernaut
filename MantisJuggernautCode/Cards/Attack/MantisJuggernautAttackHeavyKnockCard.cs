@@ -22,7 +22,7 @@ public abstract class MantisJuggernautAttackHeavyKnockCard(
         HoverTipFactory.FromPower<HeavyKnockObliquePower>(),
         HoverTipFactory.FromPower<HeavyKnockDownPower>()
     ]);
-    
+
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Concat(
     [
@@ -37,10 +37,7 @@ public abstract class MantisJuggernautAttackHeavyKnockCard(
         CardModel? cardSource
     )
     {
-        if (amount <= 0)
-        {
-            return;
-        }
+        if (amount <= 0) return;
 
         if (target.HasPower<HeavyKnockDownPower>())
         {

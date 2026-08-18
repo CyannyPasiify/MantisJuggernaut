@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using MegaCrit.Sts2.Core.Audio.Debug;
+﻿using MegaCrit.Sts2.Core.Audio.Debug;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -102,14 +101,14 @@ public static class ExtCardPileCmd
 
             result.Add(card);
             await CardPileCmd.Add(card, hand, position);
-            NPlayerHand? nPlayerHand = NPlayerHand.Instance;
+            var nPlayerHand = NPlayerHand.Instance;
             if (nPlayerHand?.GetCardHolder(card) is NHandCardHolder holder)
             {
                 nPlayerHand.CardHolderContainer.MoveChildSafely(holder, hand.Cards.IndexOf(card));
                 holder.SetDefaultTargets();
                 nPlayerHand.ForceRefreshCardIndices();
             }
-            
+
             if (combatState != null)
             {
                 CombatManager.Instance.History.CardDrawn(combatState, card, fromHandDraw);

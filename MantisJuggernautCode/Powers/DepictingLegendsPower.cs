@@ -1,6 +1,5 @@
 ﻿using MantisJuggernaut.Cards;
 using MegaCrit.Sts2.Core.Combat;
-using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
@@ -53,13 +52,10 @@ public class DepictingLegendsPower : MantisJuggernautPower
     {
         if (player == Owner.Player && AmountOnTurnStart >= 1)
         {
-            CardModel? card = Owner.Player.RunState.Rng.CombatCardGeneration.NextItem(LegendTechniques);
+            var card = Owner.Player.RunState.Rng.CombatCardGeneration.NextItem(LegendTechniques);
             if (card is not null)
             {
-                if (IsUpgraded)
-                {
-                    CardCmd.Upgrade(card);
-                }
+                if (IsUpgraded) CardCmd.Upgrade(card);
 
                 Flash();
                 await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, player);

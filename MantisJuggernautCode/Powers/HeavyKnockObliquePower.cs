@@ -1,5 +1,4 @@
-﻿using MantisJuggernaut.HoverTips;
-using MegaCrit.Sts2.Core.Entities.Powers;
+﻿using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -21,7 +20,7 @@ public class HeavyKnockObliquePower : MantisJuggernautPower
     [
         HoverTipFactory.FromPower<HeavyKnockDownPower>()
     ];
-    
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
     ];

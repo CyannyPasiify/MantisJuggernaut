@@ -1,6 +1,4 @@
-﻿using MantisJuggernaut.Cards;
-using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Cards;
+﻿using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -42,28 +40,16 @@ public class AtemiWazaPower : MantisJuggernautPower
         CardModel? cardSource
     )
     {
-        if (target != Owner || dealer is null || !result.WasFullyBlocked)
-        {
-            return;
-        }
+        if (target != Owner || dealer is null || !result.WasFullyBlocked) return;
 
         if (Owner.GetPower<BackswingImbalancePower>() is not null)
-        {
             await PowerCmd.Remove<BackswingImbalancePower>(Owner);
-        }
 
-        if (Owner.GetPower<BackswingLeftPower>() is not null)
-        {
-            await PowerCmd.Remove<BackswingLeftPower>(Owner);
-        }
+        if (Owner.GetPower<BackswingLeftPower>() is not null) await PowerCmd.Remove<BackswingLeftPower>(Owner);
 
-        if (Owner.GetPower<BackswingRightPower>() is not null)
-        {
-            await PowerCmd.Remove<BackswingRightPower>(Owner);
-        }
+        if (Owner.GetPower<BackswingRightPower>() is not null) await PowerCmd.Remove<BackswingRightPower>(Owner);
 
         if (Owner.GetPower<BackswingBalancePower>() is null)
-        {
             await PowerCmd.Apply<BackswingBalancePower>(
                 choiceContext,
                 Owner,
@@ -71,7 +57,6 @@ public class AtemiWazaPower : MantisJuggernautPower
                 Owner,
                 null
             );
-        }
 
         await CreatureCmd.Damage(choiceContext, dealer, Amount, ValueProp.Unpowered, Owner, null, null);
     }

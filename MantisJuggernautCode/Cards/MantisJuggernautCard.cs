@@ -1,7 +1,6 @@
 using MantisJuggernaut.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -15,6 +14,14 @@ public abstract class MantisJuggernautCard(
     bool showInCardLibrary = true)
     : ModCardTemplate(baseCost, cardType, rarity, target, showInCardLibrary)
 {
+    public enum StanceSate
+    {
+        Balance,
+        Imbalance,
+        Left,
+        Right
+    }
+
     // 卡图资源。
     // 如果你按这行代码写，文件名就对应 MantisJuggernaut/images/cards/MantisJuggernautStrike.png。
     // 这里的 res://MantisJuggernaut/... 是 Godot 资源路径，对应的是你的资源文件夹名字。
@@ -24,14 +31,6 @@ public abstract class MantisJuggernautCard(
 
     public virtual bool IsPrepared => PileType.Hand.GetPile(Owner).Cards.FirstOrDefault() == this;
 
-    public enum StanceSate
-    {
-        Balance,
-        Imbalance,
-        Left,
-        Right
-    }
-
     public bool IsBalance => Owner.Creature.HasPower<BackswingBalancePower>();
     public bool IsImbalance => Owner.Creature.HasPower<BackswingImbalancePower>();
     public bool IsLeft => Owner.Creature.HasPower<BackswingLeftPower>();
@@ -40,7 +39,7 @@ public abstract class MantisJuggernautCard(
     // 切换状态
     public virtual async Task ToState(PlayerChoiceContext choiceContext, StanceSate state)
     {
-        Creature creature = Owner.Creature;
+        var creature = Owner.Creature;
         Dictionary<StanceSate, MantisJuggernautPower?> powers = new()
         {
             { StanceSate.Balance, creature.GetPower<BackswingBalancePower>() },
@@ -49,18 +48,13 @@ public abstract class MantisJuggernautCard(
             { StanceSate.Right, creature.GetPower<BackswingRightPower>() }
         };
         foreach (var (st, power) in powers)
-        {
             if (st != state && power is not null)
-            {
                 await PowerCmd.Remove(power);
-            }
-        }
 
         switch (state)
         {
             case StanceSate.Balance:
                 if (!IsBalance)
-                {
                     await PowerCmd.Apply<BackswingBalancePower>(
                         choiceContext,
                         Owner.Creature,
@@ -68,11 +62,9 @@ public abstract class MantisJuggernautCard(
                         Owner.Creature,
                         this
                     );
-                }
                 break;
             case StanceSate.Imbalance:
                 if (!IsImbalance)
-                {
                     await PowerCmd.Apply<BackswingImbalancePower>(
                         choiceContext,
                         Owner.Creature,
@@ -80,11 +72,9 @@ public abstract class MantisJuggernautCard(
                         Owner.Creature,
                         this
                     );
-                }
                 break;
             case StanceSate.Left:
                 if (!IsLeft)
-                {
                     await PowerCmd.Apply<BackswingLeftPower>(
                         choiceContext,
                         Owner.Creature,
@@ -92,11 +82,9 @@ public abstract class MantisJuggernautCard(
                         Owner.Creature,
                         this
                     );
-                }
                 break;
             case StanceSate.Right:
                 if (!IsRight)
-                {
                     await PowerCmd.Apply<BackswingRightPower>(
                         choiceContext,
                         Owner.Creature,
@@ -104,7 +92,6 @@ public abstract class MantisJuggernautCard(
                         Owner.Creature,
                         this
                     );
-                }
                 break;
         }
     }

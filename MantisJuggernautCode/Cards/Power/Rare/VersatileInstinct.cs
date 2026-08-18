@@ -1,14 +1,12 @@
+using MantisJuggernaut.Characters;
+using MantisJuggernaut.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MantisJuggernaut.Characters;
-using MantisJuggernaut.HoverTips;
-using STS2RitsuLib.Interop.AutoRegistration;
-using MantisJuggernaut.Powers;
 using MegaCrit.Sts2.Core.Models.Enchantments;
-using MegaCrit.Sts2.Core.Models.Powers;
+using STS2RitsuLib.Interop.AutoRegistration;
 
 namespace MantisJuggernaut.Cards;
 
@@ -30,13 +28,11 @@ public sealed class VersatileInstinct() : MantisJuggernautPowerCard(BaseEnergyCo
         {
             var common = base.AdditionalHoverTips.ToList();
             if (!IsUpgraded)
-            {
                 return common
                     .Concat(HoverTipFactory.FromEnchantment<Sharp>(3))
                     .Concat(HoverTipFactory.FromEnchantment<Adroit>(3))
                     .Concat(HoverTipFactory.FromEnchantment<Swift>(2))
                     .Concat(HoverTipFactory.FromEnchantment<Inky>());
-            }
 
             return common
                 .Concat(HoverTipFactory.FromEnchantment<Sharp>(5))
@@ -59,17 +55,14 @@ public sealed class VersatileInstinct() : MantisJuggernautPowerCard(BaseEnergyCo
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "PowerUp", Owner.Character.PowerUpAnimDelay);
-        VersatileInstinctPower? power = await PowerCmd.Apply<VersatileInstinctPower>(
+        var power = await PowerCmd.Apply<VersatileInstinctPower>(
             choiceContext,
             Owner.Creature,
             DynamicVars[nameof(VersatileInstinctPower)].BaseValue,
             Owner.Creature,
             this
         );
-        if (power is not null)
-        {
-            power.IsUpgraded = IsUpgraded;
-        }
+        if (power is not null) power.IsUpgraded = IsUpgraded;
     }
 
     // 升级后的效果逻辑。

@@ -27,13 +27,11 @@ public class VersatileInstinctPower : MantisJuggernautPower
         {
             var common = base.AdditionalHoverTips.ToList();
             if (!IsUpgraded)
-            {
                 return common
                     .Concat(HoverTipFactory.FromEnchantment<Sharp>(3))
                     .Concat(HoverTipFactory.FromEnchantment<Adroit>(3))
                     .Concat(HoverTipFactory.FromEnchantment<Swift>(2))
                     .Concat(HoverTipFactory.FromEnchantment<Inky>());
-            }
 
             return common
                 .Concat(HoverTipFactory.FromEnchantment<Sharp>(5))
@@ -79,15 +77,9 @@ public class VersatileInstinctPower : MantisJuggernautPower
 
     public override Task AfterCardEnteredCombat(CardModel card)
     {
-        if (card is not InstinctSlash)
-        {
-            return Task.CompletedTask;
-        }
+        if (card is not InstinctSlash) return Task.CompletedTask;
 
-        if (card.Owner != Owner.Player)
-        {
-            return Task.CompletedTask;
-        }
+        if (card.Owner != Owner.Player) return Task.CompletedTask;
 
         RandomApplyEnchantment(card);
         return Task.CompletedTask;
@@ -95,15 +87,10 @@ public class VersatileInstinctPower : MantisJuggernautPower
 
     public override Task AfterApplied(Creature? applier, CardModel? cardSource)
     {
-        if (Owner.Player?.PlayerCombatState is null)
-        {
-            return Task.CompletedTask;
-        }
+        if (Owner.Player?.PlayerCombatState is null) return Task.CompletedTask;
 
-        foreach (CardModel item in Owner.Player.PlayerCombatState.AllCards.Where(c => c is InstinctSlash))
-        {
+        foreach (var item in Owner.Player.PlayerCombatState.AllCards.Where(c => c is InstinctSlash))
             RandomApplyEnchantment(item);
-        }
 
         return Task.CompletedTask;
     }
@@ -111,16 +98,10 @@ public class VersatileInstinctPower : MantisJuggernautPower
     private void RandomApplyEnchantment(CardModel card)
     {
         var validPool = EnchantmentsPool.Where(c => c.Item1.CanEnchant(card)).ToList();
-        if (validPool.Count == 0)
-        {
-            return;
-        }
+        if (validPool.Count == 0) return;
 
         var enchantAmount = Owner.Player?.RunState.Rng.CombatCardGeneration.NextItem(validPool);
-        if (enchantAmount is null)
-        {
-            return;
-        }
+        if (enchantAmount is null) return;
 
         var (enchant, amount) = enchantAmount;
         CardCmd.Enchant(enchant, card, amount);

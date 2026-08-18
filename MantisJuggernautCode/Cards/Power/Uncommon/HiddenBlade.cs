@@ -1,17 +1,17 @@
+using MantisJuggernaut.Characters;
+using MantisJuggernaut.Commands;
+using MantisJuggernaut.HoverTips;
+using MantisJuggernaut.Powers;
+using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MantisJuggernaut.Characters;
-using MantisJuggernaut.HoverTips;
-using STS2RitsuLib.Interop.AutoRegistration;
-using MantisJuggernaut.Powers;
-using MegaCrit.Sts2.Core.CardSelection;
-using MegaCrit.Sts2.Core.Helpers;
-using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Nodes.Cards.Holders;
 using MegaCrit.Sts2.Core.Nodes.Combat;
+using STS2RitsuLib.Interop.AutoRegistration;
 
 namespace MantisJuggernaut.Cards;
 
@@ -51,14 +51,9 @@ public sealed class HiddenBlade() : MantisJuggernautPowerCard(BaseEnergyCost, Ca
         )).FirstOrDefault();
         if (card is not null)
         {
-            await CardPileCmd.Add(card, PileType.Hand, CardPilePosition.Top);
-            var nPlayerHand = NPlayerHand.Instance;
-            if (nPlayerHand?.GetCardHolder(card) is NHandCardHolder holder)
-            {
-                nPlayerHand.CardHolderContainer.MoveChildSafely(holder, 0);
-                holder.SetDefaultTargets();
-            }
+            await ExtCardCmd.Prepare(card);
         }
+
         await PowerCmd.Apply<HiddenBladePower>(
             choiceContext,
             Owner.Creature,

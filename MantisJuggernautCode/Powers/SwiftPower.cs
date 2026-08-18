@@ -15,6 +15,12 @@ namespace MantisJuggernaut.Powers;
 [RegisterPower]
 public class SwiftPower : MantisJuggernautPower
 {
+    public const string SwiftMaxVar = "SwiftMax";
+
+    private CardModel? _leftCard;
+
+    private CardModel? _rightCard;
+
     // 类型，Buff或Debuff
     public override PowerType Type => PowerType.Buff;
 
@@ -27,15 +33,10 @@ public class SwiftPower : MantisJuggernautPower
     [
     ];
 
-    public const string SwiftMaxVar = "SwiftMax";
-
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new IntVar(SwiftMaxVar, 3)
     ];
-
-    private CardModel? _leftCard;
-    private CardModel? _rightCard;
 
     public bool IsSwiftMarked(CardModel card)
     {
@@ -50,26 +51,17 @@ public class SwiftPower : MantisJuggernautPower
 
     public void UpdateRecord()
     {
-        if (Owner.Player is null)
-        {
-            return;
-        }
+        if (Owner.Player is null) return;
 
-        CardPile hand = PileType.Hand.GetPile(Owner.Player);
+        var hand = PileType.Hand.GetPile(Owner.Player);
         _leftCard = hand.Cards.FirstOrDefault();
         _rightCard = hand.Cards.LastOrDefault();
-        if (_leftCard == _rightCard)
-        {
-            _leftCard = _rightCard = null;
-        }
+        if (_leftCard == _rightCard) _leftCard = _rightCard = null;
     }
 
     public override async Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel? clonedBy)
     {
-        if (card.Owner.Creature != Owner || _leftCard is null || _rightCard is null)
-        {
-            return;
-        }
+        if (card.Owner.Creature != Owner || _leftCard is null || _rightCard is null) return;
 
         // 发生从手牌到结算区的变化（丢弃奇巧牌不会被纳入，因为是从弃牌堆到结算区）
         if (oldPileType == PileType.Hand && card.Pile?.Type == PileType.Play)
@@ -117,9 +109,7 @@ public class SwiftPower : MantisJuggernautPower
     )
     {
         if (participants.Contains(Owner))
-        {
             if (Amount > DynamicVars[SwiftMaxVar].IntValue)
-            {
                 await PowerCmd.ModifyAmount(
                     choiceContext,
                     this,
@@ -127,7 +117,5 @@ public class SwiftPower : MantisJuggernautPower
                     Owner,
                     null
                 );
-            }
-        }
     }
 }

@@ -1,14 +1,14 @@
-﻿using MegaCrit.Sts2.Core.Commands;
+﻿using MantisJuggernaut.Characters;
+using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
-using MantisJuggernaut.Characters;
-using MegaCrit.Sts2.Core.Combat;
-using MegaCrit.Sts2.Core.Entities.Players;
-using MegaCrit.Sts2.Core.Models;
 
 namespace MantisJuggernaut.Cards;
 
@@ -77,33 +77,20 @@ public sealed class InstinctSlash()
         Player? creator = null
     )
     {
-        if (count == 0)
-        {
-            return Array.Empty<CardModel>();
-        }
+        if (count == 0) return Array.Empty<CardModel>();
 
-        if (CombatManager.Instance.IsOverOrEnding)
-        {
-            return Array.Empty<CardModel>();
-        }
+        if (CombatManager.Instance.IsOverOrEnding) return Array.Empty<CardModel>();
 
-        List<CardModel> cards = new List<CardModel>();
-        for (int i = 0; i < count; i++)
+        var cards = new List<CardModel>();
+        for (var i = 0; i < count; i++)
         {
-            InstinctSlash card = combatState.CreateCard<InstinctSlash>(owner);
+            var card = combatState.CreateCard<InstinctSlash>(owner);
             if (randomize)
-            {
                 card.SwingRight = (creator ?? owner).RunState.Rng.CombatCardGeneration.NextBool();
-            }
             else
-            {
                 card.SwingRight = swingRight;
-            }
 
-            if (upgrade)
-            {
-                CardCmd.Upgrade(card);
-            }
+            if (upgrade) CardCmd.Upgrade(card);
 
             cards.Add(card);
         }
@@ -117,7 +104,7 @@ public sealed class InstinctSlash()
         bool swingRight = false
     )
     {
-        InstinctSlash card = (InstinctSlash)ModelDb.Card<InstinctSlash>().MutableClone();
+        var card = (InstinctSlash)ModelDb.Card<InstinctSlash>().MutableClone();
         card.SwingRight = swingRight;
         if (upgrade)
         {

@@ -1,12 +1,14 @@
-﻿using MegaCrit.Sts2.Core.Commands;
+﻿using MantisJuggernaut.Characters;
+using MantisJuggernaut.HoverTips;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
-using MantisJuggernaut.Characters;
-using MantisJuggernaut.HoverTips;
 
 namespace MantisJuggernaut.Cards;
 
@@ -23,14 +25,14 @@ public sealed class Juggernaut()
     // 目标类型。
     private const TargetType CardTarget = TargetType.AllEnemies;
 
-    public override bool HasTurnEndInHandEffect => true;
+    public const string DamageIncreaseVarKey = "DamageIncrease";
+
+    private decimal _extraDamge;
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => base.AdditionalHoverTips.Concat(
     [
         ExtHoverTipFactory.Static(ExtStaticHoverTip.Prepared)
     ]);
-
-    public const string DamageIncreaseVarKey = "DamageIncrease";
 
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Concat(
@@ -38,8 +40,6 @@ public sealed class Juggernaut()
         new DamageVar(12m, ValueProp.Move),
         new DynamicVar(DamageIncreaseVarKey, 6)
     ]);
-
-    private decimal _extraDamge;
 
     private decimal ExtraDamage
     {
@@ -61,10 +61,7 @@ public sealed class Juggernaut()
     // 打出时的效果逻辑。
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (CombatState is null)
-        {
-            return;
-        }
+        if (CombatState is null) return;
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this, cardPlay)
@@ -86,8 +83,14 @@ public sealed class Juggernaut()
         DynamicVars[DamageIncreaseVarKey].UpgradeValueBy(2m);
     }
 
-    protected override Task OnTurnEndInHand(PlayerChoiceContext choiceContext)
+    public override Task AfterFlush(
+        PlayerChoiceContext choiceContext,
+        Player player,
+        IReadOnlyCollection<CardModel> flushedCards,
+        IReadOnlyCollection<CardModel> retainedCards)
     {
+        if (player != Owner || !retainedCards.Contains(this)) return Task.CompletedTask;
+
         if (IsPrepared)
         {
             DynamicVars.Damage.BaseValue += DynamicVars[DamageIncreaseVarKey].BaseValue;

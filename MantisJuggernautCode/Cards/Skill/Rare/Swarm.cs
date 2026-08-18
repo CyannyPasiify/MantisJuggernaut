@@ -1,7 +1,6 @@
 using MantisJuggernaut.Characters;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -45,18 +44,12 @@ public sealed class Swarm() : MantisJuggernautSkillCard(BaseEnergyCost, CardRari
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
-        if (CombatState is null)
-        {
-            return;
-        }
+        if (CombatState is null) return;
 
-        for (int i = 0; i < DynamicVars.Repeat.IntValue; i++)
+        for (var i = 0; i < DynamicVars.Repeat.IntValue; i++)
         {
-            Creature? enemy = Owner.RunState.Rng.CombatTargets.NextItem(CombatState.HittableEnemies);
-            if (enemy == null)
-            {
-                continue;
-            }
+            var enemy = Owner.RunState.Rng.CombatTargets.NextItem(CombatState.HittableEnemies);
+            if (enemy == null) continue;
 
             await CreatureCmd.Damage(choiceContext, enemy, DynamicVars.Damage, this, cardPlay);
             await PowerCmd.Apply<RupturePower>(
@@ -71,11 +64,8 @@ public sealed class Swarm() : MantisJuggernautSkillCard(BaseEnergyCost, CardRari
 
     protected override CardLocation GetResultLocationForCardPlay()
     {
-        CardLocation resultLocationForCardPlay = base.GetResultLocationForCardPlay();
-        if (resultLocationForCardPlay.pileType == PileType.Discard)
-        {
-            resultLocationForCardPlay.pileType = PileType.Hand;
-        }
+        var resultLocationForCardPlay = base.GetResultLocationForCardPlay();
+        if (resultLocationForCardPlay.pileType == PileType.Discard) resultLocationForCardPlay.pileType = PileType.Hand;
 
         return resultLocationForCardPlay;
     }

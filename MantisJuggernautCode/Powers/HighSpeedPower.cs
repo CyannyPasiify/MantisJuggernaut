@@ -26,7 +26,6 @@ public class HighSpeedPower : MantisJuggernautPower
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
         if (player == Owner.Player)
-        {
             await PowerCmd.Apply<InstinctPower>(
                 choiceContext,
                 Owner,
@@ -34,6 +33,5 @@ public class HighSpeedPower : MantisJuggernautPower
                 Owner,
                 null
             );
-        }
     }
 }

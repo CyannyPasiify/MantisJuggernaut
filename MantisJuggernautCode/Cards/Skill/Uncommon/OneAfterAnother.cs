@@ -1,4 +1,5 @@
 using MantisJuggernaut.Characters;
+using MantisJuggernaut.Commands;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -50,17 +51,7 @@ public sealed class OneAfterAnother() : MantisJuggernautSkillCard(BaseEnergyCost
             null,
             this
         )).ToList();
-        cards.Reverse();
-        foreach (var card in cards)
-        {
-            await CardPileCmd.Add(card, PileType.Hand, CardPilePosition.Top);
-            var nPlayerHand = NPlayerHand.Instance;
-            if (nPlayerHand?.GetCardHolder(card) is NHandCardHolder holder)
-            {
-                nPlayerHand.CardHolderContainer.MoveChildSafely(holder, 0);
-                holder.SetDefaultTargets();
-            }
-        }
+        await ExtCardCmd.Prepare(cards);
     }
 
     // 升级后的效果逻辑。

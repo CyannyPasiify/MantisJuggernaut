@@ -15,6 +15,10 @@ namespace MantisJuggernaut.Powers;
 [RegisterPower]
 public class BackswingRightPower : MantisJuggernautPower
 {
+    public const string DamageIncreaseVarKey = "DamageIncrease";
+
+    public const string DamageDecreaseVarKey = "DamageDecrease";
+
     // 类型，Buff或Debuff
     public override PowerType Type => PowerType.Buff;
 
@@ -23,14 +27,10 @@ public class BackswingRightPower : MantisJuggernautPower
 
     public override PowerInstanceType InstanceType => PowerInstanceType.None;
 
-    public const string DamageIncreaseVarKey = "DamageIncrease";
-
-    public const string DamageDecreaseVarKey = "DamageDecrease";
-
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar(DamageIncreaseVarKey, 1.5m),
-        new DynamicVar(DamageDecreaseVarKey, 0.5m)
+        new(DamageIncreaseVarKey, 1.5m),
+        new(DamageDecreaseVarKey, 0.5m)
     ];
 
     public override decimal ModifyDamageMultiplicative(
@@ -42,20 +42,11 @@ public class BackswingRightPower : MantisJuggernautPower
         CardPlay? cardPlay
     )
     {
-        if (Owner != dealer || cardSource == null)
-        {
-            return 1m;
-        }
+        if (Owner != dealer || cardSource == null) return 1m;
 
-        if (!props.IsPoweredAttack())
-        {
-            return 1m;
-        }
+        if (!props.IsPoweredAttack()) return 1m;
 
-        if (cardSource is not MantisJuggernautAttackBackswingCard bsCard)
-        {
-            return 1m;
-        }
+        if (cardSource is not MantisJuggernautAttackBackswingCard bsCard) return 1m;
 
         return bsCard.SwingRight
             ? DynamicVars[DamageDecreaseVarKey].BaseValue
@@ -71,30 +62,17 @@ public class BackswingRightPower : MantisJuggernautPower
         CardModel? cardSource
     )
     {
-        if (!CombatManager.Instance.IsInProgress)
-        {
-            return;
-        }
+        if (!CombatManager.Instance.IsInProgress) return;
 
-        if (!props.IsPoweredAttack() || target != Owner || Owner.Player is null)
-        {
-            return;
-        }
+        if (!props.IsPoweredAttack() || target != Owner || Owner.Player is null) return;
 
-        if (result.WasFullyBlocked)
-        {
-            return;
-        }
+        if (result.WasFullyBlocked) return;
 
-        bool toBalance = Owner.Player.RunState.Rng.CombatTargets.NextBool();
+        var toBalance = Owner.Player.RunState.Rng.CombatTargets.NextBool();
         await PowerCmd.Remove(this);
         if (toBalance)
-        {
             await PowerCmd.Apply<BackswingBalancePower>(choiceContext, Owner, 1m, Owner, null);
-        }
         else
-        {
             await PowerCmd.Apply<BackswingImbalancePower>(choiceContext, Owner, 1m, Owner, null);
-        }
     }
 }

@@ -1,13 +1,11 @@
-﻿using MegaCrit.Sts2.Core.Commands;
+﻿using MantisJuggernaut.Characters;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using STS2RitsuLib.Interop.AutoRegistration;
-using MantisJuggernaut.Characters;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Interop.AutoRegistration;
 
 namespace MantisJuggernaut.Cards;
 
@@ -50,10 +48,8 @@ public sealed class MazeStep()
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
         await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
-        for (int i = 0; i < DynamicVars.Repeat.IntValue; i++)
-        {
+        for (var i = 0; i < DynamicVars.Repeat.IntValue; i++)
             await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-        }
     }
 
     // 升级后的效果逻辑。

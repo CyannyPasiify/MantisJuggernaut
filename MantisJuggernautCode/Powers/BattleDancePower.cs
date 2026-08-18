@@ -1,11 +1,7 @@
-﻿using MantisJuggernaut.Cards;
-using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Cards;
+﻿using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
-using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -36,15 +32,10 @@ public class BattleDancePower : MantisJuggernautPower
         CardPlay? cardPlay
     )
     {
-        if (Owner != dealer || target == Owner || Owner.Player is null)
-        {
-            return 1m;
-        }
+        if (Owner != dealer || target == Owner || Owner.Player is null) return 1m;
 
-        if (PileType.Draw.GetPile(Owner.Player).Cards.Count != PileType.Discard.GetPile(Owner.Player).Cards.Count)
-        {
-            return 1m;
-        }
+        if (PileType.Draw.GetPile(Owner.Player).Cards.Count !=
+            PileType.Discard.GetPile(Owner.Player).Cards.Count) return 1m;
 
         return 1m + Amount / 100m;
     }

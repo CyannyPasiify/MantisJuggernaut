@@ -30,7 +30,7 @@ public class AmbushPower : MantisJuggernautPower
     {
         if (card.Owner == Owner.Player && card.Keywords.Contains(CardKeyword.Sly))
         {
-            int num = CombatManager.Instance.History.Entries.OfType<CardDrawnEntry>()
+            var num = CombatManager.Instance.History.Entries.OfType<CardDrawnEntry>()
                 .Count(e => e.HappenedThisTurn(CombatState) &&
                             e.Actor == Owner && e.Card.Keywords.Contains(CardKeyword.Sly));
             if (num <= 1)

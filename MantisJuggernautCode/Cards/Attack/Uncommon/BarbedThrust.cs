@@ -1,4 +1,5 @@
 ﻿using MantisJuggernaut.Characters;
+using MantisJuggernaut.Commands;
 using MantisJuggernaut.HoverTips;
 using MantisJuggernaut.Powers;
 using MegaCrit.Sts2.Core.CardSelection;
@@ -58,14 +59,7 @@ public sealed class BarbedThrust()
         )).FirstOrDefault();
         if (card is not null)
         {
-            await CardPileCmd.Add(card, PileType.Hand, CardPilePosition.Top);
-            var nPlayerHand = NPlayerHand.Instance;
-            if (nPlayerHand?.GetCardHolder(card) is NHandCardHolder holder)
-            {
-                nPlayerHand.CardHolderContainer.MoveChildSafely(holder, 0);
-                holder.SetDefaultTargets();
-            }
-
+            await ExtCardCmd.Prepare(card);
             Owner.Creature.GetPower<SwiftPower>()?.UpdateRecord();
             if (card.Type == CardType.Attack) await CardCmd.AutoPlay(choiceContext, card, null);
         }

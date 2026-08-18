@@ -33,14 +33,8 @@ public class BonusMarkPower : MantisJuggernautPower
         CardModel? cardSource
     )
     {
-        if (target != Owner || dealer?.Player is null)
-        {
-            return;
-        }
+        if (target != Owner || dealer?.Player is null) return;
 
-        if (result.WasTargetKilled)
-        {
-            await PlayerCmd.GainGold(Amount, dealer.Player);
-        }
+        if (result.WasTargetKilled) await PlayerCmd.GainGold(Amount, dealer.Player);
     }
 }

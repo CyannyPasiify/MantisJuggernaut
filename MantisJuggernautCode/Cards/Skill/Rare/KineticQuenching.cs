@@ -29,7 +29,7 @@ public sealed class KineticQuenching() : MantisJuggernautSkillCard(BaseEnergyCos
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar(nameof(Momentum), 5m)
+        new(nameof(Momentum), 5m)
     ];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
@@ -45,10 +45,7 @@ public sealed class KineticQuenching() : MantisJuggernautSkillCard(BaseEnergyCos
         {
             EnchantmentModel enchant = ModelDb.Enchantment<Momentum>();
             var handEnchant = Owner.PlayerCombatState.Hand.Cards.Where(enchant.CanEnchant);
-            foreach (var card in handEnchant)
-            {
-                CardCmd.Enchant<Momentum>(card, DynamicVars[nameof(Momentum)].IntValue);
-            }
+            foreach (var card in handEnchant) CardCmd.Enchant<Momentum>(card, DynamicVars[nameof(Momentum)].IntValue);
         }
     }
 

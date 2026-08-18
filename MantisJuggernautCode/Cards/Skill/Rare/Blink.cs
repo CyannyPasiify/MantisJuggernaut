@@ -1,4 +1,5 @@
 using MantisJuggernaut.Characters;
+using MantisJuggernaut.Commands;
 using MantisJuggernaut.HoverTips;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
@@ -50,21 +51,11 @@ public sealed class Blink() : MantisJuggernautSkillCard(BaseEnergyCost, CardRari
         )).FirstOrDefault();
         if (card is not null)
         {
-            await CardPileCmd.Add(card, PileType.Hand, CardPilePosition.Top);
-            var nPlayerHand = NPlayerHand.Instance;
-            if (nPlayerHand?.GetCardHolder(card) is NHandCardHolder holder)
-            {
-                nPlayerHand.CardHolderContainer.MoveChildSafely(holder, 0);
-                holder.SetDefaultTargets();
-            }
-
+            await ExtCardCmd.Prepare(card);
             if (!card.EnergyCost.CostsX)
             {
-                int cost = card.EnergyCost.GetResolved();
-                if (cost > 0)
-                {
-                    await PlayerCmd.GainEnergy(cost, Owner);
-                }
+                var cost = card.EnergyCost.GetResolved();
+                if (cost > 0) await PlayerCmd.GainEnergy(cost, Owner);
             }
         }
     }

@@ -32,9 +32,7 @@ public class ExposureMarkPower : MantisJuggernautPower
         if (target != Owner ||
             !power.IsVisible ||
             power.GetTypeForAmount(amount) != PowerType.Debuff)
-        {
             return 1m;
-        }
 
         return 2m;
     }
