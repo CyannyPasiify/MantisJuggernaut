@@ -70,7 +70,7 @@ public sealed class FoehnWind()
 
         await PowerCmd.Apply<RoutPower>(
             choiceContext,
-            Owner.Creature,
+            CombatState.HittableEnemies,
             DynamicVars[nameof(RoutPower)].BaseValue,
             Owner.Creature,
             this

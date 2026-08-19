@@ -44,7 +44,6 @@ public sealed class ShadowExistence()
     {
         if (cardPlay.Player != Owner ||
             !IsPrepared ||
-            cardPlay.Card.Type != CardType.Attack ||
             cardPlay.Card is InstinctSlash ||
             CombatState is null)
             return;

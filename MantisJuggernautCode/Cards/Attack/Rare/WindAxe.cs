@@ -3,6 +3,7 @@ using MantisJuggernaut.HoverTips;
 using MantisJuggernaut.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -35,20 +36,30 @@ public sealed class WindAxe()
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Concat(
     [
-        new DamageVar(6m, ValueProp.Move),
+        new DamageVar(9m, ValueProp.Move),
         new PowerVar<SwiftPower>(1m)
     ]);
 
     // 打出时的效果逻辑。
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        ArgumentNullException.ThrowIfNull(cardPlay.Target);
+        Creature? target = cardPlay.Target;
+        if (target is null)
+        {
+            if (CombatState is not null)
+            {
+                target = Owner.RunState.Rng.CombatTargets.NextItem(CombatState.HittableEnemies);
+            }
+
+            ArgumentNullException.ThrowIfNull(target);
+        }
+
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this, cardPlay)
-            .Targeting(cardPlay.Target)
+            .Targeting(target)
             .WithHitFx("vfx/vfx_heavy_blunt", null, "heavy_attack.mp3")
             .Execute(choiceContext);
-        if (IsUpgraded) await ApplyHeavyKnock(choiceContext, cardPlay.Target, HeavyKnockAmount, Owner.Creature, this);
+        if (IsUpgraded) await ApplyHeavyKnock(choiceContext, target, HeavyKnockAmount, Owner.Creature, this);
 
         await PowerCmd.Apply<SwiftPower>(
             choiceContext,
@@ -61,9 +72,7 @@ public sealed class WindAxe()
 
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (cardPlay.Player != Owner || !IsPrepared || cardPlay.Card.Type != CardType.Attack ||
-            cardPlay.Card == this) return;
-
+        if (cardPlay.Player != Owner || !IsPrepared || cardPlay.Card == this) return;
         await OnPlay(choiceContext, cardPlay);
     }
 

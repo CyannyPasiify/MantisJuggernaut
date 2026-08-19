@@ -59,7 +59,6 @@ public sealed class Fastened()
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .WithHitCount(DynamicVars.Repeat.IntValue)
             .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
@@ -77,6 +76,8 @@ public sealed class Fastened()
                 cards.RemoveAt(selIdx);
             }
         }
+        
+        await base.OnPlay(choiceContext, cardPlay);
     }
 
     // 升级后的效果逻辑。

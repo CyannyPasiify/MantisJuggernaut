@@ -1,4 +1,5 @@
 using MantisJuggernaut.Characters;
+using MantisJuggernaut.HoverTips;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -24,7 +25,8 @@ public sealed class FightingWill() : MantisJuggernautSkillCard(BaseEnergyCost, C
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => base.AdditionalHoverTips.Concat(
     [
-        EnergyHoverTip
+        EnergyHoverTip,
+        ExtHoverTipFactory.Static(ExtStaticHoverTip.Prepared)
     ]);
 
     // 卡牌基础数值。

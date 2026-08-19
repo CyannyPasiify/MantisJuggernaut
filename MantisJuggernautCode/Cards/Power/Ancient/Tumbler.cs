@@ -34,7 +34,7 @@ public sealed class Tumbler() : MantisJuggernautPowerCard(BaseEnergyCost, CardRa
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<TumblerPower>(1m)
+        new PowerVar<TumblerPower>(2m)
     ];
 
     // 打出时的效果逻辑。

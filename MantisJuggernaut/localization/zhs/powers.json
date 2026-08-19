@@ -1,9 +1,9 @@
 ﻿{
-  "MANTIS_JUGGERNAUT_POWER_BACKSWING_LEFT_POWER.description": "[red]左引[/red]/[green]右引[/green]攻击造成的伤害[red]减少50%[/red]/[green]增加50%[/green]。\n受到未被格挡的伤害时将随机进入[gold]衡势[/gold]或[red]失衡[/red]。",
-  "MANTIS_JUGGERNAUT_POWER_BACKSWING_LEFT_POWER.smartDescription": "[green]右引[/green]/[red]左引[/red]攻击造成的伤害[green]增加{DamageIncrease:percentMore()}%[/green]/[red]减少{DamageDecrease:percentLess()}%[/red]。\n受到未被格挡的伤害时将随机进入[gold]衡势[/gold]或[red]失衡[/red]。",
+  "MANTIS_JUGGERNAUT_POWER_BACKSWING_LEFT_POWER.description": "[green]右引[/green]/[red]左引[/red]攻击造成的伤害[green]增加50%[/green]/[red]减少50%[/red]。",
+  "MANTIS_JUGGERNAUT_POWER_BACKSWING_LEFT_POWER.smartDescription": "[green]右引[/green]/[red]左引[/red]攻击造成的伤害[green]增加{DamageIncrease:percentMore()}%[/green]/[red]减少{DamageDecrease:percentLess()}%[/red]。",
   "MANTIS_JUGGERNAUT_POWER_BACKSWING_LEFT_POWER.title": "左蓄势",
-  "MANTIS_JUGGERNAUT_POWER_BACKSWING_RIGHT_POWER.description": "[green]左引[/green]/[red]右引[/red]攻击造成的伤害[green]增加50%[/green]/[red]减少50%[/red]。\n受到未被格挡的伤害时将随机进入[gold]衡势[/gold]或[red]失衡[/red]。",
-  "MANTIS_JUGGERNAUT_POWER_BACKSWING_RIGHT_POWER.smartDescription": "[green]左引[/green]/[red]右引[/red]攻击造成的伤害[green]增加{DamageIncrease:percentMore()}%[/green]/[red]减少{DamageDecrease:percentLess()}%[/red]。\n受到未被格挡的伤害时将随机进入[gold]衡势[/gold]或[red]失衡[/red]。",
+  "MANTIS_JUGGERNAUT_POWER_BACKSWING_RIGHT_POWER.description": "[green]左引[/green]/[red]右引[/red]攻击造成的伤害[green]增加50%[/green]/[red]减少50%[/red]。",
+  "MANTIS_JUGGERNAUT_POWER_BACKSWING_RIGHT_POWER.smartDescription": "[green]左引[/green]/[red]右引[/red]攻击造成的伤害[green]增加{DamageIncrease:percentMore()}%[/green]/[red]减少{DamageDecrease:percentLess()}%[/red]。",
   "MANTIS_JUGGERNAUT_POWER_BACKSWING_RIGHT_POWER.title": "右蓄势",
   "MANTIS_JUGGERNAUT_POWER_BACKSWING_IMBALANCE_POWER.description": "造成的攻击伤害减少[blue]50%[/blue]。从敌人攻击中受到的伤害增加[blue]50%[/blue]。\n回合开始时进入[gold]衡势[/gold]。",
   "MANTIS_JUGGERNAUT_POWER_BACKSWING_IMBALANCE_POWER.smartDescription": "造成的攻击伤害减少[blue]{DamageDecrease:percentLess()}%[/blue]。从攻击中受到的伤害增加[blue]{DamageIncrease:percentMore()}%[/blue]。\n回合开始时进入[gold]衡势[/gold]。",

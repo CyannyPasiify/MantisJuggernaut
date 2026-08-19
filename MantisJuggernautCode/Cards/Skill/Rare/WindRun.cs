@@ -16,7 +16,7 @@ public sealed class WindRun()
     : MantisJuggernautSkillCard(BaseEnergyCost, CardRarityValue, CardTarget)
 {
     // 基础耗能。
-    private const int BaseEnergyCost = 2;
+    private const int BaseEnergyCost = 1;
 
     // 卡牌稀有度。
     private const CardRarity CardRarityValue = CardRarity.Rare;
@@ -57,7 +57,6 @@ public sealed class WindRun()
     {
         if (cardPlay.Player != Owner ||
             !IsPrepared ||
-            cardPlay.Card.Type != CardType.Skill ||
             cardPlay.Card == this)
             return;
 
@@ -67,6 +66,6 @@ public sealed class WindRun()
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(2m);
+        DynamicVars.Block.UpgradeValueBy(3m);
     }
 }

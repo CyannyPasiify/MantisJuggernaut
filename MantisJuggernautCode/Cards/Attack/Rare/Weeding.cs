@@ -33,7 +33,7 @@ public sealed class Weeding()
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Concat(
     [
-        new DamageVar(7m, ValueProp.Move)
+        new DamageVar(5m, ValueProp.Move)
     ]);
 
     // 打出时的效果逻辑。

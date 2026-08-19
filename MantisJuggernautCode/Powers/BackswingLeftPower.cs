@@ -53,26 +53,26 @@ public class BackswingLeftPower : MantisJuggernautPower
             : DynamicVars[DamageDecreaseVarKey].BaseValue;
     }
 
-    public override async Task AfterDamageReceived(
-        PlayerChoiceContext choiceContext,
-        Creature? target,
-        DamageResult result,
-        ValueProp props,
-        Creature? dealer,
-        CardModel? cardSource
-    )
-    {
-        if (!CombatManager.Instance.IsInProgress) return;
-
-        if (!props.IsPoweredAttack() || target != Owner || Owner.Player is null) return;
-
-        if (result.WasFullyBlocked) return;
-
-        var toBalance = Owner.Player.RunState.Rng.CombatTargets.NextBool();
-        await PowerCmd.Remove(this);
-        if (toBalance)
-            await PowerCmd.Apply<BackswingBalancePower>(choiceContext, Owner, 1m, Owner, null);
-        else
-            await PowerCmd.Apply<BackswingImbalancePower>(choiceContext, Owner, 1m, Owner, null);
-    }
+    // public override async Task AfterDamageReceived(
+    //     PlayerChoiceContext choiceContext,
+    //     Creature? target,
+    //     DamageResult result,
+    //     ValueProp props,
+    //     Creature? dealer,
+    //     CardModel? cardSource
+    // )
+    // {
+    //     if (!CombatManager.Instance.IsInProgress) return;
+    //
+    //     if (!props.IsPoweredAttack() || target != Owner || Owner.Player is null) return;
+    //
+    //     if (result.WasFullyBlocked) return;
+    //
+    //     var toBalance = Owner.Player.RunState.Rng.CombatTargets.NextBool();
+    //     await PowerCmd.Remove(this);
+    //     if (toBalance)
+    //         await PowerCmd.Apply<BackswingBalancePower>(choiceContext, Owner, 1m, Owner, null);
+    //     else
+    //         await PowerCmd.Apply<BackswingImbalancePower>(choiceContext, Owner, 1m, Owner, null);
+    // }
 }

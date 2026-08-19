@@ -63,7 +63,7 @@ public sealed class Piercing()
 
         await PowerCmd.Apply<VulnerablePower>(
             choiceContext,
-            Owner.Creature,
+            cardPlay.Target,
             DynamicVars.Vulnerable.BaseValue,
             Owner.Creature,
             this

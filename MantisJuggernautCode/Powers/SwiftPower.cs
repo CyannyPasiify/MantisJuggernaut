@@ -75,7 +75,7 @@ public class SwiftPower : MantisJuggernautPower
                     if (_rightCard is not null)
                     {
                         await CardCmd.DiscardAndDraw(
-                            new ThrowingPlayerChoiceContext(),
+                            new BlockingPlayerChoiceContext(),
                             [_rightCard],
                             1
                         );
@@ -88,7 +88,7 @@ public class SwiftPower : MantisJuggernautPower
                     if (_leftCard is not null)
                     {
                         await ExtCardCmd.DiscardAndDraw(
-                            new ThrowingPlayerChoiceContext(),
+                            new BlockingPlayerChoiceContext(),
                             [_leftCard],
                             1
                         );
