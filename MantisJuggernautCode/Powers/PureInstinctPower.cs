@@ -22,8 +22,7 @@ public class PureInstinctPower : MantisJuggernautPower
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
-        InstinctSlash.MakeCardHoverTip(),
-        HoverTipFactory.FromKeyword(CardKeyword.Retain)
+        InstinctSlash.MakeCardHoverTip()
     ];
 
     public override decimal ModifyDamageAdditive(

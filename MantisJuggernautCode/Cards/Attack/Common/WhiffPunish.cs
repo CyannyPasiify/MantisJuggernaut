@@ -31,7 +31,7 @@ public sealed class WhiffPunish()
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Concat(
     [
-        new DamageVar(6m, ValueProp.Move),
+        new DamageVar(8m, ValueProp.Move),
         new CardsVar(1)
     ]);
 

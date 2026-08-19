@@ -32,6 +32,11 @@ public sealed class WindySelf() : MantisJuggernautSkillCard(BaseEnergyCost, Card
         new CardsVar(3)
     ];
 
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+    [
+        CardKeyword.Exhaust
+    ];
+
     // 打出时的效果逻辑。
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

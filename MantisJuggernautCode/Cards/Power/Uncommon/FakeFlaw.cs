@@ -30,7 +30,7 @@ public sealed class FakeFlaw() : MantisJuggernautPowerCard(BaseEnergyCost, CardR
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<FakeFlawPower>(6m)
+        new PowerVar<FakeFlawPower>(7m)
     ];
 
     // 打出时的效果逻辑。

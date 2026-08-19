@@ -25,7 +25,6 @@ public class DepictingLegendsPower : MantisJuggernautPower
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
-        HoverTipFactory.FromKeyword(CardKeyword.Sly)
     ];
 
     public bool IsUpgraded

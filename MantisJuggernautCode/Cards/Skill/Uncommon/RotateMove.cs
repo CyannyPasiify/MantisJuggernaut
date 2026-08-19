@@ -32,7 +32,7 @@ public sealed class RotateMove() : MantisJuggernautSkillCard(BaseEnergyCost, Car
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new BlockVar(18m, ValueProp.Move)
+        new BlockVar(22m, ValueProp.Move)
     ];
 
     protected override bool IsPlayable => PileType.Hand.GetPile(Owner).Cards.Count == 1;
@@ -48,6 +48,6 @@ public sealed class RotateMove() : MantisJuggernautSkillCard(BaseEnergyCost, Car
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(6);
+        DynamicVars.Block.UpgradeValueBy(8m);
     }
 }

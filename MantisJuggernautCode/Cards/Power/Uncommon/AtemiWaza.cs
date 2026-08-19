@@ -30,7 +30,7 @@ public sealed class AtemiWaza() : MantisJuggernautPowerCard(BaseEnergyCost, Card
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<AtemiWazaPower>(5m)
+        new PowerVar<AtemiWazaPower>(7m)
     ];
 
     // 打出时的效果逻辑。

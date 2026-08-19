@@ -30,7 +30,7 @@ public sealed class SeeThrough() : MantisJuggernautSkillCard(BaseEnergyCost, Car
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<WeakPower>(1)
+        new PowerVar<WeakPower>(2)
     ];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>

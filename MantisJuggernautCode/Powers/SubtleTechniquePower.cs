@@ -24,9 +24,6 @@ public class SubtleTechniquePower : MantisJuggernautPower
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
-        HoverTipFactory.FromPower<BackswingImbalancePower>(),
-        HoverTipFactory.FromPower<BackswingBalancePower>(),
-        HoverTipFactory.FromPower<StrengthPower>()
     ];
 
     public override async Task AfterPowerAmountChanged(

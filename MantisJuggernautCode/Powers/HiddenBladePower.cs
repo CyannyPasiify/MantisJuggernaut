@@ -27,7 +27,6 @@ public class HiddenBladePower : MantisJuggernautPower
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
-        ExtHoverTipFactory.Static(ExtStaticHoverTip.Prepared)
     ];
 
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)

@@ -45,7 +45,7 @@ public sealed class Fastened()
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Concat(
     [
-        new DamageVar(7, ValueProp.Move),
+        new DamageVar(8, ValueProp.Move),
         new CardsVar(1),
         new EnergyVar(1)
     ]);

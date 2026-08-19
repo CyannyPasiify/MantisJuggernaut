@@ -18,7 +18,6 @@ public class HeavyKnockObliquePower : MantisJuggernautPower
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
-        HoverTipFactory.FromPower<HeavyKnockDownPower>()
     ];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>

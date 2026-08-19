@@ -24,7 +24,7 @@ public sealed class Frenzy()
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Concat(
     [
-        new DamageVar(3m, ValueProp.Move),
+        new DamageVar(4m, ValueProp.Move),
         new RepeatVar(4)
     ]);
 

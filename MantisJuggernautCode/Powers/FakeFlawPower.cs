@@ -22,7 +22,6 @@ public class FakeFlawPower : MantisJuggernautPower
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
-        HoverTipFactory.FromPower<BackswingImbalancePower>()
     ];
 
     public override async Task AfterPowerAmountChanged(

@@ -22,7 +22,6 @@ public class AnxietyPower : MantisJuggernautPower
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
-        HoverTipFactory.FromKeyword(CardKeyword.Sly)
     ];
 
     public override async Task BeforeSideTurnEnd(

@@ -61,7 +61,7 @@ public class SwiftPower : MantisJuggernautPower
 
     public override async Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel? clonedBy)
     {
-        if (card.Owner.Creature != Owner || _leftCard is null || _rightCard is null) return;
+        if (card.Owner.Creature != Owner) return;
 
         // 有卡牌离开手牌
         if (oldPileType == PileType.Hand)

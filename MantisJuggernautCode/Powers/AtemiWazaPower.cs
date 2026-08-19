@@ -23,8 +23,6 @@ public class AtemiWazaPower : MantisJuggernautPower
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
-        HoverTipFactory.Static(StaticHoverTip.Block),
-        HoverTipFactory.FromPower<BackswingBalancePower>()
     ];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>

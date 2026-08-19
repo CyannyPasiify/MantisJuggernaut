@@ -55,6 +55,6 @@ public sealed class Exquisite() : MantisJuggernautSkillCard(BaseEnergyCost, Card
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
-        AddKeyword(CardKeyword.Retain);
+        EnergyCost.UpgradeBy(-1);
     }
 }

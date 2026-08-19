@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
 
 namespace MantisJuggernaut.Powers;
@@ -30,7 +31,11 @@ public class BlockadeMarkPower : MantisJuggernautPower
         out decimal modifiedAmount
     )
     {
-        if (target != Owner || canonicalPower.GetTypeForAmount(amount) != PowerType.Buff || !canonicalPower.IsVisible)
+        if (target != Owner || canonicalPower.GetTypeForAmount(amount) != PowerType.Buff || !canonicalPower.IsVisible ||
+            canonicalPower is not StrengthPower ||
+            canonicalPower is not VigorPower ||
+            canonicalPower is not ArtifactPower
+           )
         {
             modifiedAmount = amount;
             return false;

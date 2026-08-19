@@ -30,7 +30,7 @@ public sealed class Swarm() : MantisJuggernautSkillCard(BaseEnergyCost, CardRari
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new RepeatVar(2),
+        new RepeatVar(3),
         new DamageVar(1m, ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move),
         new PowerVar<RoutPower>(1m)
     ];

@@ -21,7 +21,6 @@ public class WindStationaryPower : MantisJuggernautPower
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
-        HoverTipFactory.FromPower<BackswingBalancePower>()
     ];
 
     public override async Task AfterPowerAmountChanged(

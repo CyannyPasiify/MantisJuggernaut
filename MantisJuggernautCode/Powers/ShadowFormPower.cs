@@ -22,7 +22,6 @@ public class ShadowFormPower : MantisJuggernautPower
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
-        HoverTipFactory.FromKeyword(CardKeyword.Sly)
     ];
 
     public bool IsUpgraded
@@ -43,9 +42,9 @@ public class ShadowFormPower : MantisJuggernautPower
             Flash();
             await CardCmd.Discard(choiceContext, card);
             var genCard = card.CreateClone();
-            if (IsUpgraded && !genCard.IsUpgraded) CardCmd.Upgrade(card);
+            if (IsUpgraded && !genCard.IsUpgraded) CardCmd.Upgrade(genCard);
 
-            await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, Owner.Player);
+            await CardPileCmd.AddGeneratedCardToCombat(genCard, PileType.Hand, Owner.Player);
         }
     }
 }

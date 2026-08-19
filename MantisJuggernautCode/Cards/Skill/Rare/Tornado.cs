@@ -36,8 +36,13 @@ public sealed class Tornado() : MantisJuggernautSkillCard(BaseEnergyCost, CardRa
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<SwiftPower>(3m),
+        new PowerVar<SwiftPower>(5m),
         new CardsVar(2)
+    ];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+    [
+        CardKeyword.Exhaust
     ];
 
     // 打出时的效果逻辑。
