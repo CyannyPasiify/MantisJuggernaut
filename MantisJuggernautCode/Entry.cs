@@ -1,5 +1,6 @@
 using System.Reflection;
 using Godot;
+using HarmonyLib;
 using MantisJuggernaut.Cards;
 using MantisJuggernaut.Powers;
 using MegaCrit.Sts2.Core.Logging;
@@ -37,7 +38,8 @@ public class Entry
         // 新增内容类后，只要 attribute 写对，通常不需要在入口里手动逐个注册。
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
 
-        Logger.Info("MantisJuggernaut initialized.");
+        Harmony harmony = new(ModId);
+        harmony.PatchAll();
 
         // 添加卡牌泛光规则
         ModCardHandOutlineRegistry.Register<MantisJuggernautCard>(
@@ -51,5 +53,7 @@ public class Entry
                 1, // （可选）优先级。更高的才会展示。
                 true // 不可打出时仍显示边框
             ));
+
+        Logger.Info("MantisJuggernaut initialized.");
     }
 }
