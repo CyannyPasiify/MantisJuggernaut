@@ -36,7 +36,7 @@ public sealed class WindAxe()
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Concat(
     [
-        new DamageVar(9m, ValueProp.Move),
+        new DamageVar(6m, ValueProp.Move),
         new PowerVar<SwiftPower>(1m)
     ]);
 

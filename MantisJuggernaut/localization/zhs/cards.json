@@ -82,7 +82,7 @@
   "MANTIS_JUGGERNAUT_CARD_WEEDING.title": "芜杂尽灭",
   "MANTIS_JUGGERNAUT_CARD_KILL_RUSH.description": "[gold]{Backswing:choose(0):左|右}引[/gold]。\n获得{Block:diff()}点[gold]格挡[/gold]。\n获得{InstinctPower:diff()}层[gold]本能[/gold]。",
   "MANTIS_JUGGERNAUT_CARD_KILL_RUSH.title": "诛杀步",
-  "MANTIS_JUGGERNAUT_CARD_POSE_DISRUPTION.description": "如果敌人的意图是攻击，给予[gold]失衡[/gold]。{IfUpgraded:show:\n[gold]衡势[/gold]：抽{Cards:diff()}张牌。|}",
+  "MANTIS_JUGGERNAUT_CARD_POSE_DISRUPTION.description": "如果敌人的意图是攻击，给予[gold]失衡[/gold]。\n[gold]衡势[/gold]：抽{Cards:diff()}张牌。",
   "MANTIS_JUGGERNAUT_CARD_POSE_DISRUPTION.title": "撩乱重心",
   "MANTIS_JUGGERNAUT_CARD_ARM_HOLD.description": "获得{Block:diff()}点[gold]格挡[/gold]。\n进入随机方向[gold]蓄势[/gold]。",
   "MANTIS_JUGGERNAUT_CARD_ARM_HOLD.title": "架臂",

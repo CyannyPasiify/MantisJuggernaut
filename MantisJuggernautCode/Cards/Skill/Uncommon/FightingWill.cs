@@ -13,7 +13,7 @@ namespace MantisJuggernaut.Cards;
 public sealed class FightingWill() : MantisJuggernautSkillCard(BaseEnergyCost, CardRarityValue, CardTarget)
 {
     // 基础耗能。
-    private const int BaseEnergyCost = 2;
+    private const int BaseEnergyCost = 3;
 
     // 卡牌稀有度。
     private const CardRarity CardRarityValue = CardRarity.Uncommon;

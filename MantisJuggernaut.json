@@ -4,7 +4,7 @@
   "pck_name": "MantisJuggernaut",
   "author": "CyanPasiify",
   "description": "A starter Slay the Spire 2 mod template built on RitsuLib.",
-  "version": "2026.0819.2300",
+  "version": "2026.0820.1800",
   "has_pck": true,
   "has_dll": true,
   "affects_gameplay": true,

@@ -16,7 +16,7 @@ public sealed class PoseDisruption() : MantisJuggernautSkillCard(BaseEnergyCost,
     private const int BaseEnergyCost = 1;
 
     // 卡牌稀有度。
-    private const CardRarity CardRarityValue = CardRarity.Common;
+    private const CardRarity CardRarityValue = CardRarity.Uncommon;
 
     // 目标类型（Self 表示自己）。
     private const TargetType CardTarget = TargetType.AnyEnemy;
@@ -27,7 +27,7 @@ public sealed class PoseDisruption() : MantisJuggernautSkillCard(BaseEnergyCost,
         {
             var hoverTips = base.AdditionalHoverTips.ToList();
             hoverTips.Add(HoverTipFactory.FromPower<HeavyKnockDownPower>());
-            if (IsUpgraded) hoverTips.Add(HoverTipFactory.FromPower<BackswingBalancePower>());
+            hoverTips.Add(HoverTipFactory.FromPower<BackswingBalancePower>());
 
             return hoverTips;
         }
@@ -39,7 +39,7 @@ public sealed class PoseDisruption() : MantisJuggernautSkillCard(BaseEnergyCost,
         new CardsVar(1)
     ];
 
-    protected override bool ShouldGlowGoldInternal => IsUpgraded && IsBalance;
+    protected override bool ShouldGlowGoldInternal => IsBalance;
 
     // 打出时的效果逻辑。
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -60,11 +60,12 @@ public sealed class PoseDisruption() : MantisJuggernautSkillCard(BaseEnergyCost,
             );
         }
 
-        if (IsUpgraded && IsBalance) await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
+        if (IsBalance) await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
     }
 
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
+        DynamicVars.Cards.UpgradeValueBy(1m);
     }
 }
