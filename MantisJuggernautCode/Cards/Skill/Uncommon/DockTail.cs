@@ -30,26 +30,22 @@ public sealed class DockTail() : MantisJuggernautSkillCard(BaseEnergyCost, CardR
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [
-        CardKeyword.Retain
     ];
 
     // 打出时的效果逻辑。
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
-        if (!IsUpgraded)
-        {
-            await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
-            VfxCmd.PlayOnCreatureCenter(Owner.Creature, "vfx/vfx_bloody_impact");
-            await CreatureCmd.Damage(
-                choiceContext,
-                Owner.Creature,
-                DynamicVars.HpLoss.BaseValue,
-                ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move,
-                this,
-                cardPlay
-            );
-        }
+        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
+        VfxCmd.PlayOnCreatureCenter(Owner.Creature, "vfx/vfx_bloody_impact");
+        await CreatureCmd.Damage(
+            choiceContext,
+            Owner.Creature,
+            DynamicVars.HpLoss.BaseValue,
+            ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move,
+            this,
+            cardPlay
+        );
 
         var cardModel =
             (await CardSelectCmd.FromHand(
@@ -65,5 +61,6 @@ public sealed class DockTail() : MantisJuggernautSkillCard(BaseEnergyCost, CardR
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
+        AddKeyword(CardKeyword.Retain);
     }
 }

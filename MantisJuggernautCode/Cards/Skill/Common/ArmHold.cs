@@ -33,7 +33,7 @@ public sealed class ArmHold() : MantisJuggernautSkillCard(BaseEnergyCost, CardRa
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new BlockVar(8m, ValueProp.Move)
+        new BlockVar(9m, ValueProp.Move)
     ];
 
     // 打出时的效果逻辑。

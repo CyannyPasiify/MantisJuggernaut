@@ -37,7 +37,7 @@ public sealed class Countermove() : MantisJuggernautSkillBackswingCard(BaseEnerg
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Concat(
     [
-        new BlockVar(9m, ValueProp.Move)
+        new BlockVar(8m, ValueProp.Move)
     ]);
 
     // 打出时的效果逻辑。

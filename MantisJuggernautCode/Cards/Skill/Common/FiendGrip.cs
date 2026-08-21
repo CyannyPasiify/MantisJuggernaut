@@ -14,7 +14,7 @@ public sealed class FiendGrip() : MantisJuggernautSkillBackswingCard(BaseEnergyC
     private const int BaseEnergyCost = 1;
 
     // 卡牌稀有度。
-    private const CardRarity CardRarityValue = CardRarity.Uncommon;
+    private const CardRarity CardRarityValue = CardRarity.Common;
 
     // 目标类型（Self 表示自己）。
     private const TargetType CardTarget = TargetType.Self;

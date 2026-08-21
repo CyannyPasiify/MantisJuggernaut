@@ -44,7 +44,7 @@ public sealed class ShadowExistence()
     {
         if (cardPlay.Player != Owner ||
             !IsPrepared ||
-            cardPlay.Card is InstinctSlash ||
+            cardPlay.Card is InstinctSlash itSlash && itSlash.IsUpgraded == IsUpgraded ||
             CombatState is null)
             return;
 

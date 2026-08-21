@@ -65,6 +65,6 @@ public sealed class SwiftStrike() : MantisJuggernautAttackCard(BaseEnergyCost, C
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
-        DynamicVars[nameof(SwiftPower)].UpgradeValueBy(2m);
+        DynamicVars[nameof(SwiftPower)].UpgradeValueBy(1m);
     }
 }

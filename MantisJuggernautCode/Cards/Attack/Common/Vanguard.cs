@@ -62,7 +62,6 @@ public sealed class Vanguard()
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(4m);
-        DynamicVars[nameof(InstinctPower)].UpgradeValueBy(1m);
+        DynamicVars.Damage.UpgradeValueBy(6m);
     }
 }

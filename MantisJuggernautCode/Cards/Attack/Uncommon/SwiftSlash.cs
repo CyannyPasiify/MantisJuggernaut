@@ -31,7 +31,7 @@ public sealed class SwiftSlash()
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Concat(
     [
-        new DamageVar(8m, ValueProp.Move),
+        new DamageVar(6m, ValueProp.Move),
         new PowerVar<SwiftPower>(2m)
     ]);
 
@@ -65,7 +65,7 @@ public sealed class SwiftSlash()
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(2m);
+        DynamicVars.Damage.UpgradeValueBy(1m);
         DynamicVars[nameof(SwiftPower)].UpgradeValueBy(1m);
     }
 }

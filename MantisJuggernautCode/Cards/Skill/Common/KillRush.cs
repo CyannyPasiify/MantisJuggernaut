@@ -32,8 +32,8 @@ public sealed class KillRush() : MantisJuggernautSkillBackswingCard(BaseEnergyCo
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Concat(
     [
-        new BlockVar(8m, ValueProp.Move),
-        new PowerVar<InstinctPower>(2m)
+        new BlockVar(7m, ValueProp.Move),
+        new PowerVar<InstinctPower>(1m)
     ]);
 
     // 打出时的效果逻辑。
@@ -53,6 +53,7 @@ public sealed class KillRush() : MantisJuggernautSkillBackswingCard(BaseEnergyCo
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(3m);
+        DynamicVars.Block.UpgradeValueBy(2m);
+        DynamicVars[nameof(SwiftSlash)].UpgradeValueBy(1m);
     }
 }
