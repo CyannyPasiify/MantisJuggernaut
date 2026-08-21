@@ -67,6 +67,23 @@ public class SwiftPower : MantisJuggernautPower
         var card = cardPlay.Card;
         if (cardPlay.Player != Owner.Player) return;
 
+        if (card == playCard)
+        {
+            if (cardToDiscard is not null)
+            {
+                await CardCmd.DiscardAndDraw(
+                    choiceContext,
+                    [cardToDiscard],
+                    1
+                );
+                await PowerCmd.Decrement(this);
+                if (Amount > 0) UpdateRecord();
+                cardToDiscard = null;
+            }
+
+            playCard = null;
+        }
+
         // 确定卡牌是否为之前记录的左右端侧牌
         if (card == _leftCard)
         {
@@ -96,9 +113,12 @@ public class SwiftPower : MantisJuggernautPower
         }
     }
 
+    private CardModel? playCard;
+    private CardModel? cardToDiscard;
+
     public override Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel? clonedBy)
     {
-        if (card.Owner.Creature != Owner)
+        if (card.Owner != Owner.Player)
         {
             return Task.CompletedTask;
         }
@@ -106,8 +126,20 @@ public class SwiftPower : MantisJuggernautPower
         // 有卡牌离开手牌
         if (oldPileType == PileType.Hand)
         {
-            // if (card.Pile?.Type != PileType.Play)
-            //     UpdateRecord();
+            // 这是一张从手牌中打出的牌进入结算队列
+            if (card.Pile?.Type == PileType.Play)
+            {
+                playCard = card;
+                // 确定卡牌是否为之前记录的左右端侧牌
+                if (card == _leftCard)
+                {
+                    cardToDiscard = _rightCard;
+                }
+                else if (card == _rightCard)
+                {
+                    cardToDiscard = _leftCard;
+                }
+            }
         }
 
         // 有卡牌进入手牌

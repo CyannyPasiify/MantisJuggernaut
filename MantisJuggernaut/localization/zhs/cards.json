@@ -131,7 +131,7 @@
   "MANTIS_JUGGERNAUT_CARD_ROTATE_MOVE.title": "旋身收招",
   "MANTIS_JUGGERNAUT_CARD_PENETRATION.description": "去除[gold]人工制品[/gold]。\n给予{ExposureMarkPower:diff()}层[gold]暴露标记[/gold]。",
   "MANTIS_JUGGERNAUT_CARD_PENETRATION.title": "渗入缝隙",
-  "MANTIS_JUGGERNAUT_CARD_BALANCE_SENSE.description": "进入[gold]衡势[/gold]。\n[gold]衡势[/gold]：获得{Energy:energyIcons()}。",
+  "MANTIS_JUGGERNAUT_CARD_BALANCE_SENSE.description": "[gold]失衡[/gold]：获得{Energy:energyIcons()}。\n进入[gold]衡势[/gold]。",
   "MANTIS_JUGGERNAUT_CARD_BALANCE_SENSE.title": "平衡感",
   "MANTIS_JUGGERNAUT_CARD_IMPROVISATION.description": "用随机方向的[gold]本能挥斩[/gold]填满你的[gold]手牌[/gold]。",
   "MANTIS_JUGGERNAUT_CARD_IMPROVISATION.title": "即兴序幕",

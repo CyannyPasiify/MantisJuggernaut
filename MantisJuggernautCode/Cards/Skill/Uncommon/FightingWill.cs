@@ -53,6 +53,6 @@ public sealed class FightingWill() : MantisJuggernautSkillCard(BaseEnergyCost, C
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
-        DynamicVars.Energy.UpgradeValueBy(1m);
+        DynamicVars[PreparedEnergyVarKey].UpgradeValueBy(1m);
     }
 }

@@ -44,23 +44,23 @@ public sealed class WindAxe()
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         Creature? target = cardPlay.Target;
-        if (target is null)
+        if (target is null || !target.IsHittable)
         {
             if (CombatState is not null)
             {
                 target = Owner.RunState.Rng.CombatTargets.NextItem(CombatState.HittableEnemies);
             }
-
-            ArgumentNullException.ThrowIfNull(target);
         }
 
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this, cardPlay)
-            .Targeting(target)
-            .WithHitFx("vfx/vfx_heavy_blunt", null, "heavy_attack.mp3")
-            .Execute(choiceContext);
-        if (IsUpgraded) await ApplyHeavyKnock(choiceContext, target, HeavyKnockAmount, Owner.Creature, this);
-
+        if (target is not null)
+        {
+            await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+                .FromCard(this, cardPlay)
+                .Targeting(target)
+                .WithHitFx("vfx/vfx_heavy_blunt", null, "heavy_attack.mp3")
+                .Execute(choiceContext);
+            if (IsUpgraded) await ApplyHeavyKnock(choiceContext, target, HeavyKnockAmount, Owner.Creature, this);
+        }
         await PowerCmd.Apply<SwiftPower>(
             choiceContext,
             Owner.Creature,

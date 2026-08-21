@@ -38,13 +38,13 @@ public sealed class BalanceSense() : MantisJuggernautSkillCard(BaseEnergyCost, C
     // 打出时的效果逻辑。
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (IsBalance)
+        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
+        if (IsImbalance)
         {
             await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
         }
-        else
+        if (!IsBalance)
         {
-            await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
             await ToState(choiceContext, StanceSate.Balance);
         }
     }
