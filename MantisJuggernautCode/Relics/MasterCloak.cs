@@ -60,13 +60,13 @@ public sealed class MasterCloak : MantisJuggernautRelic
     {
         EnchantmentModel enchant = ModelDb.Enchantment<MasterHeritage>();
         List<CardModel> list = PileType.Deck.GetPile(Owner).Cards.Where(enchant.CanEnchant).ToList();
-        CardModel? card = (await CardSelectCmd.FromDeckForEnchantment(
+        var cards = (await CardSelectCmd.FromDeckForEnchantment(
                 list.UnstableShuffle(Owner.RunState.Rng.Niche).ToList(),
                 enchant,
                 1,
-                new CardSelectorPrefs(CardSelectorPrefs.EnchantSelectionPrompt, 1))
-            ).FirstOrDefault();
-        if (card != null)
+                new CardSelectorPrefs(CardSelectorPrefs.EnchantSelectionPrompt, DynamicVars.Cards.IntValue))
+            ).ToList();
+        foreach (var card in cards)
         {
             CardCmd.Enchant<MasterHeritage>(card, 1m);
             NCardEnchantVfx? nCardEnchantVfx = NCardEnchantVfx.Create(card);

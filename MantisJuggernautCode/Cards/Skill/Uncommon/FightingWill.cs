@@ -47,7 +47,7 @@ public sealed class FightingWill() : MantisJuggernautSkillCard(BaseEnergyCost, C
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
-        if (IsPrepared) await PlayerCmd.GainEnergy(DynamicVars[PreparedEnergyVarKey].BaseValue, Owner);
+        if (IsImbalance) await PlayerCmd.GainEnergy(DynamicVars[PreparedEnergyVarKey].BaseValue, Owner);
     }
 
     // 升级后的效果逻辑。

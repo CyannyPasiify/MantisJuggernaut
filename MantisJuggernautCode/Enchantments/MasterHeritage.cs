@@ -24,7 +24,8 @@ public class MasterHeritage : ModEnchantmentTemplate
 
     // 图标位置。大小1:1就行，原版是64x64
     public override EnchantmentAssetProfile AssetProfile => new(
-        // IconPath: "res://icon.svg"
+        // TODO RitsuLib analyzer: 资源路径 'res://MantisJuggernaut/images/enchantments/MasterHeritage.png' 在项目资源索引中未找到。
+        IconPath: $"{Entry.ResPath}/images/enchantments/{GetType().Name}.png"
     );
 
     public override bool CanEnchantCardType(CardType cardType)

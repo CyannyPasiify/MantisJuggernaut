@@ -75,6 +75,7 @@
     <ItemGroup>
         <Folder Include="MantisJuggernaut\images\cards\"/>
         <Folder Include="MantisJuggernaut\images\characters\"/>
+        <Folder Include="MantisJuggernaut\images\enchantments\" />
         <Folder Include="MantisJuggernaut\images\relics\"/>
     </ItemGroup>
 

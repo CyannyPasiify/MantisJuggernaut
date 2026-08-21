@@ -1,8 +1,11 @@
-﻿using MantisJuggernaut.Commands;
+﻿using System.Diagnostics;
+using MantisJuggernaut.Commands;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Multiplayer;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -59,44 +62,52 @@ public class SwiftPower : MantisJuggernautPower
         if (_leftCard == _rightCard) _leftCard = _rightCard = null;
     }
 
-    public override async Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel? clonedBy)
+    public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (card.Owner.Creature != Owner) return;
+        var card = cardPlay.Card;
+        if (cardPlay.Player != Owner.Player) return;
+
+        // 确定卡牌是否为之前记录的左右端侧牌
+        if (card == _leftCard)
+        {
+            if (_rightCard is not null)
+            {
+                await CardCmd.DiscardAndDraw(
+                    choiceContext,
+                    [_rightCard],
+                    1
+                );
+                await PowerCmd.Decrement(this);
+                if (Amount > 0) UpdateRecord();
+            }
+        }
+        else if (card == _rightCard)
+        {
+            if (_leftCard is not null)
+            {
+                await ExtCardCmd.DiscardAndDraw(
+                    choiceContext,
+                    [_leftCard],
+                    1
+                );
+                await PowerCmd.Decrement(this);
+                if (Amount > 0) UpdateRecord();
+            }
+        }
+    }
+
+    public override Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel? clonedBy)
+    {
+        if (card.Owner.Creature != Owner)
+        {
+            return Task.CompletedTask;
+        }
 
         // 有卡牌离开手牌
         if (oldPileType == PileType.Hand)
         {
-            // 发生从手牌到结算区的变化（丢弃奇巧牌不会被纳入，因为是从弃牌堆到结算区）
-            if (card.Pile?.Type == PileType.Play)
-            {
-                // 确定卡牌是否为之前记录的左右端侧牌
-                if (card == _leftCard)
-                {
-                    if (_rightCard is not null)
-                    {
-                        await CardCmd.DiscardAndDraw(
-                            new BlockingPlayerChoiceContext(),
-                            [_rightCard],
-                            1
-                        );
-                        UpdateRecord();
-                        await PowerCmd.Decrement(this);
-                    }
-                }
-                else if (card == _rightCard)
-                {
-                    if (_leftCard is not null)
-                    {
-                        await ExtCardCmd.DiscardAndDraw(
-                            new BlockingPlayerChoiceContext(),
-                            [_leftCard],
-                            1
-                        );
-                        await PowerCmd.Decrement(this);
-                    }
-                }
-            }
-            UpdateRecord();
+            // if (card.Pile?.Type != PileType.Play)
+            //     UpdateRecord();
         }
 
         // 有卡牌进入手牌
@@ -104,6 +115,8 @@ public class SwiftPower : MantisJuggernautPower
         {
             UpdateRecord();
         }
+
+        return Task.CompletedTask;
     }
 
     public override async Task AfterSideTurnEnd(

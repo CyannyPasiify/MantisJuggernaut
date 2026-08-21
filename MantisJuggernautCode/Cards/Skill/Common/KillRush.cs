@@ -54,6 +54,6 @@ public sealed class KillRush() : MantisJuggernautSkillBackswingCard(BaseEnergyCo
     protected override void OnUpgrade()
     {
         DynamicVars.Block.UpgradeValueBy(2m);
-        DynamicVars[nameof(SwiftSlash)].UpgradeValueBy(1m);
+        DynamicVars[nameof(InstinctPower)].UpgradeValueBy(1m);
     }
 }
