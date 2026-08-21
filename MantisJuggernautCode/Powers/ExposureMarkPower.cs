@@ -1,4 +1,5 @@
-﻿using MegaCrit.Sts2.Core.Entities.Creatures;
+﻿using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
@@ -31,9 +32,15 @@ public class ExposureMarkPower : MantisJuggernautPower
     {
         if (target != Owner ||
             !power.IsVisible ||
+            power.InstanceType != PowerInstanceType.None ||
             power.GetTypeForAmount(amount) != PowerType.Debuff)
             return 1m;
 
         return 2m;
+    }
+
+    public override async Task AfterModifyingPowerAmountGiven(PowerModel power)
+    {
+        await PowerCmd.Decrement(this);
     }
 }

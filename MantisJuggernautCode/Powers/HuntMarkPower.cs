@@ -24,12 +24,12 @@ public class HuntMarkPower : MantisJuggernautPower
     [
     ];
 
-    public override async Task AfterDamageReceived(
+    public override async Task AfterDamageGiven(
         PlayerChoiceContext choiceContext,
-        Creature target,
+        Creature? dealer,
         DamageResult result,
         ValueProp props,
-        Creature? dealer,
+        Creature target,
         CardModel? cardSource
     )
     {

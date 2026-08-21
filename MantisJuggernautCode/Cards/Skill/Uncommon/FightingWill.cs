@@ -41,13 +41,17 @@ public sealed class FightingWill() : MantisJuggernautSkillCard(BaseEnergyCost, C
         CardKeyword.Sly
     ];
 
-    protected override bool ShouldGlowGoldInternal => IsPrepared;
+    protected override bool ShouldGlowGoldInternal => IsImbalance;
 
     // 打出时的效果逻辑。
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
-        if (IsImbalance) await PlayerCmd.GainEnergy(DynamicVars[PreparedEnergyVarKey].BaseValue, Owner);
+        if (IsImbalance)
+        {
+            await PlayerCmd.GainEnergy(DynamicVars[PreparedEnergyVarKey].BaseValue, Owner);
+            // await ToState(choiceContext, StanceSate.Balance);
+        }
     }
 
     // 升级后的效果逻辑。

@@ -45,7 +45,7 @@ public sealed class MuscleMemory()
             await PowerCmd.Apply<InstinctPower>(
                 choiceContext,
                 Owner.Creature,
-                DynamicVars[nameof(InstinctPower)].BaseValue,
+                num,
                 Owner.Creature,
                 this
             );

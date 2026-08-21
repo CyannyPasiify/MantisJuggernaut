@@ -33,7 +33,7 @@ public class AnxietyPower : MantisJuggernautPower
         if (!participants.Contains(Owner) || Owner.Player is null) return;
 
         var slyCards = PileType.Hand.GetPile(Owner.Player).Cards
-            .Where(e => e.Keywords.Contains(CardKeyword.Sly))
+            .Where(e => e.Keywords.Contains(CardKeyword.Sly) && !e.Keywords.Contains(CardKeyword.Retain))
             .ToList();
 
         for (var i = 0; i < Amount && slyCards.Count > 0; i++)

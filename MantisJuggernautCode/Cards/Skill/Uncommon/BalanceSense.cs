@@ -33,7 +33,7 @@ public sealed class BalanceSense() : MantisJuggernautSkillCard(BaseEnergyCost, C
         new EnergyVar(2)
     ];
 
-    protected override bool ShouldGlowGoldInternal => IsBalance;
+    protected override bool ShouldGlowGoldInternal => IsImbalance;
 
     // 打出时的效果逻辑。
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
