@@ -13,7 +13,7 @@ namespace MantisJuggernaut.Cards;
 public sealed class BalanceSense() : MantisJuggernautSkillCard(BaseEnergyCost, CardRarityValue, CardTarget)
 {
     // 基础耗能。
-    private const int BaseEnergyCost = 1;
+    private const int BaseEnergyCost = 0;
 
     // 卡牌稀有度。
     private const CardRarity CardRarityValue = CardRarity.Uncommon;
@@ -33,6 +33,11 @@ public sealed class BalanceSense() : MantisJuggernautSkillCard(BaseEnergyCost, C
         new EnergyVar(2)
     ];
 
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+    [
+        CardKeyword.Retain
+    ];
+
     protected override bool ShouldGlowGoldInternal => IsImbalance;
 
     // 打出时的效果逻辑。
@@ -43,6 +48,7 @@ public sealed class BalanceSense() : MantisJuggernautSkillCard(BaseEnergyCost, C
         {
             await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
         }
+
         if (!IsBalance)
         {
             await ToState(choiceContext, StanceSate.Balance);

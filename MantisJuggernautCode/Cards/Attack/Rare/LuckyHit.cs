@@ -36,6 +36,8 @@ public sealed class LuckyHit()
         new EnergyVar(2)
     ]);
 
+    protected override bool ShouldGlowGoldInternal => base.ShouldGlowGoldInternal || IsBalance;
+
     // 打出时的效果逻辑。
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -45,9 +47,9 @@ public sealed class LuckyHit()
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_lightning")
             .Execute(choiceContext);
-        await base.OnPlay(choiceContext, cardPlay);
 
         if (IsBalance) await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
+        await base.OnPlay(choiceContext, cardPlay);
     }
 
     // 升级后的效果逻辑。

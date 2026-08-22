@@ -21,7 +21,7 @@ public sealed class FightingWill() : MantisJuggernautSkillCard(BaseEnergyCost, C
     // 目标类型（Self 表示自己）。
     private const TargetType CardTarget = TargetType.Self;
 
-    public const string PreparedEnergyVarKey = "PreparedEnergy";
+    public const string ImbalanceEnergyVarKey = "ImbalanceEnergy";
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => base.AdditionalHoverTips.Concat(
     [
@@ -33,7 +33,7 @@ public sealed class FightingWill() : MantisJuggernautSkillCard(BaseEnergyCost, C
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new EnergyVar(1),
-        new EnergyVar(PreparedEnergyVarKey, 1)
+        new EnergyVar(ImbalanceEnergyVarKey, 2)
     ];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
@@ -41,22 +41,25 @@ public sealed class FightingWill() : MantisJuggernautSkillCard(BaseEnergyCost, C
         CardKeyword.Sly
     ];
 
-    protected override bool ShouldGlowGoldInternal => IsImbalance;
+    protected override bool ShouldGlowGoldInternal => IsBalance || IsImbalance;
 
     // 打出时的效果逻辑。
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
+        if (IsBalance)
+        {
+            await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
+        }
         if (IsImbalance)
         {
-            await PlayerCmd.GainEnergy(DynamicVars[PreparedEnergyVarKey].BaseValue, Owner);
-            // await ToState(choiceContext, StanceSate.Balance);
+            await PlayerCmd.GainEnergy(DynamicVars[ImbalanceEnergyVarKey].BaseValue, Owner);
         }
     }
 
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
-        DynamicVars[PreparedEnergyVarKey].UpgradeValueBy(1m);
+        DynamicVars.Energy.UpgradeValueBy(1m);
+        DynamicVars[ImbalanceEnergyVarKey].UpgradeValueBy(1m);
     }
 }

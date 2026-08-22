@@ -23,11 +23,11 @@ public sealed class DepictingLegends() : MantisJuggernautPowerCard(BaseEnergyCos
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
-        HoverTipFactory.FromCard<Omnislash>(IsUpgraded),
-        HoverTipFactory.FromCard<Guillotine>(IsUpgraded),
-        HoverTipFactory.FromCard<TurboWhirl>(IsUpgraded),
+        HoverTipFactory.FromCard<MazeStep>(IsUpgraded),
         HoverTipFactory.FromCard<DominateForce>(IsUpgraded),
-        HoverTipFactory.FromCard<MazeStep>(IsUpgraded)
+        HoverTipFactory.FromCard<TurboWhirl>(IsUpgraded),
+        HoverTipFactory.FromCard<Guillotine>(IsUpgraded),
+        HoverTipFactory.FromCard<Omnislash>(IsUpgraded)
     ];
 
     // 卡牌基础数值。
