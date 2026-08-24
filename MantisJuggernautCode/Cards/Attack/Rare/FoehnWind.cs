@@ -35,7 +35,7 @@ public sealed class FoehnWind()
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Concat(
     [
-        new DamageVar(12m, ValueProp.Move),
+        new DamageVar(14m, ValueProp.Move),
         new PowerVar<RoutPower>(6m)
     ]);
 
@@ -80,6 +80,7 @@ public sealed class FoehnWind()
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
-        AddKeyword(CardKeyword.Innate);
+        DynamicVars.Damage.UpgradeValueBy(6m);
+        DynamicVars[nameof(RoutPower)].UpgradeValueBy(2m);
     }
 }

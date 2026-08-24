@@ -34,7 +34,7 @@ public sealed class AsBlade()
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Concat(
     [
-        new DamageVar(14m, ValueProp.Move),
+        new DamageVar(18m, ValueProp.Move),
         new CardsVar(2)
     ]);
 
@@ -67,7 +67,7 @@ public sealed class AsBlade()
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(6m);
+        DynamicVars.Damage.UpgradeValueBy(8m);
         DynamicVars.Cards.UpgradeValueBy(1m);
     }
 }

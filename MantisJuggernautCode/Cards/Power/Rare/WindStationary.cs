@@ -48,6 +48,6 @@ public sealed class WindStationary() : MantisJuggernautPowerCard(BaseEnergyCost,
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        DynamicVars[nameof(WindStationaryPower)].UpgradeValueBy(1m);
     }
 }

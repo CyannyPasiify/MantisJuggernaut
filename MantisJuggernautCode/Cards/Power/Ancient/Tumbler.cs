@@ -53,6 +53,6 @@ public sealed class Tumbler() : MantisJuggernautPowerCard(BaseEnergyCost, CardRa
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
-        AddKeyword(CardKeyword.Innate);
+        AddKeyword(CardKeyword.Retain);
     }
 }
