@@ -28,7 +28,7 @@ public sealed class StarExoskeleton() : MantisJuggernautPowerCard(BaseEnergyCost
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<StarExoskeletonPower>(20m)
+        new PowerVar<StarExoskeletonPower>(15m)
     ];
 
     // 打出时的效果逻辑。

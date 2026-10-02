@@ -32,8 +32,8 @@ public class BlockadeMarkPower : MantisJuggernautPower
     )
     {
         if (target != Owner || canonicalPower.GetTypeForAmount(amount) != PowerType.Buff || !canonicalPower.IsVisible ||
-            canonicalPower is not StrengthPower ||
-            canonicalPower is not VigorPower ||
+            canonicalPower is not StrengthPower &&
+            canonicalPower is not VigorPower &&
             canonicalPower is not ArtifactPower
            )
         {

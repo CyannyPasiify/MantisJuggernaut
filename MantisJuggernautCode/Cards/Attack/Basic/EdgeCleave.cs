@@ -9,7 +9,7 @@ using STS2RitsuLib.Interop.AutoRegistration;
 namespace MantisJuggernaut.Cards;
 
 [RegisterCard(typeof(MantisJuggernautCardPool))]
-[RegisterCharacterStarterCard(typeof(MantisJuggernautCharacter), Order = 1)]
+[RegisterCharacterStarterCard(typeof(MantisJuggernautCharacter), Order = 3)]
 [RegisterArchaicToothTranscendence(typeof(EdgeFall))]
 public sealed class EdgeCleave()
     : MantisJuggernautAttackBackswingCard(BaseEnergyCost, CardRarityValue, CardTarget)

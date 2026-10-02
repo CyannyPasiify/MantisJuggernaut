@@ -23,7 +23,6 @@ public abstract class MantisJuggernautCard(
     }
 
     // 卡图资源。
-    // 如果你按这行代码写，文件名就对应 MantisJuggernaut/images/cards/MantisJuggernautStrike.png。
     // 这里的 res://MantisJuggernaut/... 是 Godot 资源路径，对应的是你的资源文件夹名字。
     public override CardAssetProfile AssetProfile => new(
         // TODO RitsuLib analyzer: 资源路径 'res://MantisJuggernaut/images/cards/MantisJuggernautCard.png' 在项目资源索引中未找到。

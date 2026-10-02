@@ -35,13 +35,28 @@ public sealed class EdgeFall()
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
+        bool applyHeavyKnock = false;
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+            .WithHitCount(DynamicVars.Repeat.IntValue)
             .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target)
-            .WithHitCount(DynamicVars.Repeat.IntValue)
+            .BeforeDamage(async delegate
+            {
+                if (applyHeavyKnock)
+                {
+                    await ApplyHeavyKnock(choiceContext, cardPlay.Target, HeavyKnockAmount, Owner.Creature, this);
+                }
+                else
+                {
+                    applyHeavyKnock = true;
+                }
+            })
             .WithHitFx("vfx/vfx_heavy_blunt", null, "heavy_attack.mp3")
             .Execute(choiceContext);
-        await ApplyHeavyKnock(choiceContext, cardPlay.Target, HeavyKnockAmount, Owner.Creature, this);
+
+        if (DynamicVars.Repeat.IntValue > 0)
+            await ApplyHeavyKnock(choiceContext, cardPlay.Target, HeavyKnockAmount, Owner.Creature, this);
+
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
         await base.OnPlay(choiceContext, cardPlay);
     }

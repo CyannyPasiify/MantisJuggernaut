@@ -28,7 +28,7 @@ public sealed class BattleDance() : MantisJuggernautPowerCard(BaseEnergyCost, Ca
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<BattleDancePower>(100m)
+        new PowerVar<BattleDancePower>(200m)
     ];
 
     // 打出时的效果逻辑。
@@ -47,6 +47,6 @@ public sealed class BattleDance() : MantisJuggernautPowerCard(BaseEnergyCost, Ca
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
-        DynamicVars[nameof(BattleDancePower)].UpgradeValueBy(100m);
+        AddKeyword(CardKeyword.Innate);
     }
 }

@@ -34,7 +34,7 @@ public sealed class AsBlade()
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Concat(
     [
-        new DamageVar(18m, ValueProp.Move),
+        new DamageVar(24m, ValueProp.Move),
         new CardsVar(2)
     ]);
 

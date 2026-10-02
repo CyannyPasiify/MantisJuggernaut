@@ -11,7 +11,7 @@ namespace MantisJuggernaut.Cards;
 // RegisterCard 会把这张牌交给 RitsuLib 自动注册。
 // RegisterCharacterStarterCard 会把它追加进 MantisJuggernautCharacter 的初始卡组。
 [RegisterCard(typeof(MantisJuggernautCardPool))]
-[RegisterCharacterStarterCard(typeof(MantisJuggernautCharacter), 4)]
+[RegisterCharacterStarterCard(typeof(MantisJuggernautCharacter), 4, Order = 0)]
 public sealed class MantisJuggernautStrike() : MantisJuggernautAttackCard(BaseEnergyCost, CardRarityValue, CardTarget)
 {
     // 基础耗能。

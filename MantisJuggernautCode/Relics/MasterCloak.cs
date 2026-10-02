@@ -4,6 +4,7 @@ using MantisJuggernaut.HoverTips;
 using MantisJuggernaut.Powers;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.Extensions;
@@ -11,6 +12,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
@@ -60,12 +62,22 @@ public sealed class MasterCloak : MantisJuggernautRelic
     {
         EnchantmentModel enchant = ModelDb.Enchantment<MasterHeritage>();
         List<CardModel> list = PileType.Deck.GetPile(Owner).Cards.Where(enchant.CanEnchant).ToList();
-        var cards = (await CardSelectCmd.FromDeckForEnchantment(
-                list.UnstableShuffle(Owner.RunState.Rng.Niche).ToList(),
-                enchant,
-                1,
-                new CardSelectorPrefs(CardSelectorPrefs.EnchantSelectionPrompt, DynamicVars.Cards.IntValue))
-            ).ToList();
+        List<CardModel> cards;
+        // 处理初始遗物被替换的特殊情况，附魔末端的若干张牌
+        if (LocalContext.NetId is null)
+        {
+            cards = list.TakeLast(DynamicVars.Cards.IntValue).ToList();
+        }
+        else
+        {
+            cards = (await CardSelectCmd.FromDeckForEnchantment(
+                    list.UnstableShuffle(Owner.RunState.Rng.Niche).ToList(),
+                    enchant,
+                    1,
+                    new CardSelectorPrefs(CardSelectorPrefs.EnchantSelectionPrompt, DynamicVars.Cards.IntValue))
+                ).ToList();
+        }
+
         foreach (var card in cards)
         {
             CardCmd.Enchant<MasterHeritage>(card, 1m);

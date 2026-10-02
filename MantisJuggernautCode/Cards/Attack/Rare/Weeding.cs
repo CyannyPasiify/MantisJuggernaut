@@ -54,16 +54,28 @@ public sealed class Weeding()
             NRun.Instance?.GlobalUi.AddChildSafely(NSmokyVignetteVfx.Create(color, color));
         }
 
-        for (var i = 0; i < num; i++)
-        {
-            await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-                .FromCard(this, cardPlay)
-                .TargetingAllOpponents(CombatState)
-                .WithHitFx("vfx/vfx_giant_horizontal_slash")
-                .Execute(choiceContext);
+        bool applyHeavyKnock = false;
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+            .WithHitCount(num)
+            .FromCard(this, cardPlay)
+            .TargetingAllOpponents(CombatState)
+            .BeforeDamage(async delegate
+            {
+                if (applyHeavyKnock)
+                {
+                    foreach (var enemy in CombatState.HittableEnemies)
+                        await ApplyHeavyKnock(choiceContext, enemy, HeavyKnockAmount, Owner.Creature, this);
+                }
+                else
+                {
+                    applyHeavyKnock = true;
+                }
+            })
+            .WithHitFx("vfx/vfx_giant_horizontal_slash")
+            .Execute(choiceContext);
 
-            foreach (var enemy in CombatState.HittableEnemies)
-                await ApplyHeavyKnock(choiceContext, enemy, HeavyKnockAmount, Owner.Creature, this);
-        }
+        // Last apply
+        foreach (var enemy in CombatState.HittableEnemies)
+            await ApplyHeavyKnock(choiceContext, enemy, HeavyKnockAmount, Owner.Creature, this);
     }
 }

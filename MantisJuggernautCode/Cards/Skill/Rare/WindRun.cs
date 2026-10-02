@@ -35,7 +35,7 @@ public sealed class WindRun()
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Concat(
     [
-        new BlockVar(5m, ValueProp.Move),
+        new BlockVar(7m, ValueProp.Move),
         new PowerVar<SwiftPower>(1m)
     ]);
 
@@ -66,6 +66,6 @@ public sealed class WindRun()
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(2m);
+        DynamicVars.Block.UpgradeValueBy(3m);
     }
 }

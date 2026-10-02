@@ -10,7 +10,7 @@ namespace MantisJuggernaut.Cards;
 
 // 防御牌和打击一样注册到角色卡池，并作为 4 张初始卡加入角色卡组。
 [RegisterCard(typeof(MantisJuggernautCardPool))]
-[RegisterCharacterStarterCard(typeof(MantisJuggernautCharacter), 4)]
+[RegisterCharacterStarterCard(typeof(MantisJuggernautCharacter), 4, Order = 1)]
 public sealed class MantisJuggernautDefend() : MantisJuggernautSkillCard(BaseEnergyCost, CardRarityValue, CardTarget)
 {
     // 基础耗能。
