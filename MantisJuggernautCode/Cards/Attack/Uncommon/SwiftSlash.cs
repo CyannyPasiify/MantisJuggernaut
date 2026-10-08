@@ -12,7 +12,7 @@ namespace MantisJuggernaut.Cards;
 
 [RegisterCard(typeof(MantisJuggernautCardPool))]
 public sealed class SwiftSlash()
-    : MantisJuggernautAttackBackswingCard(BaseEnergyCost, CardRarityValue, CardTarget)
+    : MantisJuggernautAttackCard(BaseEnergyCost, CardRarityValue, CardTarget)
 {
     // 基础耗能。
     private const int BaseEnergyCost = 2;
@@ -31,8 +31,8 @@ public sealed class SwiftSlash()
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars => base.CanonicalVars.Concat(
     [
-        new DamageVar(6m, ValueProp.Move),
-        new PowerVar<SwiftPower>(2m)
+        new DamageVar(8m, ValueProp.Move),
+        new PowerVar<SwiftPower>(3m)
     ]);
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
@@ -65,7 +65,7 @@ public sealed class SwiftSlash()
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(1m);
+        DynamicVars.Damage.UpgradeValueBy(2m);
         DynamicVars[nameof(SwiftPower)].UpgradeValueBy(1m);
     }
 }

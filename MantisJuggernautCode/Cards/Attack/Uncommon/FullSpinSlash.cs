@@ -13,7 +13,7 @@ namespace MantisJuggernaut.Cards;
 
 [RegisterCard(typeof(MantisJuggernautCardPool))]
 public sealed class FullSpinSlash()
-    : MantisJuggernautAttackBackswingCard(BaseEnergyCost, CardRarityValue, CardTarget, true)
+    : MantisJuggernautAttackBackswingCard(BaseEnergyCost, CardRarityValue, CardTarget)
 {
     // 基础耗能。
     private const int BaseEnergyCost = 1;

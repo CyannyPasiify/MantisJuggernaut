@@ -32,7 +32,7 @@ public sealed class RotateMove() : MantisJuggernautSkillCard(BaseEnergyCost, Car
     // 卡牌基础数值。
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new BlockVar(22m, ValueProp.Move)
+        new BlockVar(28m, ValueProp.Move)
     ];
 
     protected override bool IsPlayable => PileType.Hand.GetPile(Owner).Cards.Count == 1;

@@ -34,7 +34,7 @@ public sealed class PincerLock() : MantisJuggernautAttackCard(BaseEnergyCost, Ca
     [
         new DamageVar(5, ValueProp.Move),
         new RepeatVar(2),
-        new PowerVar<BlockadeMarkPower>(1)
+        new PowerVar<BlockadeMarkPower>(2)
     ];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>

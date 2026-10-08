@@ -13,7 +13,7 @@ namespace MantisJuggernaut.Cards;
 // RegisterCard 会把这张牌交给 RitsuLib 自动注册。
 [RegisterCard(typeof(MantisJuggernautCardPool))]
 public sealed class Fastened()
-    : MantisJuggernautAttackBackswingCard(BaseEnergyCost, CardRarityValue, CardTarget)
+    : MantisJuggernautAttackCard(BaseEnergyCost, CardRarityValue, CardTarget)
 {
     // 基础耗能。
     private const int BaseEnergyCost = 1;

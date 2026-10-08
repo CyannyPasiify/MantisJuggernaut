@@ -10,7 +10,7 @@ namespace MantisJuggernaut.Cards;
 
 [RegisterCard(typeof(MantisJuggernautCardPool))]
 public sealed class MuscleMemory()
-    : MantisJuggernautSkillBackswingCard(BaseEnergyCost, CardRarityValue, CardTarget, true)
+    : MantisJuggernautSkillCard(BaseEnergyCost, CardRarityValue, CardTarget)
 {
     // 基础耗能。
     private const int BaseEnergyCost = 0;

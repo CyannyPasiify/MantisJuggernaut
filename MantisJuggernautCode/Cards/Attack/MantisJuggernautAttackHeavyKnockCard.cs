@@ -31,7 +31,9 @@ public abstract class MantisJuggernautAttackHeavyKnockCard(
 
     public decimal HeavyKnockAmount => DynamicVars[HeavyKnockVar.Key].BaseValue;
 
-    public async Task ApplyHeavyKnock(PlayerChoiceContext choiceContext, Creature target,
+    public async Task ApplyHeavyKnock(
+        PlayerChoiceContext choiceContext, 
+        Creature target,
         decimal amount,
         Creature? applier,
         CardModel? cardSource

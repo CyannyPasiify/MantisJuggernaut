@@ -50,6 +50,7 @@ public sealed class WindCall() : MantisJuggernautSkillCard(BaseEnergyCost, CardR
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
+        DynamicVars.Block.UpgradeValueBy(1m);
         DynamicVars.Cards.UpgradeValueBy(1m);
     }
 }
