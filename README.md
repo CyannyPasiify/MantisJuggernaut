@@ -1,260 +1,219 @@
-# MantisJuggernaut
+# 曼提斯武装猎手
 
-语言 / Languages：中文 | [English](README.en.md)
+基础角色：静默猎手
 
-一个可复制、可构建的 RitsuLib Mod 模板，提供通用的 Godot/C# 工程结构、示例内容和静态占位资源。
+初始遗物：
 
-**模板包含：**
+- 虫翼披风：战斗开始时，进入衡势。
+- 大师披风：战斗开始时，进入衡势。拾起时，从你的牌组中选择至多3张牌添加奇巧。
 
-- 一个 `[ModInitializer]` 入口，外加最小自定义角色（含角色卡池、遗物池、药水池）。
-- 4 张初始打击、4 张初始防御和 1 个初始遗物示例。
-- 最小 Godot 静态占位场景：战斗模型、能量表盘、角色选择背景、商店和火堆。
-- 从原版资源复制并按模板命名的占位 PNG，复制模板后可直接替换。
-- 中英文基础本地化文件。
-- 完整的 Godot 项目、导出配置、Mod manifest 和 MSBuild 构建脚本。
+## 机制
 
-## 学习资源
+左/右蓄势[Left/Right Backswing]：初始层数上限1。
 
-- [STS2-RitsuLib](https://github.com/BAKAOLC/STS2-RitsuLib)：Slay the Spire 2 Mod 的共享框架库，本模板基于它提供内容注册、角色脚手架和 Godot 资源接入能力。
-- [RitsuLib 文档地址](https://github.com/GlitchedReme/SlayTheSpire2ModdingTutorials/tree/master/RitsuLib)：按文件阅读教程和示例。
-- [Slay the Spire 2 Modding Tutorials 网页版](https://glitchedreme.github.io/SlayTheSpire2ModdingTutorials/index.html)：完整教程站点。
-- 模板 Wiki（以 Rider 为主线）：[中文首页](https://github.com/alkaid616/MantisJuggernaut/wiki/Home) | [English Home](https://github.com/alkaid616/MantisJuggernaut/wiki/Home-EN)。
+- 使用带有右>/<左挥舞的攻击牌时，使伤害+50%。
+- 使用带有<左/右>挥舞的攻击牌时，使伤害减半。
+- 根据挥舞方向和数值修改蓄势，如果蓄势清零则进入衡势；如果超出上限则进入失衡，失衡层数等同于溢出量。
+- 处于蓄势状态时，受到未被格挡的伤害时会随机增减蓄势。
 
-## 安装与使用
+衡势[Balance]：回合开始时，抽1张牌。
 
-这个项目可以通过两种方式获得：使用 NuGet 模板自动生成，或者手动复制目录。
+失衡：每层使受到的伤害+50%，使伤害减半。回合开始时进入衡势。如果是敌人，则清除状态。
 
-### 方式 A：使用 NuGet 模板（推荐）
+偏斜：通过带有重击效果的攻击牌给予敌人偏斜状态。偏斜层数超过1时进入失衡，失衡层数等同于溢出量。
 
-```powershell
-# 安装模板
-dotnet new install STS2.RitsuLib.ModTemplate
+重击：没有偏斜时给予敌人偏斜，如果敌人已经偏斜，使其进入失衡。对失衡的敌人重击将增加失衡层数。
 
-# 创建新 Mod
-dotnet new ritsulibmod -n MyMod
+本能：下一次丢弃手牌时，抽牌。
 
-# 卸载模板
-dotnet new uninstall STS2.RitsuLib.ModTemplate
+## 流派化
+
+### 蓄势控制
+
+衡势/失衡增益：一些卡牌在衡势/失衡状态下可触发特效。
+
+蓄势+失衡重击：增伤。
+
+### 运转控制
+
+疾风：在此状态下使用最左/右侧牌时，将丢弃最右/左侧牌并抽牌补充。回合结束时疾风最多保留5层。
+
+卡池控制：提供要求手牌数、抽牌堆、弃牌堆牌数关系作为打出条件的牌。
+
+准备：最左侧的手牌为已准备牌。
+
+### 次要
+
+标记：提供几种带有减益效果的标记。赏金标记、猎食标记、暴露标记（提升某些负面状态的给予量）、拘束标记（阻止一些增益效果的获取）。
+
+```
+攻-防-能力=32:32:18
 ```
 
-`dotnet new ritsulibmod -n MyMod` 会生成名为 `MyMod` 的工程，并把模板中的 `MantisJuggernaut`、示例类名、资源文件名、资源目录、manifest 名称、namespace 和本地化 id 同步替换成新名称。
+**基础：**
 
-### 方式 B：手动复制模板
+- [x] 1c-打击[x5]：造成6（9）点伤害。
+- [x] 1c-防御[x5]：获得5（8）点格挡。
+- [x] 1c-斩锋[EdgeCleave]：<左。造成6（8）点伤害。获得3（4）点格挡。
+- [x] 1c-斫刃[GrindBlade]：右>。造成3（4）点伤害。获得5（8）点格挡。
 
-1. 复制整个目录并改名为你的 Mod 名称。
-2. 修改 `MantisJuggernaut.json` 里的 `id`、`name`、`author`、`description`。
-3. 修改 `MantisJuggernautCode/Entry.cs` 里的 `ModId`。
-4. 如需彻底改名，同时修改 `.csproj`、`.sln`、`project.godot` 的项目名和命名空间。
-5. 把资源目录 `MantisJuggernaut/` 改成你的 `ModId`，并同步更新代码中的 `Entry.ResPath` 相关路径。
+**先古：**
 
-## 配置本机路径
+- [x] 1c-锋坠[EdgeFall]：<左。重击。造成6（7）点伤害2（3）次。获得6（7）点格挡。
+- [x] 1c-衔势[Tumbler]：（固有。）每当你切换架势时，在本回合内获得1点力量和1点敏捷。
 
-```powershell
-Copy-Item .\local.props.template .\local.props
-```
+**数值基准：攻防1c7（10），AOE 1c6（9），消耗1c9（12）**
 
-在 `local.props` 中设置以下值（文件已在 `.gitignore`，不要提交）：
+**攻击32张：**
 
-| 字段 | 说明 |
-|---|---|
-| `Sts2Dir` | Slay the Spire 2 安装目录 |
-| `Sts2DataDir` | 游戏 dll 目录，通常是 `$(Sts2Dir)/data_sts2_windows_x86_64` |
-| `GodotExe` | 用于导出 pck 的 MegaDot/Godot 可执行文件 |
-| `RitsuLibDeployDir` | RitsuLib 本机部署目录，默认 `$(Sts2Dir)/mods/STS2-RitsuLib`。这是 RitsuLib 包/构建逻辑把 RitsuLib 复制到游戏 mods 目录的位置，**不是当前 Mod 自身的输出目录** |
+**衍生：**
 
-## RitsuLib 版本兼容性
+- [x] 0c-本能挥斩[InstinctSlash]：<左/右>。造成7（10）点伤害。消耗。
 
-> ⚠️ **重要：发布前请校对 manifest 与 csproj 版本对齐**
->
-> `MantisJuggernaut.json` 中 `dependencies[STS2-RitsuLib].version` **必须**与 `.csproj` 里 `STS2.RitsuLib` 包实际编译使用的版本一致。模板构建时会自动同步该依赖版本；`min_game_version` 和有意声明较低运行时下限的场景仍需人工确认。详细步骤见下方 [发布前 checklist：版本对齐](#发布前-checklist版本对齐)。
+**普通：**12
 
-### 当前版本快照（截至 2026-05-22）
+- [x] 0c-强袭[Assault]：<左。造成6（9）点伤害。丢弃1张牌。
+- [x] 1c-狂乱[Frenzy]：随机（下一次是<左！）。随机对敌人造成4点伤害4（5）次。每段攻击都应用引势。
+- [x] 1c-横扫[Sweep]：右>。对所有敌人造成8（11）点伤害。
+- [x] 1c-落刃[DownCut]：造成9（12）点伤害。衡势：具有重击。
+- [x] 1c-借力打力[Redirect]：奇巧。造成6（9）点伤害。抽1张牌。
+- [x] 1c-疾风打击[SwiftStrike]：奇巧。造成1点伤害4次。获得2（3）层疾风。
+- [x] 1c-缠斗[Fastened]：造成8（10）点伤害。击中偏斜或失衡的敌人时，随机1（2）张手牌的耗能在打出前减少1能量。
+- [x] 1c-头甲冲撞[HelmCharge]：造成9（12）点伤害。选择2张牌分别放到手牌最左侧和最右侧。
+- [x] 1c-关节打击[JointStrike]：造成7（9）点伤害。如果敌人的意图是攻击，给予1（2）层虚弱，否则给予1（2）层易伤。
+- [x] 2c-战车[Juggernaut]：保留。对所有敌人造成12（16）点伤害。准备：回合结束时，这张牌在本场战斗中的伤害增加6（8）。
+- [x] 0c-尖兵[Vanguard]：准备时才能打出。对所有敌人造成12（18）点伤害。获得2层本能。
+- [x] 2c-差合斩[WhiffPunish]：右>。重击。造成8（10）点伤害。将1张反向的本能挥斩（+）加入你的手牌。
 
-| 项 | 值 |
-|---|---|
-| STS2 游戏当前版本 | `0.106.0` |
-| RitsuLib 当前版本 | `0.3.0` |
-| 模板 manifest 状态 | `min_game_version` 与 `dependencies[STS2-RitsuLib].version` 已对齐 |
+**罕见：**12
 
-### 版本对应表
+- [x] 2c-倒钩刺[BarbedThrust]：造成16（20）点伤害。准备一张牌，如果是攻击牌则将其打出。
+- [x] 0c-团身踢[TuckedKick]：造成6点伤害。失衡：进入衡势，抽1（2）张牌。
+- [x] 1c-啃食[Gnaw]：造成4点伤害。获得2（3）层本能。给予猎食标记4（6）。消耗。
+- [x] 1c-疾风乱舞[GaleFlurry]：奇巧。造成4（5）点伤害。你每有1层疾风，就再造成1次伤害。
+- [x] 1c-封锁夹击[PincerLock]：造成5点伤害2次。衡势：给予拘束标记2（3）。消耗。
+- [x] 1c-全回旋斩[FullSpinSlash]：<左。造成9（12）点伤害。衡势：从抽牌堆中将2张耗能最高的牌放入手牌。
+- [x] 1c-会心一击[CriticalHit]：右>。造成4（5）点伤害。丢弃任意数量的手牌。每丢弃1张牌，此牌就额外造成4（5）点伤害。
+- [x] 2c-跃空袭[LeapingSlash]：重击。造成8（11）点伤害。每当你在回合进行中抽到这张牌时，耗能在本回合减少1。
+- [x] 2c-起势[StarterHit]：右>。造成7点伤害。将2种方向的本能挥斩（+）加入你的手牌。
+- [x] 2c-迅风切[SwiftSlash]：奇巧。对所有敌人造成8（10）点伤害。获得3（4）层疾风。
+- [x] 2c-钻心[Piercing]：造成10（14）点伤害。给予2层易伤。每当这张牌被送入弃牌堆时，增加6（8）点伤害。
+- [x] 3c-谢幕[FinishIt]：重击。造成10点伤害3次。斩杀时，对随机敌人再次打出这张牌。[消耗。]
 
-下表汇总主要边界版本对应的 STS2 主要目标版本，整理自 [STS2-RitsuLib Releases](https://github.com/BAKAOLC/STS2-RitsuLib/releases) 的公告。未在表中显式列出的小版本沿用所在区间；遇到边界版本时以对应 release notes 为准。
+**稀有：**8
 
-| RitsuLib 版本 | 主要目标 STS2 版本 | 兼容（Compat）包 |
-|---|---|---|
-| `v0.3.0+`（2026-05-22 起） | `0.106.0` | `0.103.2`；删除了 `0.104.0` 兼容支持 |
-| `v0.2.29` ~ `v0.2.40` | `0.105.1` | `0.104.0`、`0.103.2` |
-| `v0.2.27` ~ `v0.2.28` | `0.105.0` | `0.104.0`、`0.103.2` |
-| `v0.2.0` ~ `v0.2.26` | `0.104.0` | 自 `v0.2.6` 起实验性提供 `0.103.2`；同步移除 `0.99.1` 兼容 |
-| `v0.0.x` / `v0.1.x` | `0.99.1` 及更早 | — |
+- [x] 2c-焚风[FoehnWind]：（固有。）对所有敌人造成12点伤害。给予所有敌人6层溃乱。消耗。
+     - 溃乱：每次受到攻击伤害时，受到等同于溃乱的伤害，增加溃乱层数。回合结束时变为1层。
 
-### 包选择：主线与兼容包
+- [x] 2c-追踪镖[TrackingDart]：造成8（12）点伤害。给予敌人等量的赏金标记。消耗。
+- [x] 1c-底牌尽出[AllIn]：手牌中每有1张牌，随机对敌人造成3（4）点伤害。丢弃你的所有手牌，然后抽取相同数量的牌。
+- [x] 0-噩梦[Nightmare]：只有当手牌数量大于等于8（6）时才能打出。对所有敌人造成你在本场战斗中抽牌总数的伤害。（造成n点伤害。）
+- [x] 2c-化身成刃[AsBlade]：奇巧。保留。造成14（20）点伤害，进入失衡。失衡：进入衡势，抽2（3）张牌。
+- [x] 2c-风之斧[WindAxe]：（重击。）造成6点伤害。获得1层疾风。准备：每当你打出一张牌后，使用此牌效果一次。
+- [x] 2c-幸运一击[LuckyHit]：右>。造成16（18）点伤害。衡势：获得2（3）能量。
+- [x] Xc-芜杂尽灭[Weeding]：重击。对所有敌人造成7点伤害X（X+1）次。
 
-模板默认引用主线 `STS2.RitsuLib`，跟踪 NuGet 最新版本：
+**技能32张：**
 
-```xml
-<PackageReference Include="STS2.RitsuLib" Version="*" GeneratePathProperty="true" />
-```
+**普通：**11
 
-**三个 RitsuLib 包一次只能启用一个。** 仍针对老分支的代码，注释主线包并启用对应兼容包：
+- [x] 1c-诛杀步[KillRush]：右>。获得7（9）点格挡。获得1（2）层本能。
+- [x] 0c-情势急转[SituationReversed]：丢弃1张牌。从抽牌堆中将1（2）张同类型的耗能最高的牌放入手牌。
+- [x] 1c-架臂[ArmHold]：获得9（12）点格挡。进入随机方向蓄势。
+- [x] 2c-风声[WindCall]：奇巧。获得4（5）点格挡。抽1（2）张牌。
+- [x] 1c-留有后招[Countermove]：<左。获得8（11）点格挡。准备一张牌。
+- [x] 1c-看破[SeeThrough]：奇巧。给予所有意图为攻击的敌人2（3）层虚弱。
+- [x] 0c-轻装上阵[LightPack]：至多丢弃2（3）张牌。在下回合获得等同于弃牌数的能量。
+- [x] 1c-天生猎手[BornHunter]：给予2层易伤。将1张随机方向的本能挥斩（+）加入你的手牌。
+- [x] 2c-复位[ResetStance]：获得13（16）点格挡。进入衡势。准备：这张牌的耗能变为0。
+- [x] 1c-虚步[EmptyMove]：抽3（4）张牌。随机丢弃1张手牌中耗能最高的牌。
+- [x] 1c-魔爪[FiendGrip]：右>。将3张同向的本能挥斩（+）加入你的手牌。
 
-```xml
-<!-- STS2 0.104.0 兼容分支（v0.3.0 起已停止维护） -->
-<PackageReference Include="STS2.RitsuLib.Compat.0.104.0" Version="*" />
+**罕见：**13
 
-<!-- STS2 0.103.2 兼容分支 -->
-<PackageReference Include="STS2.RitsuLib.Compat.0.103.2" Version="*" />
-```
+- [x] 1c-风流[WindFlow]：左<。抽1张牌。获得2（3）层疾风。
+- [x] 0c-断尾[DockTail]：（保留。）失去1点生命。消耗1张牌。
+- [x] Xc-肌肉记忆[MuscleMemory]：奇巧。获得X（+1）层本能。
+- [x] 1（0）c-精湛[Exquisite]：选择1张手牌添加奇巧。消耗。
+- [x] 1c-伺机待发[InPosition]：（奇巧。）你打出的下一张牌耗能变为0能量。
+- [x] 1c-撩乱重心[PoseDisruption]：如果敌人的意图是攻击，给予失衡。衡势：抽1（2）张牌。
+- [x] 2c-苦战斗志[FightingWill]：奇巧。获得1能量。失衡：获得1（2）能量。
+- [x] 1（0）c-热血[HotBlood]：给予4层溃乱。消耗。
+- [x] 1c-接二连三[OneAfterAnother]：抽2张牌。选择至多2（4）张手牌并按序置于手牌左侧。
+- [x] 3c-猎物伪装[DisguiseOfPrey]：奇巧。抽2（3）张牌。准备一张牌。
+- [x] 1c-旋身收招[RotateMove]：只有当这是你的最后一张手牌时才能打出。获得28（36）点格挡。进入衡势。
+- [x] 1c-渗入缝隙[Penetration]：去除人工制品。给予2（3）层暴露标记。消耗。
+- [x] 1c-平衡感[BalanceSense]：进入衡势。失衡：获得2（3）能量。
 
-兼容包只是选择对应游戏分支，并不会恢复所有旧 API；部分老 Mod 仍然需要修改并重新编译。
+**稀有：**8
 
-项目还引用 `Nothing.STS2RitsuLib.ModAnalyzers` —— 一个 AI 编写的辅助分析器，开发期会提示 RitsuLib Mod 模板中常见的 manifest 和资源配置问题。
+- [x] 2c-即兴序幕[Improvisation]：用随机本能挥斩填满你的手牌。[消耗。]
+- [x] 0c-龙卷[Tornado]：（固有。）获得5层疾风。抽2张牌。准备一张牌。消耗。
+- [x] 1c-动能淬刃[KineticQuenching]：为手牌中的所有攻击牌添加动量5（8）附魔。消耗。
+- [x] 1c-化为风影[WindySelf]：消耗所有手牌。获得等量层数的疾风。抽3（5）张牌。消耗。
+- [x] 1（0）c-闪烁[Blink]：准备一张牌。获得等同于其耗能的能量。
+- [x] 3-虫群[Swarm]：奇巧。随机重复3（4）次，使敌人失去1点生命，给予1层溃乱。将此牌返回你的手牌。
+- [x] 4c-如影随形[ShadowExistence]：不能被打出。准备：每当你打出一张名称不是本能挥斩（+）的牌后，将1张随机方向的本能挥斩（+）加入你的手牌。
+- [x] 2c-风行[WindRun]：获得5（7）点格挡。获得1层疾风。准备：每当你打出一张牌，使用此牌效果一次。
 
-### 发布前 checklist：版本对齐
+**能力18张：**
 
-> **`.csproj` 里的 `PackageReference` 只控制编译时拉取；`MantisJuggernaut.json` 的 `dependencies` 是游戏加载器在运行时校验的。模板会在构建时把 `STS2-RitsuLib` 依赖版本同步为实际解析到的 NuGet 版本，但 `min_game_version` 仍需人工确认。**
+**罕见：**9
 
-如果发布时 manifest 没有同步到编译使用的新版 RitsuLib，玩家装了旧版 RitsuLib 仍能通过 manifest 校验、运行时却会因 API 缺失或签名变化崩掉；反过来 manifest 写得过新，会让本来能跑的玩家被错误拒绝。
+- [x] 1c-假破绽[FakeFlaw]：每当你进入失衡时，获得6（8）点格挡。
+- [x] 1c-高速[HighSpeed]：获得1（2）点敏捷。在你的回合开始时，获得1层本能。
+- [x] 1（0）c-藏锋[HiddenBlade]：准备一张牌。在你的回合开始时，准备一张牌。
+- [x] 1c-伏击[Ambush]：每回合你第一次抽到奇巧牌时，丢弃它，抽1（2）张牌。
+- [x] 0c-急眼[Anxiety]：在你的回合结束时，随机保留你手牌中的1（2）张奇巧牌，其耗能增加1能量。
+- [x] 1c-舞刃[BladeDance]：每[回合首次]当你打出3张本能挥斩后，将1张随机方向的本能挥斩加入你的手牌。
+- [x] 1c-当身技[AtemiWaza]：如果敌人的攻击被你完全格挡，进入衡势，并对其造成7（10）点伤害。
+- [x] 1c-巧劲[SubtleTechnique]：在你的回合内第一次进入失衡时，进入衡势，在本回合内获得3（5）点力量。
+- [x] 1c-纯粹本能[PureInstinct]：本能挥斩额外造成6（9）点伤害。
 
-每次发布前请：
+**稀有：**9
 
-1. 构建后确认 `MantisJuggernaut.json` 的 `dependencies[STS2-RitsuLib].version` 已同步为实际解析到的 `STS2.RitsuLib` 版本。
-2. 切换到兼容包（`Compat.0.104.0` / `Compat.0.103.2`）时，把 `min_game_version` 同步调到对应分支；`dependencies[].id` 保持 `STS2-RitsuLib`（兼容包对外暴露的 mod id 不变）。
-3. 如果 manifest 版本是作为"运行时下限"而不是编译版本（例如声明 `0.3.0+` 都可用），在发布说明里明确，并自己测过下限能跑通。
+- [x] 1（0）c-风息于一[WindStationary]：每当你进入衡势时，抽1张牌。
+- [x] 2c-风刃[WindBlade]：奇巧。每当你在回合内打出1张攻击牌时，对所有敌人造成1（2）点伤害。
+- [x] 1（0）c-迷踪[SlyZone]：每当你在回合内打出1张奇巧牌时，获得1层疾风。
+- [x] 1c-碾碎[Crush]：对生命值小于等于50%的敌人所造成的攻击伤害增加50（100）%。
+- [x] 2c-星虫外骨骼[StarExoskeleton]：你单次失去的生命值不会超过15（10）点。
+- [x] 0c-战舞[BattleDance]：（固有。）抽牌堆和弃牌堆牌数相等时，你造成的伤害增加200%。
+- [x] 1c-百变本能[VersatileInstinct]：本能挥斩获得随机（更加强大）的附魔。
+   - 共有：锋利3（5），伶俐3（5），迅速2（3），墨影
+   - 华彩，本能，播种
+- [x] 3c-摹绘传奇[DepictingLegends]：你的回合开始时，将1张（升级的）随机传奇战技加入你的手牌。
+- [x] 3c-猎影形态[ShadowForm]：每当你抽到奇巧牌时，丢弃此牌并在手牌中生成（升级的）复制品。
 
-### 升级注意事项
+**传奇：**5
 
-#### 升级到 RitsuLib `v0.3.0` / STS2 `0.106.0`
+- [x] 3c-无敌斩[Omnislash]：奇巧。获得1层缓冲。随机对敌人造成4（5）点伤害4（5）次。消耗。
+- [x] 3c-断头台[Guillotine]：奇巧。给予2层易伤。造成20（28）点伤害。消耗。
+- [x] 3c-旋风劈[TurboWhirl]：奇巧。获得3（5）层疾风。对所有敌人造成8点伤害3次。消耗。
+- [x] 3c-拨千斤[DominateForce]：奇巧。获得1层滑溜。抽6（9）张牌。消耗。
+- [x] 3c-迷踪步[MazeStep]：奇巧。获得2（3）能量。获得6点格挡2次。消耗。
 
-主要变化（来自 [v0.3.0 release notes](https://github.com/BAKAOLC/STS2-RitsuLib/releases/tag/v0.3.0)）：
+# 武装猎手
 
-- **破坏性变更**：移除 `RunSidecar` 相关设计，完全被 `RunSavedData` 取代。
-- 新增 `TargetType` 注册能力，支持自定义 `TargetType`。
-- 加强 Loader 的加载目标检测：分支版本文件使用哈希校验，未匹配的版本被丢弃。
-- 移除 `0.104.0` 兼容支持。
+## 药水
 
-#### 升级到 RitsuLib `v0.2.27` / STS2 `0.105.0`（历史）
+[普通]
 
-仍从更早分支（`v0.2.0` ~ `v0.2.26` / STS2 `0.104.0`）迁移时请检查：
+[罕见]
 
-- 版本条件编译改为累积区间宏 `STS2_AT_LEAST_<ver>`；旧的 `STS2_V_<ver>` 不再推荐。
-- AnyPlayer / AnyAny 目标逻辑调整；旧卡牌目标、基础构造函数签名和注册逻辑要按新 API 检查。
-- 卡牌右下角支持额外图标数量标签，并处理与原版 UI 的冲突；自定义 UI 或图标补丁需确认显示层级和位置。
-- 保留/flush 相关 hook 和 event 有替换、移除或 `[Obsolete]` 标记；旧代码使用 `CardRetainedEvent`、`CardsFlushedEvent` 或旧 `Hook.*` 入口需迁移。
-- `Badge`、`BadgeRuntimeTemplate`、`BadgePool.CreateAll` 和 `ModBadgeTemplate` 构造签名调整；旧代码可能需更新以避免 `MissingMethodException`。
+[稀有]
 
-## 构建
+## 遗物
 
-| 命令 | 行为 |
-|---|---|
-| `dotnet build .\MantisJuggernaut.csproj` | 完整构建：编译 + `CopyMod` + `ExportPCK` |
-| `... /p:RunPckExport=false` | 跳过 PCK 导出（不需要 `GodotExe`） |
-| `... /p:CopyModOnBuild=false` | 跳过复制到游戏 mods 目录（产物只留在 `bin/`） |
-| `... /p:RunPckExport=false /p:CopyModOnBuild=false` | 仅验证 C# 编译 |
+[普通]
 
-完整构建会在 `Build` 之后运行两个 MSBuild target：
+[罕见]
 
-- **`CopyMod`**：复制 dll 和 manifest 到游戏的 `mods/MantisJuggernaut` 目录。
-- **`ExportPCK`**：调用 `GodotExe` 导出 pck 到同一个 Mod 目录。
+[罕见]
 
-> `RitsuLibDeployDir` 只控制 RitsuLib 框架自身的部署位置；当前 Mod 的 dll、manifest 和 pck 由 `ModOutputDir` 控制（默认 `$(Sts2Dir)/mods/$(MSBuildProjectName)`）。
+[稀有]
 
-## 目录结构
+[稀有]
 
-```text
-MantisJuggernaut/
-├── MantisJuggernautCode/   # C# 源码
-├── MantisJuggernaut/       # Godot 资源、本地化和占位场景
-├── MantisJuggernaut.csproj
-├── MantisJuggernaut.json   # Mod manifest
-├── project.godot
-└── local.props.template
-```
+[稀有]
 
-`res://MantisJuggernaut/...` 是 Godot/PCK 内的资源路径，对应仓库里的 `MantisJuggernaut/` 资源目录，**不是 C# namespace**。通过 NuGet 模板创建项目时，这些目录名、文件名和 namespace 会按新 Mod 名同步替换。
-
-## 模板内容
-
-### 示例角色
-
-| 项 | 值 |
-|---|---|
-| 类型 | `MantisJuggernautCharacter` |
-| 预期 id | `MANTIS_JUGGERNAUT_CHARACTER_MANTIS_JUGGERNAUT_CHARACTER` |
-| starter 牌组 | 4 × `MantisJuggernautStrike`、4 × `MantisJuggernautDefend`、1 × `MantisJuggernautRelic` |
-| 资源配置 | `CharacterAssetProfile`；模板只指定静态占位资源，未指定的音频/拖尾/转场等字段从 `PlaceholderCharacterId` 回退 |
-
-### 示例卡牌与遗物
-
-| 类型 | 池 | 预期 id |
-|---|---|---|
-| `MantisJuggernautStrike`（攻击） | 角色卡池 | `MANTIS_JUGGERNAUT_CARD_MANTIS_JUGGERNAUT_STRIKE` |
-| `MantisJuggernautDefend`（技能） | 角色卡池 | `MANTIS_JUGGERNAUT_CARD_MANTIS_JUGGERNAUT_DEFEND` |
-| `MantisJuggernautRelic` | `MantisJuggernautRelicPool` | `MANTIS_JUGGERNAUT_RELIC_MANTIS_JUGGERNAUT_RELIC` |
-
-### 静态占位资源
-
-**图片**（`res://MantisJuggernaut/images/...`）：
-
-- `cards/MantisJuggernautStrike.png`、`cards/MantisJuggernautDefend.png`：示例卡图。
-- `relics/MantisJuggernautRelic.png`：示例遗物图标。
-- `characters/MantisJuggernaut_character_*.png`：角色头像、角色选择图、地图标记和能量图标。
-
-**场景**（`res://MantisJuggernaut/scenes/characters/...`）：
-
-| 场景文件 | 用途 | 占位结构 |
-|---|---|---|
-| `MantisJuggernaut_character.tscn` | 战斗人物 | `%Visuals`、`%Bounds`、`%IntentPos`、`%CenterPos`、`%TalkPos` |
-| `MantisJuggernaut_energy_counter.tscn` | 能量表盘 | `%EnergyVfxBack`、`%Layers`、`%RotationLayers`、`%EnergyVfxFront`、`Label` |
-| `MantisJuggernaut_merchant.tscn` | 商店人物 | — |
-| `MantisJuggernaut_rest_site.tscn` | 火堆人物 | `%ControlRoot`、`%SelectionReticle`、`%Hitbox`、`%ThoughtBubbleRight`、`%ThoughtBubbleLeft` |
-| `MantisJuggernaut_character_select_bg.tscn` | 角色选择背景 | — |
-
-这些资源只用于保证模板可见、可替换，不追求原版动画效果。复制模板后替换为自己的素材即可；如果改了路径，同步更新对应 `AssetProfile`。
-
-## Manifest 格式
-
-`MantisJuggernaut.json` 是 Mod 的清单文件，游戏加载器在启动时读取它来识别 Mod、检查依赖、决定是否加载。完整示例：
-
-```json
-{
-  "id": "MantisJuggernaut",
-  "name": "MantisJuggernaut",
-  "pck_name": "MantisJuggernaut",
-  "author": "Author",
-  "description": "A starter Slay the Spire 2 mod template built on RitsuLib.",
-  "version": "0.0.0",
-  "has_pck": true,
-  "has_dll": true,
-  "affects_gameplay": true,
-  "min_game_version": "0.106.0",
-  "dependencies": [
-    { "id": "STS2-RitsuLib", "version": "0.3.0" }
-  ]
-}
-```
-
-### 字段说明
-
-| 字段 | 类型 | 说明 |
-|---|---|---|
-| `id` | string | Mod 唯一标识。**必须与 `Entry.ModId` 完全一致**，也建议与 `mods/<id>` 目录名一致。游戏内依赖、本地化前缀和资源路径都依赖这个值 |
-| `name` | string | Mod 列表中的显示名，可包含空格和中文 |
-| `pck_name` | string | `.pck` 文件名（不含扩展名）。**必须与 `.csproj` 实际导出的 PCK 文件名一致**，否则即使 `has_pck=true` 也加载不到资源 |
-| `author` | string | 作者名，显示用 |
-| `description` | string | Mod 简介，显示在 Mod 列表 |
-| `version` | string | 此 Mod 自身的版本号，建议 SemVer（`主.次.修`），每次发布前更新 |
-| `has_pck` | bool | 是否分发 `.pck`。纯代码 Mod 可置 `false` 并跳过 `ExportPCK` |
-| `has_dll` | bool | 是否分发 `.dll`。纯资源 Mod 可置 `false` |
-| `affects_gameplay` | bool | 是否影响游戏玩法。开启后游戏会在存档/成就等处做相应标记；仅纯视觉/本地化可设 `false` |
-| `min_game_version` | string | 兼容的最低 STS2 版本，低于该版本拒绝加载。**应与 `.csproj` 选用的 RitsuLib 包面向的游戏分支匹配**（见上文 [RitsuLib 版本兼容性](#ritsulib-版本兼容性)） |
-| `dependencies` | array | 依赖列表。每项使用 `id` + `version`。**旧版单对象 `min_version` 写法已不支持** |
-| `dependencies[].id` | string | 被依赖 Mod 的 `id`。RitsuLib 框架的 id 是 `STS2-RitsuLib` |
-| `dependencies[].version` | string | 被依赖 Mod 的最低版本。**`STS2-RitsuLib` 的版本必须与 `.csproj` 编译时的 NuGet 版本严格一致**，详见上文 [发布前 checklist：版本对齐](#发布前-checklist版本对齐) |
-
-## 开发提示
-
-- 新内容优先写 `AssetProfile`；个别历史兼容字段才考虑覆写 `Custom...Path`。
-- 角色资源字段没写时，RitsuLib 会从 `PlaceholderCharacterId` 对应的原版角色配置补齐。
-- 资源路径要以 `res://` 开头，并确认 PCK 内目录名和大小写正确。
-- `.tscn` 场景需要确认已打包进 Mod 资源；需绑定脚本时，写本地包装类并在 `Entry.Initialize()` 调用 `EnsureGodotScriptsRegistered(...)`。
+[商店]
