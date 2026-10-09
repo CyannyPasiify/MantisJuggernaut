@@ -65,6 +65,7 @@
 
     <ItemGroup>
         <Content Include="local.props" Condition="Exists('local.props')"/>
+        <Content Include="README.md" />
         <Content Include="Steam\character_icon.psd"/>
         <Content Include="Steam\image.png.import"/>
         <Content Include="Steam\image.psd"/>
