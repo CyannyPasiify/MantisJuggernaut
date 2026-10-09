@@ -23,7 +23,7 @@ public sealed class BladeDance() : MantisJuggernautPowerCard(BaseEnergyCost, Car
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
-        InstinctSlash.MakeCardHoverTip(IsUpgraded)
+        InstinctSlash.MakeCardHoverTip()
     ];
 
     // 卡牌基础数值。

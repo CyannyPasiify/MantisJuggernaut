@@ -31,15 +31,14 @@ public sealed class VersatileInstinct() : MantisJuggernautPowerCard(BaseEnergyCo
                 return common
                     .Concat(HoverTipFactory.FromEnchantment<Sharp>(3))
                     .Concat(HoverTipFactory.FromEnchantment<Adroit>(3))
-                    .Concat(HoverTipFactory.FromEnchantment<Swift>(2))
+                    .Concat(HoverTipFactory.FromEnchantment<Swift>(1))
                     .Concat(HoverTipFactory.FromEnchantment<Inky>());
 
             return common
                 .Concat(HoverTipFactory.FromEnchantment<Sharp>(5))
                 .Concat(HoverTipFactory.FromEnchantment<Adroit>(5))
-                .Concat(HoverTipFactory.FromEnchantment<Swift>(3))
+                .Concat(HoverTipFactory.FromEnchantment<Swift>(2))
                 .Concat(HoverTipFactory.FromEnchantment<Inky>())
-                .Concat(HoverTipFactory.FromEnchantment<Glam>())
                 .Concat(HoverTipFactory.FromEnchantment<Instinct>())
                 .Concat(HoverTipFactory.FromEnchantment<Sown>());
         }

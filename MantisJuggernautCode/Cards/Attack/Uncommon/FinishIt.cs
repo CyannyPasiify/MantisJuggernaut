@@ -77,8 +77,6 @@ public sealed class FinishIt()
     // 升级后的效果逻辑。
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(8m);
-        DynamicVars.Strength.UpgradeValueBy(1m);
-        DynamicVars.Cards.UpgradeValueBy(1m);
+        RemoveKeyword(CardKeyword.Exhaust);
     }
 }

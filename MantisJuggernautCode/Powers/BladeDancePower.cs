@@ -1,5 +1,7 @@
 ﻿using MantisJuggernaut.Cards;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -20,11 +22,13 @@ public class BladeDancePower : MantisJuggernautPower
     public override PowerInstanceType InstanceType => PowerInstanceType.Instanced;
 
     public override int DisplayAmount =>
-        DynamicVars.Cards.IntValue - GetInternalData<Data>().InstictPlayed % DynamicVars.Cards.IntValue;
+        DynamicVars.Cards.IntValue - (IsUpgraded
+            ? GetInternalData<Data>().InstictPlayed % DynamicVars.Cards.IntValue
+            : GetInternalData<Data>().InstictPlayed);
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
-        InstinctSlash.MakeCardHoverTip(IsUpgraded)
+        // InstinctSlash.MakeCardHoverTip(IsUpgraded)
     ];
 
     public bool IsUpgraded
@@ -49,15 +53,41 @@ public class BladeDancePower : MantisJuggernautPower
         if (cardPlay.Card.Owner != Owner.Player || cardPlay.Card is not InstinctSlash) return;
 
         var data = GetInternalData<Data>();
+        if (!IsUpgraded && data.TriggerCountThisTurn > 0) return;
+
         data.InstictPlayed++;
         var triggers = data.InstictPlayed / DynamicVars.Cards.IntValue;
-        await InstinctSlash.CreateInHand(Owner.Player, triggers, CombatState, IsUpgraded, false, true);
-        data.InstictPlayed -= triggers * DynamicVars.Cards.IntValue;
+        await InstinctSlash.CreateInHand(Owner.Player, triggers, CombatState, false, false, true);
+        data.TriggerCountThisTurn += triggers;
+        if (IsUpgraded) data.InstictPlayed -= triggers * DynamicVars.Cards.IntValue;
         InvokeDisplayAmountChanged();
+    }
+
+    public override Task AfterSideTurnEnd(
+        PlayerChoiceContext choiceContext,
+        CombatSide side,
+        IEnumerable<Creature> participants
+    )
+    {
+        if (!participants.Contains(Owner))
+        {
+            return Task.CompletedTask;
+        }
+
+        var data = GetInternalData<Data>();
+        data.TriggerCountThisTurn = 0;
+        if (!IsUpgraded)
+        {
+            data.InstictPlayed = 0;
+            InvokeDisplayAmountChanged();
+        }
+
+        return Task.CompletedTask;
     }
 
     private class Data
     {
         public int InstictPlayed;
+        public int TriggerCountThisTurn;
     }
 }

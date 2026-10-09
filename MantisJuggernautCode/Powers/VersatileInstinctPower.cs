@@ -21,28 +21,27 @@ public class VersatileInstinctPower : MantisJuggernautPower
 
     public override PowerInstanceType InstanceType => PowerInstanceType.None;
 
-    protected override IEnumerable<IHoverTip> AdditionalHoverTips
-    {
-        get
-        {
-            var common = base.AdditionalHoverTips.ToList();
-            if (!IsUpgraded)
-                return common
-                    .Concat(HoverTipFactory.FromEnchantment<Sharp>(3))
-                    .Concat(HoverTipFactory.FromEnchantment<Adroit>(3))
-                    .Concat(HoverTipFactory.FromEnchantment<Swift>(2))
-                    .Concat(HoverTipFactory.FromEnchantment<Inky>());
-
-            return common
-                .Concat(HoverTipFactory.FromEnchantment<Sharp>(5))
-                .Concat(HoverTipFactory.FromEnchantment<Adroit>(5))
-                .Concat(HoverTipFactory.FromEnchantment<Swift>(3))
-                .Concat(HoverTipFactory.FromEnchantment<Inky>())
-                .Concat(HoverTipFactory.FromEnchantment<Glam>())
-                .Concat(HoverTipFactory.FromEnchantment<Instinct>())
-                .Concat(HoverTipFactory.FromEnchantment<Sown>());
-        }
-    }
+    // protected override IEnumerable<IHoverTip> AdditionalHoverTips
+    // {
+    //     get
+    //     {
+    //         var common = base.AdditionalHoverTips.ToList();
+    //         if (!IsUpgraded)
+    //             return common
+    //                 .Concat(HoverTipFactory.FromEnchantment<Sharp>(3))
+    //                 .Concat(HoverTipFactory.FromEnchantment<Adroit>(3))
+    //                 .Concat(HoverTipFactory.FromEnchantment<Swift>(1))
+    //                 .Concat(HoverTipFactory.FromEnchantment<Inky>());
+    //
+    //         return common
+    //             .Concat(HoverTipFactory.FromEnchantment<Sharp>(5))
+    //             .Concat(HoverTipFactory.FromEnchantment<Adroit>(5))
+    //             .Concat(HoverTipFactory.FromEnchantment<Swift>(2))
+    //             .Concat(HoverTipFactory.FromEnchantment<Inky>())
+    //             .Concat(HoverTipFactory.FromEnchantment<Instinct>())
+    //             .Concat(HoverTipFactory.FromEnchantment<Sown>());
+    //     }
+    // }
 
     public List<Tuple<EnchantmentModel, int>> EnchantmentsPool =>
         IsUpgraded
@@ -50,9 +49,8 @@ public class VersatileInstinctPower : MantisJuggernautPower
             [
                 new Tuple<EnchantmentModel, int>(ModelDb.Enchantment<Sharp>(), 5),
                 new Tuple<EnchantmentModel, int>(ModelDb.Enchantment<Adroit>(), 5),
-                new Tuple<EnchantmentModel, int>(ModelDb.Enchantment<Swift>(), 3),
+                new Tuple<EnchantmentModel, int>(ModelDb.Enchantment<Swift>(), 2),
                 new Tuple<EnchantmentModel, int>(ModelDb.Enchantment<Inky>(), 1),
-                new Tuple<EnchantmentModel, int>(ModelDb.Enchantment<Glam>(), 1),
                 new Tuple<EnchantmentModel, int>(ModelDb.Enchantment<Instinct>(), 1),
                 new Tuple<EnchantmentModel, int>(ModelDb.Enchantment<Sown>(), 1)
             ]
@@ -60,7 +58,7 @@ public class VersatileInstinctPower : MantisJuggernautPower
             [
                 new Tuple<EnchantmentModel, int>(ModelDb.Enchantment<Sharp>(), 3),
                 new Tuple<EnchantmentModel, int>(ModelDb.Enchantment<Adroit>(), 3),
-                new Tuple<EnchantmentModel, int>(ModelDb.Enchantment<Swift>(), 2),
+                new Tuple<EnchantmentModel, int>(ModelDb.Enchantment<Swift>(), 1),
                 new Tuple<EnchantmentModel, int>(ModelDb.Enchantment<Inky>(), 1)
             ];
 

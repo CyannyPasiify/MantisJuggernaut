@@ -172,7 +172,7 @@
   "MANTIS_JUGGERNAUT_CARD_AMBUSH.title": "伏击",
   "MANTIS_JUGGERNAUT_CARD_ANXIETY.description": "在你的回合结束时，随机[gold]保留[/gold]你[gold]手牌[/gold]中的{AnxietyPower:diff()}张[gold]奇巧[/gold]牌，其耗能增加1{energyPrefix:energyIcons(1)}。",
   "MANTIS_JUGGERNAUT_CARD_ANXIETY.title": "急眼",
-  "MANTIS_JUGGERNAUT_CARD_BLADE_DANCE.description": "每当你打出3张[gold]本能挥斩[/gold]后，将1张随机方向的[gold]{IfUpgraded:show:本能挥斩+|本能挥斩}[/gold]加入你的手牌。",
+  "MANTIS_JUGGERNAUT_CARD_BLADE_DANCE.description": "每{IfUpgraded:show:|回合首次}当你打出3张[gold]本能挥斩[/gold]后，将1张随机方向的[gold]本能挥斩[/gold]加入你的手牌。",
   "MANTIS_JUGGERNAUT_CARD_BLADE_DANCE.title": "舞刃",
   "MANTIS_JUGGERNAUT_CARD_ATEMI_WAZA.description": "如果敌人的攻击被你完全[gold]格挡[/gold]，进入[gold]衡势[/gold]，并对其造成{AtemiWazaPower:diff()}点伤害。",
   "MANTIS_JUGGERNAUT_CARD_ATEMI_WAZA.title": "当身技",
